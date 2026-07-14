@@ -1,0 +1,645 @@
+<div class="app-shell" aria-label="Showmesh application concept preview">
+  <div class="app-topbar">
+    <div>
+      <span class="eyebrow">Show file</span>
+      <strong>Smoke demo / rehearsal</strong>
+    </div>
+    <div class="now-card">
+      <span>Now playing</span>
+      <b>07 · Opening video</b>
+      <i></i>
+    </div>
+    <div class="next-card">
+      <span>Next on GO</span>
+      <b>08 · Smoke field</b>
+      <small>Start Notch block · Fog 0 → 0.8 · OSC pulse</small>
+    </div>
+    <button class="go-button">GO</button>
+    <button class="panic-button">Panic</button>
+  </div>
+
+  <div class="app-body">
+    <aside class="resources-panel">
+      <div class="panel-title">Resources</div>
+      <label class="search">Search resources</label>
+      <div class="resource-group">
+        <span>Video</span>
+        <p>▶ aseri_movie_v1.mov <em>03:42</em></p>
+        <p>▶ leaves_transition.mov <em>00:18</em></p>
+      </div>
+      <div class="resource-group">
+        <span>Realtime</span>
+        <p>◆ Smoke Field.block <em>planned</em></p>
+        <p>⌁ TouchDesigner bridge <em>offline</em></p>
+      </div>
+      <div class="resource-group">
+        <span>Control</span>
+        <p>⌁ Lighting OSC <em>online</em></p>
+        <p>◌ APC40 MIDI <em>live</em></p>
+      </div>
+    </aside>
+
+    <main class="show-workspace">
+      <div class="workspace-header">
+        <div>
+          <span class="eyebrow">Cue workspace</span>
+          <h2>Run order</h2>
+        </div>
+        <div class="workspace-actions">Edit mode · ⌘K command palette</div>
+      </div>
+
+      <article class="cue-object is-playing">
+        <div class="cue-rail"></div>
+        <div class="cue-number">07</div>
+        <div class="cue-main">
+          <div class="cue-header">
+            <span class="cue-type">▶ Video</span>
+            <strong>Opening video</strong>
+            <span class="cue-state">Playing</span>
+          </div>
+          <div class="cue-meta">
+            Program output · 01:24 elapsed · 00:50 remaining
+          </div>
+          <div class="cue-progress"><span style="width: 64%"></span></div>
+          <div class="action-tree">
+            <div class="action done">
+              <span></span><b>Fade in</b><em>Opacity 0 → 100 · done</em>
+            </div>
+            <div class="action running">
+              <span></span><b>Blur</b><em>0 → 20 · 1.4 / 3.0s</em>
+            </div>
+            <div class="action">
+              <span></span><b>Fade out</b><em>On finish · targets this cue</em>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="cue-object is-next">
+        <div class="cue-rail"></div>
+        <div class="cue-number">08</div>
+        <div class="cue-main">
+          <div class="cue-header">
+            <span class="cue-type">◆ Notch</span>
+            <strong>Smoke field build</strong>
+            <span class="cue-state">Next</span>
+          </div>
+          <div class="cue-meta">
+            Will run: block playback · Fog Density · Bloom · OSC lighting pulse
+          </div>
+          <div class="action-tree compact">
+            <div class="action">
+              <span></span><b>Fog Density</b><em>0.2 → 0.8 · GO</em>
+            </div>
+            <div class="action listening">
+              <span></span><b>Bloom</b><em>MIDI CC22 · live value</em>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="cue-object">
+        <div class="cue-rail"></div>
+        <div class="cue-number">09</div>
+        <div class="cue-main">
+          <div class="cue-header">
+            <span class="cue-type">⇄ Transition</span>
+            <strong>Leaves into blackout</strong>
+            <span class="cue-state muted">Waiting</span>
+          </div>
+          <div class="cue-meta">
+            Connects cue 08 → cue 10 · triggered by LTC 01:02:15:12
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <section class="inspector-panel">
+      <div class="panel-title">Inspector</div>
+      <div class="inspector-head">
+        <span>Notch block cue</span>
+        <strong>08 · Smoke field build</strong>
+        <em>Ready for GO</em>
+      </div>
+      <div class="tabs">
+        <b>General</b><span>Actions</span><span>Parameters</span>
+      </div>
+      <div class="property-group">
+        <h3>Lifecycle</h3>
+        <p><span>On start</span><b>Play block</b></p>
+        <p><span>On stop</span><b>Stop and hold</b></p>
+      </div>
+      <div class="property-group">
+        <h3>Actions</h3>
+        <p><span>Fog Density</span><b>GO · 4.0s</b></p>
+        <p><span>Bloom</span><b>MIDI CC22</b></p>
+        <p><span>OSC pulse</span><b>/lighting/smoke</b></p>
+      </div>
+      <div class="property-group subdued">
+        <h3>Runtime status</h3>
+        <p><span>Notch SDK</span><b>Not connected</b></p>
+      </div>
+    </section>
+  </div>
+
+  <div class="status-strip">
+    <span><b>Output</b> Program 1080p60</span>
+    <span><b>Audio</b> WASAPI 48 kHz</span>
+    <span><b>Engine</b> 93 fps · 0 underruns</span>
+    <span><b>Network</b> OSC online · MIDI live</span>
+  </div>
+</div>
+<style>
+  .app-shell {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(210, 222, 255, 0.14);
+    border-radius: 28px;
+    background:
+      linear-gradient(180deg, rgba(19, 25, 37, 0.94), rgba(8, 11, 17, 0.96)),
+      var(--surface);
+    box-shadow:
+      var(--shadow),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .app-shell::before {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    content: '';
+    background: radial-gradient(
+      circle at 58% 0%,
+      rgba(215, 255, 98, 0.12),
+      transparent 26rem
+    );
+  }
+
+  .app-topbar,
+  .app-body,
+  .status-strip {
+    position: relative;
+  }
+
+  .app-topbar {
+    display: grid;
+    grid-template-columns: 1.05fr 1.1fr 1.36fr auto auto;
+    gap: 12px;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .eyebrow,
+  .panel-title,
+  .cue-type,
+  .cue-state,
+  .tabs,
+  .status-strip,
+  .resource-group span {
+    font-family: var(--mono);
+  }
+
+  .eyebrow,
+  .panel-title {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--muted-2);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .app-topbar strong {
+    display: block;
+    letter-spacing: -0.02em;
+  }
+
+  .now-card,
+  .next-card {
+    min-height: 70px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.026);
+  }
+
+  .now-card span,
+  .next-card span {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--muted-2);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+  }
+
+  .now-card b,
+  .next-card b {
+    display: block;
+  }
+
+  .now-card i {
+    display: block;
+    width: 78%;
+    height: 4px;
+    margin-top: 10px;
+    border-radius: 99px;
+    background: linear-gradient(
+      90deg,
+      var(--danger) 64%,
+      rgba(255, 255, 255, 0.1) 64%
+    );
+  }
+
+  .next-card {
+    border-color: rgba(215, 255, 98, 0.32);
+  }
+
+  .next-card small {
+    color: var(--muted);
+  }
+
+  .go-button,
+  .panic-button {
+    height: 70px;
+    border: 0;
+    border-radius: 17px;
+    padding: 0 23px;
+    font-weight: 850;
+    text-transform: uppercase;
+  }
+
+  .go-button {
+    min-width: 92px;
+    background: var(--accent);
+    color: #111500;
+    box-shadow: 0 0 34px rgba(215, 255, 98, 0.2);
+  }
+
+  .panic-button {
+    border: 1px solid rgba(255, 95, 115, 0.38);
+    background: rgba(255, 95, 115, 0.09);
+    color: #ffd7dc;
+  }
+
+  .app-body {
+    display: grid;
+    grid-template-columns: 205px minmax(420px, 1fr) 285px;
+    min-height: 560px;
+  }
+
+  .resources-panel,
+  .inspector-panel {
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.015);
+  }
+
+  .resources-panel {
+    border-right: 1px solid var(--line);
+  }
+
+  .inspector-panel {
+    border-left: 1px solid var(--line);
+  }
+
+  .search {
+    display: block;
+    margin: 12px 0 18px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 11px;
+    color: var(--muted-2);
+    font-size: 0.82rem;
+  }
+
+  .resource-group {
+    margin-top: 18px;
+  }
+
+  .resource-group span {
+    color: var(--muted-2);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .resource-group p {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 10px 0;
+    color: #c4cfdd;
+    font-size: 0.86rem;
+  }
+
+  .resource-group em {
+    color: var(--muted-2);
+    font-style: normal;
+  }
+
+  .show-workspace {
+    padding: 20px;
+    background: rgba(9, 12, 18, 0.38);
+  }
+
+  .workspace-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .workspace-header h2 {
+    margin: 0;
+    font-size: 1.45rem;
+    letter-spacing: -0.04em;
+  }
+
+  .workspace-actions {
+    color: var(--muted);
+    font-size: 0.84rem;
+  }
+
+  .cue-object {
+    position: relative;
+    display: grid;
+    grid-template-columns: 5px 52px 1fr;
+    gap: 14px;
+    margin: 12px 0;
+    padding: 16px;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .cue-object.is-playing {
+    border-color: rgba(255, 95, 115, 0.22);
+    background: rgba(255, 95, 115, 0.052);
+  }
+
+  .cue-object.is-next {
+    border-color: rgba(215, 255, 98, 0.25);
+    background: rgba(215, 255, 98, 0.04);
+  }
+
+  .cue-rail {
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .is-playing .cue-rail {
+    background: var(--danger);
+  }
+
+  .is-next .cue-rail {
+    background: var(--accent);
+  }
+
+  .cue-number {
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 1.45rem;
+    font-weight: 700;
+  }
+
+  .cue-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .cue-header strong {
+    min-width: 0;
+    flex: 1;
+    font-size: 1.05rem;
+    letter-spacing: -0.025em;
+  }
+
+  .cue-type,
+  .cue-state {
+    color: var(--muted);
+    font-size: 0.72rem;
+  }
+
+  .cue-state {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 4px 8px;
+  }
+
+  .is-playing .cue-state {
+    border-color: rgba(255, 95, 115, 0.32);
+    color: #ffd4da;
+  }
+
+  .is-next .cue-state {
+    border-color: rgba(215, 255, 98, 0.32);
+    color: var(--accent);
+  }
+
+  .cue-state.muted {
+    color: var(--muted-2);
+  }
+
+  .cue-meta {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+
+  .cue-progress {
+    height: 5px;
+    margin-top: 13px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.09);
+  }
+
+  .cue-progress span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--danger);
+  }
+
+  .action-tree {
+    position: relative;
+    margin-top: 14px;
+    padding-left: 18px;
+  }
+
+  .action-tree::before {
+    position: absolute;
+    top: 4px;
+    bottom: 7px;
+    left: 5px;
+    width: 1px;
+    content: '';
+    background: rgba(210, 222, 255, 0.16);
+  }
+
+  .action-tree.compact {
+    margin-top: 11px;
+  }
+
+  .action {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(90px, 0.55fr) 1fr;
+    gap: 12px;
+    margin: 8px 0;
+    color: var(--muted);
+    font-size: 0.83rem;
+  }
+
+  .action > span {
+    position: absolute;
+    top: 0.55em;
+    left: -17px;
+    width: 7px;
+    height: 7px;
+    border-radius: 99px;
+    background: rgba(210, 222, 255, 0.32);
+  }
+
+  .action b {
+    color: #d8e1ef;
+    font-weight: 640;
+  }
+
+  .action em {
+    color: var(--muted-2);
+    font-style: normal;
+  }
+
+  .action.running b,
+  .action.listening b {
+    color: var(--accent-2);
+  }
+
+  .action.running > span,
+  .action.listening > span {
+    background: var(--accent-2);
+    box-shadow: 0 0 16px rgba(110, 231, 255, 0.35);
+  }
+
+  .inspector-head {
+    padding: 15px 0 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .inspector-head span,
+  .inspector-head em {
+    display: block;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-style: normal;
+  }
+
+  .inspector-head strong {
+    display: block;
+    margin: 4px 0;
+    font-size: 1.1rem;
+    letter-spacing: -0.03em;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 10px;
+    padding: 14px 0;
+    color: var(--muted-2);
+    font-size: 0.72rem;
+  }
+
+  .tabs b {
+    color: var(--text);
+  }
+
+  .property-group {
+    padding: 15px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .property-group h3 {
+    margin: 0 0 10px;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .property-group p {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 9px 0;
+    font-size: 0.84rem;
+  }
+
+  .property-group span {
+    color: var(--muted-2);
+  }
+
+  .property-group b {
+    color: #dce6f4;
+    font-weight: 620;
+    text-align: right;
+  }
+
+  .property-group.subdued b {
+    color: var(--warning);
+  }
+
+  .status-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.72rem;
+  }
+
+  .status-strip b {
+    color: #dce6f4;
+    font-weight: 740;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 980px) {
+    .app-topbar {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .app-body {
+      grid-template-columns: 1fr;
+    }
+
+    .resources-panel,
+    .inspector-panel {
+      display: none;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .app-topbar {
+      grid-template-columns: 1fr;
+    }
+
+    .go-button,
+    .panic-button {
+      height: 52px;
+    }
+
+    .cue-object {
+      grid-template-columns: 4px 38px 1fr;
+      padding: 13px;
+    }
+
+    .action {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+  }
+</style>
