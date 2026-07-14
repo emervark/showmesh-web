@@ -1,0 +1,92 @@
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="#top" aria-label="Showmesh home">
+      <span class="mark">SM</span>
+      <span>Showmesh</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="#platform">Platform</a>
+      <a href="#model">Model</a>
+      <a href="#engine">Engine</a>
+      <a href="#roadmap">Roadmap</a>
+    </nav>
+    <a class="nav-cta" href="#contact">Request access</a>
+  </div>
+</header>
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--line);
+    background: rgba(5, 7, 11, 0.78);
+    backdrop-filter: blur(18px);
+  }
+
+  .nav {
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 760;
+    letter-spacing: -0.025em;
+  }
+
+  .mark {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(215, 255, 98, 0.45);
+    border-radius: 10px;
+    background: linear-gradient(
+      180deg,
+      rgba(215, 255, 98, 0.22),
+      rgba(215, 255, 98, 0.08)
+    );
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    box-shadow: 0 0 28px rgba(215, 255, 98, 0.12);
+  }
+
+  nav {
+    display: flex;
+    gap: 24px;
+    color: var(--muted);
+    font-size: 0.93rem;
+  }
+
+  nav a:hover {
+    color: var(--text);
+  }
+
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    padding: 9px 14px;
+    color: var(--text);
+    font-weight: 680;
+    background: rgba(255, 255, 255, 0.035);
+  }
+
+  @media (max-width: 780px) {
+    nav {
+      display: none;
+    }
+
+    .nav {
+      min-height: 64px;
+    }
+  }
+</style>
