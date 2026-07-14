@@ -1,841 +1,645 @@
-<div class="product-frame" aria-label="Showmesh application concept preview">
-  <div class="window-bar">
-    <div class="show-title">
-      <span class="show-diamond"></span>
-      <strong>Smoke Demo</strong>
-      <span>Showmesh</span>
+<div class="app-shell" aria-label="Showmesh application concept preview">
+  <div class="app-topbar">
+    <div>
+      <span class="eyebrow">Show file</span>
+      <strong>Smoke demo / rehearsal</strong>
     </div>
-    <nav class="menu" aria-label="Application menu">
-      <span>File</span><span>Edit</span><span>Add</span><span>View</span><span
-        >Output</span
-      >
-    </nav>
-    <div class="command-chip">⌕ Commands <kbd>^K</kbd></div>
+    <div class="now-card">
+      <span>Now playing</span>
+      <b>07 · Opening video</b>
+      <i></i>
+    </div>
+    <div class="next-card">
+      <span>Next on GO</span>
+      <b>08 · Smoke field</b>
+      <small>Start Notch block · Fog 0 → 0.8 · OSC pulse</small>
+    </div>
+    <button class="go-button">GO</button>
+    <button class="panic-button">Panic</button>
   </div>
 
-  <div class="heartbeat">
-    <section class="now-playing">
-      <span class="live-dot"></span>
-      <b>7</b>
-      <strong>aseri_movie_v1.mov</strong>
-      <time>01:35.7</time>
-      <div class="playbar"><span style="width: 72%"></span></div>
-    </section>
-    <section class="next-up">
-      <span>Next</span>
-      <b>8</b>
-      <strong>Smoke Field</strong>
-      <small>Starts block · Fog 0 → 0.8 · holds until stopped</small>
-    </section>
-    <button class="go-button"><b>GO</b><span>8 · Smoke Field</span></button>
-    <button class="panic-button"><b>■</b><span>Panic</span></button>
-  </div>
-
-  <div class="app-grid">
-    <aside class="resources-panel" aria-label="Resources">
-      <label class="search">⌕ Resources</label>
+  <div class="app-body">
+    <aside class="resources-panel">
+      <div class="panel-title">Resources</div>
+      <label class="search">Search resources</label>
       <div class="resource-group">
         <span>Video</span>
-        <p><b>▶ aseri_movie_v1.mov</b><em>02:15</em></p>
-        <p><b>▶ Leaves_Cold_Sno...</b><em>03:10</em></p>
-        <p><b>▶ NightToll_Bells.mp4</b><em>00:12</em></p>
+        <p>▶ aseri_movie_v1.mov <em>03:42</em></p>
+        <p>▶ leaves_transition.mov <em>00:18</em></p>
       </div>
       <div class="resource-group">
-        <span>Audio</span>
-        <p><b>♪ Doorbell_SFX.wav</b><em>00:04</em></p>
+        <span>Realtime</span>
+        <p>◆ Smoke Field.block <em>planned</em></p>
+        <p>⌁ TouchDesigner bridge <em>offline</em></p>
       </div>
       <div class="resource-group">
-        <span>Notch Blocks</span>
-        <p><b>◆ Smoke_Field.nblock</b><em></em></p>
-        <p class="warning"><b>⚠ Particle_Storm...</b><em>missing</em></p>
-      </div>
-      <div class="resource-group">
-        <span>Connections</span>
-        <p><b>● Smoke OSC</b><em>live</em></p>
-        <p><b>● MIDI Console</b><em>live</em></p>
+        <span>Control</span>
+        <p>⌁ Lighting OSC <em>online</em></p>
+        <p>◌ APC40 MIDI <em>live</em></p>
       </div>
     </aside>
 
-    <main class="cue-workspace" aria-label="Cue workspace">
-      <header class="workspace-head">
+    <main class="show-workspace">
+      <div class="workspace-header">
         <div>
-          <span class="eyebrow">Cue list</span>
-          <b>9</b>
+          <span class="eyebrow">Cue workspace</span>
+          <h2>Run order</h2>
         </div>
-        <div class="add-actions"><span>+ Cue</span><span>+ Resource</span></div>
-      </header>
+        <div class="workspace-actions">Edit mode · ⌘K command palette</div>
+      </div>
 
-      <article class="cue-row muted">
-        <div class="cue-number">1</div>
-        <div class="cue-icon">◷</div>
-        <div class="cue-content">
-          <strong>House out</strong>
-          <span>00:02.0</span>
-        </div>
-      </article>
-
-      <article class="cue-row muted indent">
-        <div class="cue-number">4</div>
-        <div class="cue-icon">⇄</div>
-        <div class="cue-content">
-          <strong>Fade video out</strong>
-          <small>fades cue 2 · Opening video</small>
-        </div>
-      </article>
-
-      <article class="cue-card playing">
-        <div class="cue-number">7</div>
-        <div class="cue-icon">▶</div>
-        <div class="cue-content">
-          <div class="cue-titleline">
-            <strong>aseri_movie_v1.mov</strong>
-            <span>Playing</span>
+      <article class="cue-object is-playing">
+        <div class="cue-rail"></div>
+        <div class="cue-number">07</div>
+        <div class="cue-main">
+          <div class="cue-header">
+            <span class="cue-type">▶ Video</span>
+            <strong>Opening video</strong>
+            <span class="cue-state">Playing</span>
           </div>
-          <div class="inline-progress"><span style="width: 68%"></span></div>
-          <div class="cue-meta">01:35.7 / 02:15.6 · Program</div>
-          <div class="action-list" aria-label="Actions attached to cue 7">
+          <div class="cue-meta">
+            Program output · 01:24 elapsed · 00:50 remaining
+          </div>
+          <div class="cue-progress"><span style="width: 64%"></span></div>
+          <div class="action-tree">
             <div class="action done">
-              <i></i><b>Fade in</b><em>0% → 100% · 1.0s · done</em><span
-                >On play</span
-              >
+              <span></span><b>Fade in</b><em>Opacity 0 → 100 · done</em>
             </div>
             <div class="action running">
-              <i></i><b>Blur</b><em>0 → 20 · 3.0s · running</em><span
-                >At 00:10.0</span
-              >
-            </div>
-            <div class="action listening">
-              <i></i><b>Fog density</b><em>listening · last 0.64</em><span
-                >OSC /smoke/fog</span
-              >
+              <span></span><b>Blur</b><em>0 → 20 · 1.4 / 3.0s</em>
             </div>
             <div class="action">
-              <i></i><b>Fade out</b><em>current → 0% · 2.0s</em><span
-                >On stop</span
-              >
+              <span></span><b>Fade out</b><em>On finish · targets this cue</em>
             </div>
           </div>
         </div>
-        <button class="stop-button">■</button>
       </article>
 
-      <article class="cue-card next">
-        <div class="cue-number">8</div>
-        <div class="cue-icon">◆</div>
-        <div class="cue-content">
-          <div class="cue-titleline">
-            <strong>Smoke Field</strong>
-            <span>Next</span>
+      <article class="cue-object is-next">
+        <div class="cue-rail"></div>
+        <div class="cue-number">08</div>
+        <div class="cue-main">
+          <div class="cue-header">
+            <span class="cue-type">◆ Notch</span>
+            <strong>Smoke field build</strong>
+            <span class="cue-state">Next</span>
           </div>
-          <small>Fog · Bloom · OSC live</small>
-          <div class="next-summary">
-            Will: start Notch block · run Fog and Bloom · pulse lighting OSC
+          <div class="cue-meta">
+            Will run: block playback · Fog Density · Bloom · OSC lighting pulse
           </div>
-        </div>
-        <button class="play-button">▶</button>
-      </article>
-
-      <article class="cue-row">
-        <div class="cue-number">9</div>
-        <div class="cue-icon">▶</div>
-        <div class="cue-content">
-          <strong>Leaves_Cold_Snowflakes</strong>
-          <small>crossfades from 7 · 2.0s</small>
+          <div class="action-tree compact">
+            <div class="action">
+              <span></span><b>Fog Density</b><em>0.2 → 0.8 · GO</em>
+            </div>
+            <div class="action listening">
+              <span></span><b>Bloom</b><em>MIDI CC22 · live value</em>
+            </div>
+          </div>
         </div>
       </article>
 
-      <article class="cue-row warning-row">
-        <div class="cue-number">10</div>
-        <div class="cue-icon">⇄</div>
-        <div class="cue-content">
-          <strong>Dim to blackout</strong>
-          <small>⚠ Action target cue not found</small>
+      <article class="cue-object">
+        <div class="cue-rail"></div>
+        <div class="cue-number">09</div>
+        <div class="cue-main">
+          <div class="cue-header">
+            <span class="cue-type">⇄ Transition</span>
+            <strong>Leaves into blackout</strong>
+            <span class="cue-state muted">Waiting</span>
+          </div>
+          <div class="cue-meta">
+            Connects cue 08 → cue 10 · triggered by LTC 01:02:15:12
+          </div>
         </div>
       </article>
     </main>
 
-    <aside class="inspector-panel" aria-label="Inspector">
-      <div class="inspector-status"><span>Video cue</span><b>Playing</b></div>
-      <h3>7 · aseri_movie_v1.mov</h3>
-      <label class="search">⌕ Search properties</label>
-
-      <section class="property-group open">
-        <h4>Identity</h4>
-        <p><span>Number</span><b>7</b></p>
-        <p><span>Name</span><b>aseri_movie_v1.mov</b></p>
-        <p><span>Type</span><b>Video</b></p>
-      </section>
-
-      <section class="property-group open">
-        <h4>Resource</h4>
-        <p><span>Resource</span><b>aseri_movie_v1.mov</b></p>
-        <p><span>Duration</span><b>02:15.6</b></p>
-      </section>
-
-      <section class="property-group open">
-        <h4>Timing</h4>
-        <p><span>Pre-wait</span><b>0.000 s</b></p>
-        <p><span>Duration</span><b>02:15.6</b></p>
-        <p><span>Continue</span><b>None</b></p>
-      </section>
-
-      <section class="property-group collapsed">
-        <h4>Playback <em>Play once</em></h4>
-      </section>
-      <section class="property-group collapsed">
-        <h4>Routing <em>Program</em></h4>
-      </section>
-
-      <section class="property-group action-summary">
-        <h4>Actions</h4>
-        <div class="summary-card">
-          <p><span>Resource</span><b>aseri_movie_v1.mov</b></p>
-          <p><span>Actions</span><b>4 defined below</b></p>
-          <p><span>Triggers</span><b>On Play · Timeline · OSC · On Stop</b></p>
-        </div>
-        <div class="mini-action active">
-          <b>Blur</b><span>0 → 20 · 3.0s</span>
-        </div>
-        <div class="mini-action listening">
-          <b>Fog density</b><span>OSC /smoke/fog</span>
-        </div>
-        <div class="mini-action"><b>Fade out</b><span>On stop</span></div>
-      </section>
-    </aside>
+    <section class="inspector-panel">
+      <div class="panel-title">Inspector</div>
+      <div class="inspector-head">
+        <span>Notch block cue</span>
+        <strong>08 · Smoke field build</strong>
+        <em>Ready for GO</em>
+      </div>
+      <div class="tabs">
+        <b>General</b><span>Actions</span><span>Parameters</span>
+      </div>
+      <div class="property-group">
+        <h3>Lifecycle</h3>
+        <p><span>On start</span><b>Play block</b></p>
+        <p><span>On stop</span><b>Stop and hold</b></p>
+      </div>
+      <div class="property-group">
+        <h3>Actions</h3>
+        <p><span>Fog Density</span><b>GO · 4.0s</b></p>
+        <p><span>Bloom</span><b>MIDI CC22</b></p>
+        <p><span>OSC pulse</span><b>/lighting/smoke</b></p>
+      </div>
+      <div class="property-group subdued">
+        <h3>Runtime status</h3>
+        <p><span>Notch SDK</span><b>Not connected</b></p>
+      </div>
+    </section>
   </div>
 
-  <footer class="status-strip">
-    <span><b>Master</b><i></i>-8.2 dB</span>
-    <span><b>Output</b> Program · 1080p60 · NDI on</span>
-    <span><b>Audio</b> 48 kHz · 512 smp</span>
-    <span><b>Engine</b> 93 fps</span>
-    <span><b>Network</b> OSC ● MIDI ●</span>
-    <em>⚠ 1 warning</em>
-  </footer>
+  <div class="status-strip">
+    <span><b>Output</b> Program 1080p60</span>
+    <span><b>Audio</b> WASAPI 48 kHz</span>
+    <span><b>Engine</b> 93 fps · 0 underruns</span>
+    <span><b>Network</b> OSC online · MIDI live</span>
+  </div>
 </div>
-
 <style>
-  .product-frame {
+  .app-shell {
     position: relative;
     overflow: hidden;
-    border: 1px solid rgba(210, 222, 255, 0.1);
-    border-radius: 24px;
-    background: #080b10;
+    border: 1px solid rgba(210, 222, 255, 0.14);
+    border-radius: 28px;
+    background:
+      linear-gradient(180deg, rgba(19, 25, 37, 0.94), rgba(8, 11, 17, 0.96)),
+      var(--surface);
     box-shadow:
       var(--shadow),
-      inset 0 1px 0 rgba(255, 255, 255, 0.035);
-    color: #eef3ff;
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 
-  .product-frame::before {
+  .app-shell::before {
     position: absolute;
     inset: 0;
     pointer-events: none;
     content: '';
-    background:
-      radial-gradient(
-        circle at 40% 8%,
-        rgba(255, 95, 115, 0.08),
-        transparent 28rem
-      ),
-      radial-gradient(
-        circle at 78% 0%,
-        rgba(93, 214, 131, 0.08),
-        transparent 24rem
-      );
+    background: radial-gradient(
+      circle at 58% 0%,
+      rgba(215, 255, 98, 0.12),
+      transparent 26rem
+    );
   }
 
-  .window-bar,
-  .heartbeat,
-  .app-grid,
+  .app-topbar,
+  .app-body,
   .status-strip {
     position: relative;
   }
 
-  .window-bar {
+  .app-topbar {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1.05fr 1.1fr 1.36fr auto auto;
+    gap: 12px;
     align-items: center;
-    gap: 18px;
-    min-height: 46px;
-    padding: 0 14px;
-    color: var(--muted-2);
-    background: #070a0f;
-    border-bottom: 1px solid rgba(210, 222, 255, 0.06);
-    font-size: 0.78rem;
+    padding: 16px;
+    border-bottom: 1px solid var(--line);
   }
 
-  .show-title,
-  .menu,
-  .command-chip,
-  .heartbeat,
-  .cue-titleline,
+  .eyebrow,
+  .panel-title,
+  .cue-type,
+  .cue-state,
+  .tabs,
   .status-strip,
-  .resource-group p,
-  .property-group p,
-  .action,
-  .mini-action {
-    display: flex;
-    align-items: center;
-  }
-
-  .show-title {
-    gap: 8px;
-    color: var(--text);
-  }
-  .show-title span:last-child {
-    color: var(--muted-2);
-  }
-  .show-diamond {
-    width: 9px;
-    height: 9px;
-    rotate: 45deg;
-    background: #65dc88;
-  }
-  .menu {
-    gap: 18px;
-  }
-  .command-chip {
-    gap: 24px;
-    border-radius: 6px;
-    padding: 7px 10px;
-    background: rgba(255, 255, 255, 0.035);
-  }
-  kbd {
-    color: var(--muted-2);
+  .resource-group span {
     font-family: var(--mono);
-    font-size: 0.68rem;
   }
 
-  .heartbeat {
+  .eyebrow,
+  .panel-title {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--muted-2);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .app-topbar strong {
+    display: block;
+    letter-spacing: -0.02em;
+  }
+
+  .now-card,
+  .next-card {
+    min-height: 70px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.026);
+  }
+
+  .now-card span,
+  .next-card span {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--muted-2);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+  }
+
+  .now-card b,
+  .next-card b {
+    display: block;
+  }
+
+  .now-card i {
+    display: block;
+    width: 78%;
+    height: 4px;
+    margin-top: 10px;
+    border-radius: 99px;
+    background: linear-gradient(
+      90deg,
+      var(--danger) 64%,
+      rgba(255, 255, 255, 0.1) 64%
+    );
+  }
+
+  .next-card {
+    border-color: rgba(215, 255, 98, 0.32);
+  }
+
+  .next-card small {
+    color: var(--muted);
+  }
+
+  .go-button,
+  .panic-button {
+    height: 70px;
+    border: 0;
+    border-radius: 17px;
+    padding: 0 23px;
+    font-weight: 850;
+    text-transform: uppercase;
+  }
+
+  .go-button {
+    min-width: 92px;
+    background: var(--accent);
+    color: #111500;
+    box-shadow: 0 0 34px rgba(215, 255, 98, 0.2);
+  }
+
+  .panic-button {
+    border: 1px solid rgba(255, 95, 115, 0.38);
+    background: rgba(255, 95, 115, 0.09);
+    color: #ffd7dc;
+  }
+
+  .app-body {
     display: grid;
-    grid-template-columns:
-      minmax(360px, 1.5fr) minmax(260px, 0.75fr)
-      138px 76px;
-    gap: 18px;
-    align-items: center;
-    padding: 20px 18px 16px;
+    grid-template-columns: 205px minmax(420px, 1fr) 285px;
+    min-height: 560px;
   }
 
-  .now-playing {
+  .resources-panel,
+  .inspector-panel {
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.015);
+  }
+
+  .resources-panel {
+    border-right: 1px solid var(--line);
+  }
+
+  .inspector-panel {
+    border-left: 1px solid var(--line);
+  }
+
+  .search {
+    display: block;
+    margin: 12px 0 18px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 11px;
+    color: var(--muted-2);
+    font-size: 0.82rem;
+  }
+
+  .resource-group {
+    margin-top: 18px;
+  }
+
+  .resource-group span {
+    color: var(--muted-2);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .resource-group p {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 10px 0;
+    color: #c4cfdd;
+    font-size: 0.86rem;
+  }
+
+  .resource-group em {
+    color: var(--muted-2);
+    font-style: normal;
+  }
+
+  .show-workspace {
+    padding: 20px;
+    background: rgba(9, 12, 18, 0.38);
+  }
+
+  .workspace-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .workspace-header h2 {
+    margin: 0;
+    font-size: 1.45rem;
+    letter-spacing: -0.04em;
+  }
+
+  .workspace-actions {
+    color: var(--muted);
+    font-size: 0.84rem;
+  }
+
+  .cue-object {
     position: relative;
     display: grid;
-    grid-template-columns: 12px 32px minmax(120px, 1fr) auto;
-    gap: 10px;
-    align-items: center;
-    min-height: 64px;
-    border-radius: 12px;
-    padding: 12px 18px;
-    background: rgba(255, 95, 115, 0.055);
+    grid-template-columns: 5px 52px 1fr;
+    gap: 14px;
+    margin: 12px 0;
+    padding: 16px;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.03);
   }
-  .live-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
+
+  .cue-object.is-playing {
+    border-color: rgba(255, 95, 115, 0.22);
+    background: rgba(255, 95, 115, 0.052);
+  }
+
+  .cue-object.is-next {
+    border-color: rgba(215, 255, 98, 0.25);
+    background: rgba(215, 255, 98, 0.04);
+  }
+
+  .cue-rail {
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .is-playing .cue-rail {
     background: var(--danger);
   }
-  .now-playing b,
-  .next-up b {
+
+  .is-next .cue-rail {
+    background: var(--accent);
+  }
+
+  .cue-number {
+    color: var(--text);
     font-family: var(--mono);
-    font-size: 1.32rem;
+    font-size: 1.45rem;
+    font-weight: 700;
   }
-  .now-playing strong,
-  .next-up strong {
-    letter-spacing: -0.03em;
+
+  .cue-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
   }
-  .now-playing time {
-    font-family: var(--mono);
-    font-size: 1.55rem;
-    font-weight: 800;
+
+  .cue-header strong {
+    min-width: 0;
+    flex: 1;
+    font-size: 1.05rem;
+    letter-spacing: -0.025em;
   }
-  .playbar {
-    grid-column: 2 / -1;
-    height: 4px;
+
+  .cue-type,
+  .cue-state {
+    color: var(--muted);
+    font-size: 0.72rem;
+  }
+
+  .cue-state {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 4px 8px;
+  }
+
+  .is-playing .cue-state {
+    border-color: rgba(255, 95, 115, 0.32);
+    color: #ffd4da;
+  }
+
+  .is-next .cue-state {
+    border-color: rgba(215, 255, 98, 0.32);
+    color: var(--accent);
+  }
+
+  .cue-state.muted {
+    color: var(--muted-2);
+  }
+
+  .cue-meta {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+
+  .cue-progress {
+    height: 5px;
+    margin-top: 13px;
     overflow: hidden;
-    border-radius: 99px;
-    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.09);
   }
-  .playbar span,
-  .inline-progress span {
+
+  .cue-progress span {
     display: block;
     height: 100%;
     border-radius: inherit;
     background: var(--danger);
   }
 
-  .next-up {
-    display: grid;
-    grid-template-columns: auto 24px 1fr;
-    gap: 8px;
-    align-items: center;
-  }
-  .next-up span {
-    color: #65dc88;
-    font-size: 0.7rem;
-    font-weight: 800;
-    text-transform: uppercase;
-  }
-  .next-up small {
-    grid-column: 2 / -1;
-    color: var(--muted);
-    font-size: 0.72rem;
-  }
-
-  .go-button,
-  .panic-button,
-  .stop-button,
-  .play-button {
-    border: 0;
-    border-radius: 9px;
-    font-weight: 850;
-  }
-  .go-button {
-    height: 48px;
-    background: #2fa05c;
-    color: white;
-  }
-  .go-button b,
-  .go-button span,
-  .panic-button b,
-  .panic-button span {
-    display: block;
-  }
-  .go-button span {
-    opacity: 0.8;
-    font-size: 0.66rem;
-    font-weight: 650;
-  }
-  .panic-button {
-    height: 48px;
-    background: rgba(255, 95, 115, 0.1);
-    color: #ff9dab;
-    text-transform: uppercase;
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-  }
-
-  .app-grid {
-    display: grid;
-    grid-template-columns: 210px minmax(560px, 1fr) 318px;
-    min-height: 640px;
-  }
-
-  .resources-panel,
-  .inspector-panel {
-    background: rgba(255, 255, 255, 0.018);
-  }
-  .resources-panel {
-    padding: 12px 10px;
-    border-right: 1px solid rgba(210, 222, 255, 0.055);
-  }
-  .inspector-panel {
-    padding: 16px 16px 18px;
-    border-left: 1px solid rgba(210, 222, 255, 0.055);
-    background: rgba(5, 8, 13, 0.72);
-  }
-
-  .search {
-    display: block;
-    border-radius: 7px;
-    padding: 8px 10px;
-    background: rgba(255, 255, 255, 0.035);
-    color: var(--muted-2);
-    font-size: 0.78rem;
-  }
-
-  .resource-group {
-    margin: 16px 4px 0;
-  }
-  .resource-group > span,
-  .eyebrow,
-  .inspector-status,
-  .property-group h4,
-  .status-strip,
-  .cue-meta,
-  .action span,
-  .mini-action span {
-    font-family: var(--mono);
-  }
-  .resource-group > span {
-    color: var(--muted-2);
-    font-size: 0.68rem;
-    text-transform: uppercase;
-  }
-  .resource-group p {
-    justify-content: space-between;
-    gap: 8px;
-    margin: 9px 0;
-    color: #bac5d4;
-    font-size: 0.73rem;
-  }
-  .resource-group b {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    font-weight: 620;
-  }
-  .resource-group em {
-    color: var(--muted-2);
-    font-style: normal;
-    font-size: 0.66rem;
-  }
-  .resource-group .warning b,
-  .resource-group .warning em {
-    color: var(--warning);
-  }
-
-  .cue-workspace {
-    padding: 14px 14px 28px;
-    background: linear-gradient(
-      180deg,
-      rgba(18, 24, 34, 0.84),
-      rgba(16, 21, 30, 0.72)
-    );
-  }
-  .workspace-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 3px 10px 14px;
-    color: var(--muted);
-  }
-  .workspace-head b {
-    margin-left: 6px;
-    color: var(--muted-2);
-    font-family: var(--mono);
-  }
-  .add-actions {
-    display: flex;
-    gap: 16px;
-    font-size: 0.76rem;
-  }
-  .add-actions span:first-child {
-    color: #65dc88;
-    font-weight: 700;
-  }
-
-  .cue-row,
-  .cue-card {
-    display: grid;
-    grid-template-columns: 34px 28px minmax(0, 1fr) auto;
-    gap: 10px;
-    align-items: start;
-    margin: 6px 0;
-    padding: 11px 12px;
-    border-radius: 12px;
-    color: #d8e1ee;
-  }
-  .cue-row {
-    min-height: 48px;
-    opacity: 0.72;
-  }
-  .cue-row.indent {
-    margin-left: 32px;
-  }
-  .cue-row.muted {
-    opacity: 0.47;
-  }
-  .cue-row.warning-row small {
-    color: var(--warning);
-  }
-
-  .cue-card {
+  .action-tree {
     position: relative;
-    margin: 10px 0;
-    padding: 14px 14px 16px;
-  }
-  .cue-card.playing {
-    background: rgba(255, 95, 115, 0.083);
-    box-shadow: inset 3px 0 0 var(--danger);
-  }
-  .cue-card.next {
-    background: rgba(93, 214, 131, 0.05);
-    box-shadow: inset 3px 0 0 #65dc88;
-  }
-  .cue-number {
-    color: var(--muted);
-    font-family: var(--mono);
-    font-weight: 800;
-    text-align: right;
-  }
-  .cue-card.playing .cue-number {
-    color: var(--danger);
-  }
-  .cue-card.next .cue-number {
-    color: #65dc88;
-  }
-  .cue-icon {
-    display: grid;
-    place-items: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.04);
-    color: var(--muted);
-    font-size: 0.76rem;
-  }
-  .cue-titleline {
-    gap: 10px;
-  }
-  .cue-titleline strong,
-  .cue-content > strong {
-    flex: 1;
-    letter-spacing: -0.03em;
-  }
-  .cue-titleline span {
-    color: var(--danger);
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    font-weight: 800;
-    text-transform: uppercase;
-  }
-  .next .cue-titleline span {
-    color: #65dc88;
-  }
-  .cue-content small,
-  .cue-meta {
-    display: block;
-    margin-top: 3px;
-    color: var(--muted-2);
-    font-size: 0.72rem;
-  }
-  .inline-progress {
-    height: 3px;
-    margin: 10px 0 7px;
-    border-radius: 99px;
-    background: rgba(255, 255, 255, 0.08);
-    overflow: hidden;
-  }
-  .next-summary {
-    margin-top: 8px;
-    color: var(--muted);
-    font-size: 0.76rem;
-  }
-  .stop-button,
-  .play-button {
-    width: 28px;
-    height: 28px;
-    color: white;
-    background: rgba(255, 95, 115, 0.18);
-  }
-  .play-button {
-    background: rgba(93, 214, 131, 0.18);
+    margin-top: 14px;
+    padding-left: 18px;
   }
 
-  .action-list {
-    position: relative;
-    margin: 14px 0 0 6px;
-    padding-left: 16px;
-  }
-  .action-list::before {
+  .action-tree::before {
     position: absolute;
-    left: 3px;
-    top: 8px;
-    bottom: 8px;
+    top: 4px;
+    bottom: 7px;
+    left: 5px;
     width: 1px;
     content: '';
     background: rgba(210, 222, 255, 0.16);
   }
+
+  .action-tree.compact {
+    margin-top: 11px;
+  }
+
   .action {
     position: relative;
     display: grid;
-    grid-template-columns: 112px minmax(150px, 1fr) 112px;
-    gap: 14px;
-    margin: 9px 0;
+    grid-template-columns: minmax(90px, 0.55fr) 1fr;
+    gap: 12px;
+    margin: 8px 0;
     color: var(--muted);
-    font-size: 0.72rem;
+    font-size: 0.83rem;
   }
-  .action i {
+
+  .action > span {
     position: absolute;
+    top: 0.55em;
     left: -17px;
-    top: 0.5em;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    border: 1px solid currentColor;
-    background: #101621;
+    width: 7px;
+    height: 7px;
+    border-radius: 99px;
+    background: rgba(210, 222, 255, 0.32);
   }
+
   .action b {
-    color: #dbe4f1;
+    color: #d8e1ef;
+    font-weight: 640;
   }
+
   .action em {
     color: var(--muted-2);
     font-style: normal;
   }
-  .action span {
-    justify-self: end;
-    color: var(--muted-2);
-    font-size: 0.62rem;
-    text-transform: uppercase;
-  }
-  .action.running,
-  .action.running b {
-    color: var(--danger);
-  }
-  .action.listening,
+
+  .action.running b,
   .action.listening b {
     color: var(--accent-2);
   }
-  .action.done {
-    opacity: 0.58;
+
+  .action.running > span,
+  .action.listening > span {
+    background: var(--accent-2);
+    box-shadow: 0 0 16px rgba(110, 231, 255, 0.35);
   }
 
-  .inspector-status {
-    display: flex;
-    justify-content: space-between;
+  .inspector-head {
+    padding: 15px 0 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .inspector-head span,
+  .inspector-head em {
+    display: block;
     color: var(--muted);
-    font-size: 0.7rem;
-    text-transform: uppercase;
-  }
-  .inspector-status b {
-    color: var(--danger);
-  }
-  .inspector-panel h3 {
-    margin: 12px 0 12px;
-    font-size: 1rem;
-    letter-spacing: -0.035em;
-  }
-  .property-group {
-    padding: 13px 0;
-    border-top: 1px solid rgba(210, 222, 255, 0.06);
-  }
-  .property-group h4 {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 0 10px;
-    color: #cbd5e4;
-    font-size: 0.72rem;
-    text-transform: uppercase;
-  }
-  .property-group h4 em {
-    color: var(--muted-2);
+    font-size: 0.82rem;
     font-style: normal;
-    text-transform: none;
   }
-  .property-group p {
-    justify-content: space-between;
-    gap: 12px;
-    margin: 7px 0;
-    font-size: 0.72rem;
+
+  .inspector-head strong {
+    display: block;
+    margin: 4px 0;
+    font-size: 1.1rem;
+    letter-spacing: -0.03em;
   }
-  .property-group p span {
-    color: var(--muted);
-  }
-  .property-group p b {
-    border-radius: 5px;
-    padding: 3px 8px;
-    min-width: 86px;
-    background: rgba(255, 255, 255, 0.035);
-    color: #e2e9f5;
-    text-align: left;
-    font-weight: 650;
-  }
-  .collapsed {
-    padding: 9px 0;
-  }
-  .summary-card {
-    border-radius: 8px;
-    padding: 7px;
-    background: rgba(255, 255, 255, 0.025);
-  }
-  .summary-card p b {
-    background: transparent;
-    padding: 0;
-    text-align: right;
-  }
-  .mini-action {
-    justify-content: space-between;
+
+  .tabs {
+    display: flex;
     gap: 10px;
-    margin: 6px 0;
-    border-radius: 8px;
-    padding: 8px 9px;
-    background: rgba(255, 255, 255, 0.026);
+    padding: 14px 0;
+    color: var(--muted-2);
     font-size: 0.72rem;
   }
-  .mini-action.active {
-    color: var(--danger);
-  }
-  .mini-action.listening {
-    color: var(--accent-2);
+
+  .tabs b {
+    color: var(--text);
   }
 
-  .status-strip {
-    justify-content: space-between;
-    gap: 12px;
-    padding: 10px 14px;
-    border-top: 1px solid rgba(210, 222, 255, 0.06);
-    background: #06080c;
-    color: var(--muted-2);
-    font-size: 0.68rem;
+  .property-group {
+    padding: 15px 0;
+    border-top: 1px solid var(--line);
   }
-  .status-strip b {
+
+  .property-group h3 {
+    margin: 0 0 10px;
     color: var(--muted);
-    text-transform: uppercase;
-  }
-  .status-strip i {
-    display: inline-block;
-    width: 66px;
-    height: 4px;
-    margin: 0 8px;
-    border-radius: 99px;
-    background: linear-gradient(
-      90deg,
-      #65dc88 72%,
-      var(--warning) 72%,
-      var(--warning) 82%,
-      rgba(255, 255, 255, 0.1) 82%
-    );
-  }
-  .status-strip em {
-    margin-left: auto;
-    color: var(--warning);
-    font-style: normal;
+    font-size: 0.82rem;
     font-weight: 700;
   }
 
-  @media (max-width: 1120px) {
-    .heartbeat {
+  .property-group p {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 9px 0;
+    font-size: 0.84rem;
+  }
+
+  .property-group span {
+    color: var(--muted-2);
+  }
+
+  .property-group b {
+    color: #dce6f4;
+    font-weight: 620;
+    text-align: right;
+  }
+
+  .property-group.subdued b {
+    color: var(--warning);
+  }
+
+  .status-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.72rem;
+  }
+
+  .status-strip b {
+    color: #dce6f4;
+    font-weight: 740;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 980px) {
+    .app-topbar {
       grid-template-columns: 1fr 1fr;
     }
-    .app-grid {
+
+    .app-body {
       grid-template-columns: 1fr;
     }
+
     .resources-panel,
     .inspector-panel {
       display: none;
     }
   }
 
-  @media (max-width: 720px) {
-    .window-bar,
-    .menu {
-      display: none;
-    }
-    .heartbeat {
+  @media (max-width: 680px) {
+    .app-topbar {
       grid-template-columns: 1fr;
-      padding: 12px;
     }
-    .now-playing {
-      grid-template-columns: 10px 28px 1fr;
+
+    .go-button,
+    .panic-button {
+      height: 52px;
     }
-    .now-playing time {
-      grid-column: 2 / -1;
-      font-size: 1.25rem;
+
+    .cue-object {
+      grid-template-columns: 4px 38px 1fr;
+      padding: 13px;
     }
-    .cue-row,
-    .cue-card {
-      grid-template-columns: 30px 24px 1fr;
-    }
-    .stop-button,
-    .play-button {
-      display: none;
-    }
+
     .action {
       grid-template-columns: 1fr;
       gap: 2px;
-    }
-    .action span {
-      justify-self: start;
     }
   }
 </style>
