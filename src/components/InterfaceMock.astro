@@ -1,0 +1,218 @@
+<div class="mock card" aria-label="Showmesh interface placeholder">
+  <div class="top">
+    <span>Smoke Demo</span><b>NOW 07 · Opening video</b><em
+      >NEXT 08 · Smoke field</em
+    ><button>GO</button>
+  </div>
+  <div class="body">
+    <aside>
+      <p>Resources</p><div>▶ aseri_movie_v1.mov</div><div>
+        ◆ Smoke Field.notch
+      </div><div>♪ rhapsody.wav</div><div>⌁ OSC Lighting</div>
+    </aside>
+    <main>
+      <div class="cue playing">
+        <span class="num">07</span><div>
+          <strong>Opening video</strong><small
+            >Video · Program · 01:24 remaining</small
+          ><i></i><ul>
+            <li>Fade in · done</li><li>Blur · running</li><li>
+              Fade out · on finish
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="cue next">
+        <span class="num">08</span><div>
+          <strong>Smoke field</strong><small
+            >Notch Block · Fog + Bloom · GO armed</small>
+        </div>
+      </div>
+      <div class="cue">
+        <span class="num">09</span><div>
+          <strong>Leaves transition</strong><small
+            >Video · Program · waits for timecode</small>
+        </div>
+      </div>
+    </main>
+    <section>
+      <p>Inspector</p><h3>Smoke field</h3><div class="group">
+        <b>Resource</b><span>Smoke Field.notch</span>
+      </div><div class="group">
+        <b>Actions</b><span>Fog Density · Bloom · OSC pulse</span>
+      </div><div class="group">
+        <b>Triggers</b><span>GO · MIDI CC22 · LTC</span>
+      </div>
+    </section>
+  </div>
+  <div class="bottom">
+    <span>OUTPUT Program 1080p60</span><span>AUDIO 48 kHz</span><span
+      >ENGINE 93 fps</span
+    ><span>OSC online</span>
+  </div>
+</div>
+<style>
+  .mock {
+    overflow: hidden;
+    border-color: rgba(215, 255, 98, 0.16);
+    background: linear-gradient(
+      180deg,
+      rgba(18, 24, 36, 0.92),
+      rgba(9, 12, 19, 0.94)
+    );
+  }
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+  }
+  .top b {
+    color: var(--text);
+    font-weight: 720;
+    margin-left: auto;
+  }
+  .top em {
+    color: var(--accent);
+    font-style: normal;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+  }
+  .top button {
+    border: 0;
+    border-radius: 14px;
+    padding: 12px 22px;
+    background: var(--accent);
+    color: #111500;
+    font-weight: 850;
+  }
+  .body {
+    display: grid;
+    grid-template-columns: 190px 1fr 245px;
+    min-height: 430px;
+  }
+  aside,
+  section {
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.018);
+    color: var(--muted);
+  }
+  aside {
+    border-right: 1px solid var(--line);
+  }
+  section {
+    border-left: 1px solid var(--line);
+  }
+  p {
+    margin: 0 0 14px;
+    color: var(--muted-2);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: var(--mono);
+  }
+  aside div {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.045);
+    font-size: 0.9rem;
+  }
+  main {
+    padding: 18px 18px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .cue {
+    display: grid;
+    grid-template-columns: 54px 1fr;
+    gap: 14px;
+    padding: 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.026);
+    border: 1px solid transparent;
+  }
+  .cue.playing {
+    background: rgba(255, 95, 115, 0.055);
+    border-color: rgba(255, 95, 115, 0.25);
+  }
+  .cue.next {
+    border-color: rgba(215, 255, 98, 0.28);
+  }
+  .num {
+    font-family: var(--mono);
+    color: var(--muted);
+    font-size: 1.25rem;
+  }
+  strong {
+    display: block;
+    font-size: 1.08rem;
+    letter-spacing: -0.02em;
+  }
+  small {
+    color: var(--muted);
+  }
+  i {
+    display: block;
+    height: 4px;
+    margin: 14px 0;
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      var(--danger) 64%,
+      rgba(255, 255, 255, 0.08) 64%
+    );
+  }
+  ul {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+  li + li {
+    margin-top: 6px;
+  }
+  h3 {
+    margin: 0 0 20px;
+  }
+  .group {
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+  .group b {
+    display: block;
+    margin-bottom: 4px;
+  }
+  .group span {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .bottom {
+    display: flex;
+    gap: 22px;
+    padding: 13px 16px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+  }
+  @media (max-width: 900px) {
+    .body {
+      grid-template-columns: 1fr;
+    }
+    aside,
+    section {
+      display: none;
+    }
+    .top {
+      flex-wrap: wrap;
+    }
+    .top b {
+      margin-left: 0;
+    }
+    .bottom {
+      flex-wrap: wrap;
+    }
+  }
+</style>
