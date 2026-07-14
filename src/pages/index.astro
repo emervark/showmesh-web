@@ -1,181 +1,357 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
-import InterfaceMock from '../components/InterfaceMock.astro';
-
-const model = [
-  {
-    label: 'Resource',
-    title: 'Everything that can be used in the show.',
-    text: 'Video, audio, images, text, devices, outputs, OSC endpoints and realtime engines are represented as reusable show objects.'
-  },
-  {
-    label: 'Action',
-    title: 'What changes when the show runs.',
-    text: 'Fade opacity, set volume, trigger a cue, send OSC, animate a Notch parameter or route content to an output.'
-  },
-  {
-    label: 'Trigger',
-    title: 'What makes the change happen.',
-    text: 'GO, timecode, MIDI, OSC, keyboard, network messages and show lifecycle events can fire actions predictably.'
-  }
+const stages = [
+  [
+    '01',
+    'Resource',
+    'What can be controlled',
+    'Video, audio, an output, a connection, or an external realtime engine.'
+  ],
+  [
+    '02',
+    'Action',
+    'What changes',
+    'Fade opacity, set volume, route output, or send a control message.'
+  ],
+  [
+    '03',
+    'Trigger',
+    'When it happens',
+    'GO, cue lifecycle, timecode, OSC, MIDI, or deliberate manual execution.'
+  ]
 ];
-
-const systems = [
-  ['Video / audio playback', 'Core'],
-  ['Images and text', 'Core'],
-  ['OSC and MIDI control', 'Planned'],
-  ['DMX and timecode', 'Planned'],
-  ['NDI and Spout routing', 'Planned'],
-  ['Notch Blocks', 'Research'],
-  ['Unreal Engine', 'Research'],
-  ['TouchDesigner', 'Research']
+const connections: Array<[string, string[]]> = [
+  [
+    'Media and output',
+    [
+      'Video and audio playback · Core',
+      'Images and text · Core',
+      'NDI and Spout routing · Planned'
+    ]
+  ],
+  [
+    'Control and time',
+    ['OSC and MIDI control · Planned', 'DMX and timecode · Planned']
+  ],
+  [
+    'Realtime systems',
+    [
+      'Notch Blocks · Exploratory',
+      'Unreal Engine · Exploratory',
+      'TouchDesigner · Exploratory'
+    ]
+  ]
 ];
-
-const principles = [
+const audiences = [
   [
-    'Show-first hierarchy',
-    'The interface answers: what is playing, what is next and what GO will do.'
+    'Theatre',
+    'Clear cue state, deliberate execution, and rehearsal-friendly editing.'
   ],
   [
-    'No fake availability',
-    'Integrations are described as core, planned or research until they are production-ready.'
+    'Concerts',
+    'Media, realtime graphics, and control signals in one run order.'
   ],
   [
-    'Windows-native engine',
-    'The product direction is a real Windows playback stack, not a browser-only prototype.'
+    'Installations',
+    'Long-running system context with visible connections and health.'
   ],
   [
-    'Automation over cue sprawl',
-    'Transitions and parameter changes stay attached to the media or system they manipulate.'
+    'Live events',
+    'A Windows-first operator surface built for shared technical workflows.'
   ]
 ];
 ---
 
 <BaseLayout>
   <Header />
-  <main id="top">
-    <section class="hero container">
+  <main id="main-content">
+    <section id="top" class="hero container">
       <div class="hero-copy">
         <span class="kicker">Realtime show automation for Windows</span>
         <h1>Connect, automate and run the show.</h1>
-        <p class="lede">
-          Showmesh is a Windows-first show automation platform for theatres,
-          concerts, immersive installations and live events. It connects media,
-          realtime engines and show-control signals through one operator-focused
-          model: <strong>Resource → Action → Trigger</strong>.
+        <p>
+          Showmesh brings media, realtime graphics, control signals, and
+          external systems into one cue-centered workspace for theatres,
+          concerts, installations, and live events.
         </p>
         <div class="hero-actions">
-          <a class="btn primary" href="#contact">Request early access</a>
-          <a class="btn" href="#platform">See the platform</a>
+          <a class="btn primary" href="#contact">Request early access</a><a
+            class="btn"
+            href="#platform">See the operator workflow</a
+          >
         </div>
-        <div class="trust-row" aria-label="Product positioning">
-          <span>Not simply “QLab for Windows”</span>
-          <span>Cue control + automation + media engine</span>
-        </div>
+        <small
+          >Early product direction · capabilities are labeled by development
+          state</small
+        >
       </div>
-      <InterfaceMock />
+      <figure class="hero-visual">
+        <img
+          src="showmesh-application.png"
+          width="1633"
+          height="1064"
+          alt="Showmesh operator interface showing the current cue, next cue, GO control, cue list, resources, inspector, and system status."
+          fetchpriority="high"
+        />
+        <figcaption>
+          Current application interface · product development view
+        </figcaption>
+      </figure>
+      <div class="mobile-evidence" aria-label="Showmesh interface details">
+        <figure>
+          <div class="run-pair">
+            <div class="crop crop-current">
+              <img
+                src="showmesh-application.png"
+                width="1633"
+                height="1064"
+                alt="Showmesh current cue with elapsed and remaining time."
+              />
+            </div>
+            <div class="crop crop-next-go">
+              <img
+                src="showmesh-application.png"
+                width="1633"
+                height="1064"
+                alt="Showmesh next cue and GO target with separated panic control."
+              />
+            </div>
+          </div><figcaption>
+            Current, next, and the deliberate GO target remain visible together.
+          </figcaption>
+        </figure>
+        <figure>
+          <div class="crop crop-cues">
+            <img
+              src="showmesh-application.png"
+              width="1633"
+              height="1064"
+              alt="Showmesh cue list showing playing and next cues with attached actions."
+              loading="lazy"
+            />
+          </div><figcaption>
+            Playing and next cues use explicit labels, rails, and attached
+            action state.
+          </figcaption>
+        </figure>
+      </div>
     </section>
 
-    <section id="platform" class="section container platform-section">
-      <div class="section-header wide">
-        <span class="kicker">Positioning</span>
-        <h2>A show workspace, not another list of cue types.</h2>
-        <p>
-          Showmesh is designed for productions where playback, realtime
-          graphics, lighting/control messages and external systems have to
-          behave like one show. The cue list becomes a hierarchy of live show
-          objects, with actions visually attached to the resources they
-          manipulate.
-        </p>
-      </div>
-      <div class="principle-grid">
-        {
-          principles.map(([title, text]) => (
-            <article>
-              <b>{title}</b>
-              <p>{text}</p>
-            </article>
-          ))
-        }
+    <section id="platform" class="section thesis">
+      <div class="container grid-12">
+        <div class="section-header col-5">
+          <span class="kicker">Product thesis</span><h2>
+            One operator workspace for the systems that make a show.
+          </h2><p>
+            The cue list stays at the center while resources, actions, timing,
+            routing, and live status remain in context. Editing another object
+            does not hide what is live or change what GO will fire.
+          </p>
+        </div>
+        <div class="thesis-visual col-7">
+          <div class="crop crop-workspace">
+            <img
+              src="showmesh-application.png"
+              width="1633"
+              height="1064"
+              alt="Showmesh cue-centered workspace with resources and inspector visible."
+              loading="lazy"
+            />
+          </div>
+          <p>
+            <span>07 · PLAYING</span><span>08 · NEXT</span><span>GO · 08</span>
+          </p>
+        </div>
       </div>
     </section>
 
     <section id="model" class="section model-section">
       <div class="container">
         <div class="section-header">
-          <span class="kicker">Resource → Action → Trigger</span>
-          <h2>One language for media, control and realtime systems.</h2>
-          <p>
-            The editor should not need a new UI for every integration. Resources
-            expose capabilities, operators add actions, and triggers decide when
-            those actions fire.
+          <span class="kicker">Resource → Action → Trigger</span><h2>
+            One model for media, control, and realtime systems.
+          </h2><p>
+            Resources expose capabilities, actions describe a change, and
+            triggers define when it happens. Native media playback remains part
+            of the cue lifecycle—not an artificial action card.
           </p>
         </div>
-        <div class="model-grid">
+        <ol class="model-flow">
           {
-            model.map((item, index) => (
-              <article>
-                <span class="step">0{index + 1}</span>
-                <span class="label">{item.label}</span>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
-              </article>
+            stages.map(([number, title, label, text]) => (
+              <li>
+                <>
+                  <span>{number}</span>
+                  <h3>{title}</h3>
+                  <b>{label}</b>
+                  <p>{text}</p>
+                </>
+              </li>
             ))
           }
+        </ol>
+      </div>
+    </section>
+
+    <section class="section workflow">
+      <div class="container grid-12">
+        <div class="section-header col-5">
+          <span class="kicker">Operator workflow</span><h2>
+            Know what is happening before pressing GO.
+          </h2><p>
+            Live playback, the ready cue, timing, cue actions, warnings, and
+            system health remain readable without taking the operator away from
+            the run order.
+          </p>
+          <dl>
+            <div>
+              <dt>Playing</dt><dd>
+                Coral rail, progress, label, and remaining time
+              </dd>
+            </div><div>
+              <dt>Next</dt><dd>
+                Green rail, explicit NEXT label, and GO target
+              </dd>
+            </div><div>
+              <dt>Recovery</dt><dd>
+                Warnings stay attached to the affected cue
+              </dd>
+            </div>
+          </dl>
+        </div>
+        <figure class="workflow-visual col-7">
+          <div class="crop crop-operator">
+            <img
+              src="showmesh-application.png"
+              width="1633"
+              height="1064"
+              alt="Showmesh current and next cue workflow with cue actions and system context."
+              loading="lazy"
+            />
+          </div><figcaption>
+            Current, next, GO, and cue action state shown in one operating
+            context.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="engine" class="section engine-section">
+      <div class="container grid-12">
+        <div class="section-header col-5">
+          <span class="kicker">Windows-first engine direction</span><h2>
+            Built around the machines that run the room.
+          </h2><p>
+            Showmesh is being designed around native media and output paths,
+            separation between operator UI and playback work, and visible timing
+            and health. Architecture shown here is product direction while
+            implementation develops.
+          </p>
+        </div>
+        <div class="telemetry col-7" aria-label="Engine direction">
+          <div>
+            <span>PROCESS</span><b>Operator UI</b><small
+              >Separate from playback work · in development</small
+            >
+          </div>
+          <div>
+            <span>OUTPUT</span><b>Native media paths</b><small
+              >Windows-first direction · in development</small
+            >
+          </div>
+          <div>
+            <span>HEALTH</span><b>Timing and telemetry</b><small
+              >Visible operator evidence · planned</small
+            >
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="engine" class="section container engine-section">
-      <div class="engine-copy">
-        <span class="kicker">Windows-first engine direction</span>
-        <h2>Built for the machines that actually run the room.</h2>
-        <p>
-          The product direction is native Windows playback: GPU-aware video,
-          fullscreen outputs, audio-led timing, external control and realtime
-          system orchestration. The website intentionally uses interface
-          placeholders until final product screenshots are ready.
-        </p>
-      </div>
-      <div class="engine-list card">
-        <div>
-          <span>01</span><b>Audio-master timing</b><p>
-            Video follows the show clock, not the other way around.
-          </p>
-        </div>
-        <div>
-          <span>02</span><b>Fullscreen operator outputs</b><p>
-            Program, preview and routing are treated as first-class show
-            objects.
-          </p>
-        </div>
-        <div>
-          <span>03</span><b>Realtime-ready control</b><p>
-            OSC, MIDI, timecode and future SDK integrations fit the same action
-            model.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="roadmap" class="section systems-section">
-      <div class="container split">
+    <section id="development" class="section connections-section">
+      <div class="container">
         <div class="section-header">
-          <span class="kicker">Capability map</span>
-          <h2>Clear about what is core, planned and under research.</h2>
-          <p>
-            Showmesh should earn trust by not implying unfinished integrations
-            are already available. The marketing language separates current
-            product direction from future runtime work.
+          <span class="kicker">Connections and integrations</span><h2>
+            Connect systems by role, not by logo count.
+          </h2><p>
+            Every capability is labeled by development state. Protocols and
+            integrations are grouped around the work they perform.
           </p>
         </div>
-        <div class="system-grid">
+        <div class="connection-groups">
           {
-            systems.map(([name, status]) => (
-              <article class:list={[status.toLowerCase()]}>
-                <b>{name}</b>
-                <span>{status}</span>
+            connections.map(([heading, items]) => (
+              <section>
+                <>
+                  <h3>{heading}</h3>
+                  <ul>
+                    {items.map((item) => {
+                      const [name, status] = item.split(' · ');
+                      return (
+                        <li>
+                          <span>{name}</span>
+                          <b>{status}</b>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </>
+              </section>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section reliability">
+      <div class="container grid-12">
+        <div class="section-header col-5">
+          <span class="kicker">Reliability direction</span><h2>
+            Trust comes from visible evidence.
+          </h2><p>
+            Warnings belong beside the cue they affect. Output, audio, frame
+            timing, network state, and recent activity stay available as calm
+            telemetry rather than constant notifications.
+          </p>
+        </div>
+        <div class="reliability-panel col-7">
+          <div class="warning-row">
+            <span>10</span><b>Dim to blackout</b><em
+              >Action target cue not found</em
+            ><strong>WARNING</strong>
+          </div>
+          <div class="status-row">
+            <span><b>OUTPUT</b> Program · 1080p60</span><span
+              ><b>AUDIO</b> 48 kHz · 512 smp</span
+            ><span><b>ENGINE</b> 93 fps</span><span
+              ><b>NETWORK</b> OSC · MIDI</span
+            >
+          </div>
+          <p>
+            Validation, logs, autosave, backups, and recovery are development
+            areas and are not presented here as shipped features.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section audience-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="kicker">Built for live work</span><h2>
+            Different rooms. The same need for operator clarity.
+          </h2>
+        </div>
+        <div class="audience-list">
+          {
+            audiences.map(([name, text], index) => (
+              <article>
+                <>
+                  <span>0{index + 1}</span>
+                  <h3>{name}</h3>
+                  <p>{text}</p>
+                </>
               </article>
             ))
           }
@@ -183,346 +359,544 @@ const principles = [
       </div>
     </section>
 
-    <section class="section container docs-section">
-      <span class="kicker">Marketing strategy</span>
-      <h2>Lead with the idea, then prove the engine.</h2>
-      <div class="docs-grid">
-        <article>
-          <b>For theatres</b>
-          <p>
-            Reliable cue execution, operator clarity and rehearsal-friendly
-            workflows.
-          </p>
-        </article>
-        <article>
-          <b>For immersive rooms</b>
-          <p>Media, realtime graphics and control signals in one show graph.</p>
-        </article>
-        <article>
-          <b>For technical artists</b>
-          <p>
-            A system where exposed parameters can be automated without inventing
-            a new cue type.
-          </p>
-        </article>
+    <section id="contact" class="section final-cta">
+      <div class="container grid-12">
+        <div class="col-7">
+          <span class="kicker">Early access</span><h2>
+            Connect, automate and run the show.
+          </h2><p>
+            Showmesh is in early development. Get in touch if your production
+            needs a Windows-first approach to realtime show automation.
+          </p><a class="btn primary" href="mailto:hello@showmesh.app"
+            >Email hello@showmesh.app</a
+          >
+        </div>
       </div>
-    </section>
-
-    <section id="contact" class="section container contact card">
-      <span class="kicker">Early access</span>
-      <h2>Building for operators, designers and technical directors.</h2>
-      <p>
-        Showmesh is in early development. The first public site should explain
-        the product category, document the automation model and collect
-        conversations with productions that need Windows-native show control.
-      </p>
-      <a class="btn primary" href="mailto:hello@showmesh.app"
-        >hello@showmesh.app</a
-      >
     </section>
   </main>
   <footer>
     <div class="container">
-      © 2026 Showmesh. Realtime show automation for Windows.
+      <span>© 2026 Showmesh</span><a href="mailto:hello@showmesh.app">Contact</a
+      ><a href="#development">Development</a>
     </div>
   </footer>
 </BaseLayout>
 <style>
-  .hero {
+  .grid-12 {
     display: grid;
-    grid-template-columns: minmax(0, 0.76fr) minmax(620px, 1.24fr);
-    gap: 42px;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .col-5 {
+    grid-column: span 5;
+  }
+  .col-7 {
+    grid-column: span 7;
+  }
+  .hero {
+    min-height: calc(100vh - 64px);
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 64px;
     align-items: center;
-    padding: 92px 0 78px;
+    padding-block: 56px 72px;
   }
-
+  .hero-copy {
+    min-width: 0;
+  }
   h1 {
-    margin: 14px 0 18px;
-    font-size: clamp(3.9rem, 8vw, 7.7rem);
-    line-height: 0.85;
-    letter-spacing: -0.08em;
+    margin: 16px 0 20px;
+    color: var(--sm-text-strong);
+    font-size: clamp(52px, 5.2vw, 72px);
+    line-height: 1;
+    letter-spacing: -0.055em;
   }
-
-  .lede {
-    max-width: 670px;
+  .hero-copy > p {
+    max-width: 620px;
     margin: 0;
-    color: var(--muted);
-    font-size: clamp(1.08rem, 1.7vw, 1.26rem);
+    color: var(--sm-text-secondary);
+    font-size: clamp(18px, 1.45vw, 20px);
+    line-height: 1.55;
   }
-
-  .lede strong {
-    color: var(--text);
-    font-weight: 730;
-  }
-
   .hero-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    margin-top: 30px;
+    margin-top: 28px;
   }
-
-  .trust-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 22px;
-  }
-
-  .trust-row span {
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 8px 11px;
-    color: var(--muted);
-    font-size: 0.85rem;
-    background: rgba(255, 255, 255, 0.025);
-  }
-
-  .wide {
-    max-width: 920px;
-  }
-
-  .principle-grid,
-  .docs-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-  }
-
-  .principle-grid article,
-  .docs-grid article {
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 22px;
-    background: rgba(255, 255, 255, 0.028);
-  }
-
-  .principle-grid b,
-  .docs-grid b {
+  .hero-copy > small {
     display: block;
-    margin-bottom: 8px;
-    letter-spacing: -0.02em;
+    margin-top: 16px;
+    color: var(--sm-text-faint);
+    font: 11px/1.4 var(--mono);
   }
-
-  .principle-grid p,
-  .docs-grid p {
+  figure {
     margin: 0;
-    color: var(--muted);
-    font-size: 0.96rem;
   }
-
-  .model-section,
-  .systems-section {
-    border-block: 1px solid var(--line);
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.026),
-      rgba(255, 255, 255, 0)
-    );
+  figcaption {
+    margin-top: 10px;
+    color: var(--sm-text-faint);
+    font: 11px/1.4 var(--mono);
   }
-
-  .model-grid {
+  .hero-visual {
+    min-width: 0;
+  }
+  .hero-visual img {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--sm-border-strong);
+    border-radius: var(--sm-radius-panel);
+  }
+  .mobile-evidence {
+    display: none;
+  }
+  .thesis {
+    background: var(--sm-bg-workspace);
+  }
+  .thesis-visual {
+    align-self: start;
+  }
+  .crop {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--sm-border-strong);
+    border-radius: var(--sm-radius-panel);
+    background: var(--sm-bg-panel);
+  }
+  .crop img {
+    position: absolute;
+    max-width: none;
+  }
+  .crop-workspace {
+    aspect-ratio: 16 / 8;
+  }
+  .crop-workspace img {
+    width: 125%;
+    top: -12%;
+    left: -12%;
+  }
+  .thesis-visual > p {
+    display: flex;
+    gap: 24px;
+    margin: 12px 0 0;
+    color: var(--sm-text-muted);
+    font: 11px/1.4 var(--mono);
+  }
+  .thesis-visual > p span:first-child {
+    color: var(--sm-playing);
+  }
+  .thesis-visual > p span:nth-child(2) {
+    color: var(--sm-ready);
+  }
+  .model-flow {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
+    margin: 0;
+    padding: 0;
+    border-block: 1px solid var(--sm-border);
+    list-style: none;
+    counter-reset: none;
   }
-
-  .model-grid article {
-    min-height: 310px;
-    border: 1px solid var(--line);
-    border-radius: 24px;
-    padding: 24px;
-    background:
-      linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.045),
-        rgba(255, 255, 255, 0.015)
-      ),
-      var(--surface);
+  .model-flow li {
+    position: relative;
+    min-height: 270px;
+    padding: 28px 32px 32px 0;
+    border-right: 1px solid var(--sm-border);
   }
-
-  .step,
-  .label {
-    font-family: var(--mono);
-    font-size: 0.78rem;
+  .model-flow li + li {
+    padding-left: 32px;
   }
-
-  .step {
-    color: var(--muted-2);
+  .model-flow li:last-child {
+    border-right: 0;
   }
-
-  .label {
-    display: block;
-    margin-top: 48px;
-    color: var(--accent);
-    letter-spacing: 0.12em;
+  .model-flow li:not(:last-child)::after {
+    position: absolute;
+    top: 48px;
+    right: -5px;
+    z-index: 1;
+    width: 9px;
+    height: 9px;
+    border: 1px solid var(--sm-live);
+    background: var(--sm-bg-shell);
+    content: '';
+    transform: rotate(45deg);
+  }
+  .model-flow span {
+    color: var(--sm-text-faint);
+    font: 11px var(--mono);
+  }
+  .model-flow h3 {
+    margin: 52px 0 4px;
+    color: var(--sm-text-strong);
+    font-size: 28px;
+  }
+  .model-flow b {
+    color: var(--sm-live);
+    font: 12px/1.4 var(--mono);
     text-transform: uppercase;
   }
-
-  .model-grid h3 {
-    margin: 10px 0 12px;
-    font-size: 1.55rem;
-    line-height: 1.05;
-    letter-spacing: -0.045em;
+  .model-flow p {
+    margin: 14px 0 0;
+    color: var(--sm-text-secondary);
   }
-
-  .model-grid p {
+  .workflow dl {
+    margin: 32px 0 0;
+    border-top: 1px solid var(--sm-border);
+  }
+  .workflow dl div {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--sm-border);
+  }
+  .workflow dt {
+    font: 11px var(--mono);
+    text-transform: uppercase;
+  }
+  .workflow dl div:first-child dt {
+    color: var(--sm-playing);
+  }
+  .workflow dl div:nth-child(2) dt {
+    color: var(--sm-ready);
+  }
+  .workflow dl div:last-child dt {
+    color: var(--sm-warning);
+  }
+  .workflow dd {
     margin: 0;
-    color: var(--muted);
+    color: var(--sm-text-secondary);
+    font-size: 14px;
   }
-
+  .crop-operator {
+    aspect-ratio: 16 / 9;
+  }
+  .crop-operator img {
+    width: 128%;
+    top: -2%;
+    left: -14%;
+  }
   .engine-section {
+    background: var(--sm-bg-panel);
+  }
+  .telemetry {
+    border-top: 1px solid var(--sm-border);
+  }
+  .telemetry div {
     display: grid;
-    grid-template-columns: 0.85fr 1.15fr;
-    gap: 38px;
-    align-items: center;
+    grid-template-columns: 100px 1fr;
+    gap: 4px 20px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--sm-border);
   }
-
-  .engine-copy h2,
-  .docs-section h2,
-  .contact h2 {
-    margin: 10px 0 14px;
-    font-size: clamp(2.1rem, 4.5vw, 4.2rem);
-    line-height: 0.96;
-    letter-spacing: -0.06em;
+  .telemetry span {
+    color: var(--sm-text-faint);
+    font: 11px var(--mono);
   }
-
-  .engine-copy p,
-  .contact p {
-    color: var(--muted);
-    font-size: 1.04rem;
+  .telemetry b {
+    color: var(--sm-text-strong);
   }
-
-  .engine-list {
-    padding: 10px 26px;
+  .telemetry small {
+    grid-column: 2;
+    color: var(--sm-text-muted);
   }
-
-  .engine-list div {
+  .connection-groups {
     display: grid;
-    grid-template-columns: 42px minmax(140px, 0.55fr) 1fr;
-    gap: 18px;
-    align-items: baseline;
-    padding: 20px 0;
-    border-bottom: 1px solid var(--line);
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--sm-border);
   }
-
-  .engine-list div:last-child {
-    border-bottom: 0;
+  .connection-groups > section {
+    padding: 24px 28px 0 0;
+    border-right: 1px solid var(--sm-border);
   }
-
-  .engine-list span {
-    color: var(--muted-2);
-    font-family: var(--mono);
+  .connection-groups > section + section {
+    padding-left: 28px;
   }
-
-  .engine-list b {
-    letter-spacing: -0.025em;
+  .connection-groups > section:last-child {
+    border-right: 0;
   }
-
-  .engine-list p {
+  .connection-groups h3 {
+    margin: 0 0 18px;
+    color: var(--sm-text-strong);
+    font-size: 22px;
+  }
+  .connection-groups ul {
     margin: 0;
-    color: var(--muted);
+    padding: 0;
+    list-style: none;
   }
-
-  .split {
-    display: grid;
-    grid-template-columns: 0.85fr 1.15fr;
-    gap: 44px;
-    align-items: start;
-  }
-
-  .system-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  .system-grid article {
+  .connection-groups li {
     display: flex;
     justify-content: space-between;
-    gap: 18px;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 14px;
-    background: rgba(255, 255, 255, 0.025);
+    gap: 16px;
+    padding: 12px 0;
+    border-top: 1px solid var(--sm-border);
   }
-
-  .system-grid b {
-    font-weight: 650;
+  .connection-groups li span {
+    color: var(--sm-text-secondary);
   }
-
-  .system-grid span {
-    color: var(--muted-2);
-    font-family: var(--mono);
-    font-size: 0.72rem;
+  .connection-groups li b {
+    color: var(--sm-live);
+    font: 10px var(--mono);
     text-transform: uppercase;
   }
-
-  .system-grid .core span {
-    color: var(--accent);
+  .reliability {
+    background: var(--sm-bg-workspace);
   }
-
-  .system-grid .planned span {
-    color: var(--accent-2);
+  .reliability-panel {
+    border-top: 1px solid var(--sm-border);
   }
-
-  .system-grid .research span {
-    color: var(--warning);
+  .warning-row {
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 4px 12px;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--sm-border);
   }
-
-  .docs-grid {
-    grid-template-columns: repeat(3, 1fr);
-    margin-top: 26px;
+  .warning-row > span {
+    grid-row: span 2;
+    color: var(--sm-text-muted);
+    font: 14px var(--mono);
   }
-
-  .contact {
-    padding: 42px;
-    text-align: center;
+  .warning-row b {
+    color: var(--sm-text-strong);
   }
-
-  .contact p {
-    max-width: 760px;
-    margin: 0 auto 24px;
+  .warning-row em {
+    grid-column: 2;
+    color: var(--sm-warning);
+    font-size: 13px;
+    font-style: normal;
   }
-
+  .warning-row strong {
+    grid-row: 1 / span 2;
+    grid-column: 3;
+    color: var(--sm-warning);
+    font: 10px var(--mono);
+  }
+  .status-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--sm-border);
+    color: var(--sm-text-muted);
+    font: 10px var(--mono);
+  }
+  .status-row b {
+    color: var(--sm-live);
+  }
+  .reliability-panel > p {
+    color: var(--sm-text-muted);
+    font-size: 14px;
+  }
+  .audience-list {
+    border-top: 1px solid var(--sm-border);
+  }
+  .audience-list article {
+    display: grid;
+    grid-template-columns: 60px minmax(160px, 0.5fr) 1fr;
+    gap: 24px;
+    align-items: baseline;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--sm-border);
+  }
+  .audience-list span {
+    color: var(--sm-text-faint);
+    font: 11px var(--mono);
+  }
+  .audience-list h3 {
+    margin: 0;
+    color: var(--sm-text-strong);
+    font-size: 22px;
+  }
+  .audience-list p {
+    margin: 0;
+    color: var(--sm-text-secondary);
+  }
+  .final-cta {
+    background: var(--sm-bg-panel);
+  }
+  .final-cta h2 {
+    margin: 12px 0 16px;
+    color: var(--sm-text-strong);
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+  }
+  .final-cta p {
+    max-width: var(--sm-copy-max);
+    margin: 0 0 24px;
+    color: var(--sm-text-secondary);
+    font-size: 18px;
+  }
   footer {
-    border-top: 1px solid var(--line);
-    padding: 30px 0;
-    color: var(--muted-2);
-    font-size: 0.9rem;
+    border-top: 1px solid var(--sm-border);
+    padding: 28px 0;
+    color: var(--sm-text-muted);
+    font-size: 13px;
   }
-
-  @media (max-width: 1080px) {
-    .hero,
-    .engine-section,
-    .split {
-      grid-template-columns: 1fr;
-    }
-
-    .principle-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+  footer .container {
+    display: flex;
+    gap: 24px;
   }
-
-  @media (max-width: 760px) {
+  footer span {
+    margin-right: auto;
+  }
+  @media (max-width: 1099px) {
     .hero {
-      padding-top: 56px;
+      min-height: 0;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding-block: 64px 80px;
     }
-
-    .model-grid,
-    .principle-grid,
-    .docs-grid,
-    .system-grid {
+    .hero-copy {
+      max-width: var(--sm-copy-max);
+    }
+    .grid-12 {
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+    }
+    .col-5,
+    .col-7 {
+      grid-column: span 4;
+    }
+    .section-header {
+      margin-bottom: 32px;
+    }
+    .connection-groups {
+      grid-template-columns: 1fr 1fr;
+    }
+    .connection-groups > section:nth-child(2) {
+      border-right: 0;
+    }
+    .connection-groups > section:last-child {
+      padding-left: 0;
+      border-top: 1px solid var(--sm-border);
+    }
+  }
+  @media (max-width: 767px) {
+    .hero {
+      display: block;
+      padding-block: 56px 64px;
+    }
+    h1 {
+      font-size: clamp(42px, 13vw, 58px);
+    }
+    .hero-actions {
+      display: grid;
+    }
+    .hero-visual {
+      display: none;
+    }
+    .mobile-evidence {
+      display: grid;
+      gap: 32px;
+      margin-top: 48px;
+    }
+    .run-pair {
+      display: grid;
+      gap: 8px;
+    }
+    .crop-current,
+    .crop-next-go {
+      aspect-ratio: 16 / 4.4;
+    }
+    .crop-current img {
+      width: 205%;
+      top: 0;
+      left: 0;
+    }
+    .crop-next-go img {
+      width: 205%;
+      top: 0;
+      right: 0;
+    }
+    .crop-cues {
+      aspect-ratio: 4 / 3;
+    }
+    .crop-cues img {
+      width: 220%;
+      top: -27%;
+      left: -28%;
+    }
+    .grid-12 {
       grid-template-columns: 1fr;
     }
-
-    .engine-list div {
-      grid-template-columns: 1fr;
-      gap: 6px;
+    .col-5,
+    .col-7 {
+      grid-column: 1;
     }
-
-    .contact {
-      padding: 28px;
+    .model-flow {
+      grid-template-columns: 1fr;
+    }
+    .model-flow li,
+    .model-flow li + li {
+      min-height: 0;
+      padding: 24px 0;
+      border-right: 0;
+      border-bottom: 1px solid var(--sm-border);
+    }
+    .model-flow li:last-child {
+      border-bottom: 0;
+    }
+    .model-flow li:not(:last-child)::after {
+      top: auto;
+      right: auto;
+      bottom: -5px;
+      left: 12px;
+    }
+    .model-flow h3 {
+      margin-top: 28px;
+    }
+    .thesis-visual {
+      margin-top: 8px;
+    }
+    .crop-workspace {
+      aspect-ratio: 4 / 3;
+    }
+    .crop-workspace img {
+      width: 225%;
+      top: -28%;
+      left: -29%;
+    }
+    .thesis-visual > p {
+      flex-wrap: wrap;
+      gap: 10px 16px;
+    }
+    .workflow-visual {
+      margin-top: 8px;
+    }
+    .crop-operator {
+      aspect-ratio: 4 / 3;
+    }
+    .crop-operator img {
+      width: 225%;
+      top: -27%;
+      left: -28%;
+    }
+    .connection-groups {
+      grid-template-columns: 1fr;
+    }
+    .connection-groups > section:nth-child(n) {
+      padding: 24px 0;
+      border-right: 0;
+      border-top: 1px solid var(--sm-border);
+    }
+    .telemetry div {
+      grid-template-columns: 80px 1fr;
+    }
+    .audience-list article {
+      grid-template-columns: 36px 1fr;
+      gap: 12px;
+    }
+    .audience-list p {
+      grid-column: 2;
+    }
+    footer .container {
+      flex-wrap: wrap;
+    }
+    footer span {
+      width: 100%;
     }
   }
 </style>
