@@ -282,17 +282,21 @@ const sequence = [
 
         <aside class="inspector-fragment">
           <div class="inspector-title">
-            <span>CUE INSPECTOR</span><b>08 · Smoke Field</b><small
-              >▶ NEXT</small
-            >
+            <span>CUE INSPECTOR</span><b data-run-inspector-title
+              >08 · Smoke Field</b
+            ><small data-run-inspector-state>▶ NEXT</small>
           </div>
           <dl>
-            <div><dt>RESOURCE</dt><dd>Smoke_Field.nblock</dd></div>
-            <div><dt>DURATION</dt><dd>hold</dd></div>
-            <div><dt>OUTPUT</dt><dd>Program · L2</dd></div>
-            <div><dt>ACTIONS</dt><dd>3 · triggers</dd></div>
+            <div>
+              <dt>RESOURCE</dt><dd data-run-resource>Smoke_Field.nblock</dd>
+            </div>
+            <div><dt>DURATION</dt><dd data-run-duration>hold</dd></div>
+            <div><dt>OUTPUT</dt><dd data-run-output>Program · L2</dd></div>
+            <div><dt>ACTIONS</dt><dd data-run-actions>3 · triggers</dd></div>
             <div class="live-field">
-              <dt>FOG DENSITY</dt><dd>0.64 · OSC live</dd>
+              <dt data-run-live-label>FOG DENSITY</dt><dd data-run-live-value>
+                0.64 · OSC live
+              </dd>
             </div>
           </dl>
         </aside>
@@ -340,7 +344,7 @@ const sequence = [
           </button>
           <div class="input-row">
             <span><i></i> TIMECODE</span><b>LTC · 25 fps</b><output
-              >01:12:08:14</output
+              data-timecode-output>01:12:08:14</output
             >
           </div>
         </div>
@@ -361,9 +365,8 @@ const sequence = [
               >
             </div>
             <div class="meter-control">
-              <span>Bloom</span><i><b style="width:48%"></b></i><output
-                data-bloom-output>1.20</output
-              >
+              <span>Bloom</span><i><b data-bloom-meter style="width:48%"></b></i
+              ><output data-bloom-output>1.20</output>
               <input
                 type="range"
                 min="0"
@@ -374,9 +377,9 @@ const sequence = [
               />
             </div>
             <div class="meter-control">
-              <span>Particle count</span><i><b style="width:66%"></b></i><output
-                data-particle-output>800k</output
-              >
+              <span>Particle count</span><i
+                ><b data-particle-meter style="width:66%"></b></i
+              ><output data-particle-output>800k</output>
               <input
                 type="range"
                 min="10"
@@ -407,13 +410,13 @@ const sequence = [
       </header>
 
       <div class="systems-map" aria-label="Showmesh connected systems">
-        <div class="system-node media" tabindex="0" data-route="0">
+        <div class="system-node media" tabindex="0" data-route="0,3">
           <span>MEDIA</span><b>Video + audio</b><small>Core</small>
         </div>
         <div class="system-node control">
           <span>CONTROL</span><b>OSC + MIDI</b><small>Planned</small>
         </div>
-        <div class="system-node realtime" tabindex="0" data-route="2">
+        <div class="system-node realtime" tabindex="0" data-route="2,3">
           <span>REALTIME</span><b>Notch Blocks</b><small>Exploratory</small>
         </div>
         <div class="system-node output" tabindex="0" data-route="3">
@@ -473,6 +476,8 @@ const sequence = [
       <form
         class="access-inspector"
         data-access-inspector
+        hidden
+        inert
         action="mailto:hello@showmesh.app"
         method="post"
         enctype="text/plain"
@@ -544,6 +549,7 @@ const sequence = [
   document
     .querySelectorAll<HTMLElement>('[data-sequence-root]')
     .forEach((root) => {
+      root.classList.add('is-choreographed');
       const railLinks = Array.from(
         root.querySelectorAll<HTMLElement>('[data-rail-cue]')
       );
@@ -557,6 +563,10 @@ const sequence = [
         '[data-visual-field]'
       );
       const ctx = canvas?.getContext('2d', { alpha: false });
+      const feedbackCanvas = document.createElement('canvas');
+      const feedbackCtx = feedbackCanvas.getContext('2d');
+      const channelCanvas = document.createElement('canvas');
+      const channelCtx = channelCanvas.getContext('2d');
       const sceneLooks = [
         { fog: 0.28, bloom: 0.28, energy: 0.32, split: 0.15 },
         { fog: 0.46, bloom: 0.4, energy: 0.42, split: 0.08 },
@@ -572,8 +582,12 @@ const sequence = [
       const resizeField = () => {
         if (!canvas) return;
         const ratio = Math.min(devicePixelRatio, 1.5);
-        canvas.width = Math.max(1, Math.floor(innerWidth * ratio));
-        canvas.height = Math.max(1, Math.floor(innerHeight * ratio));
+        const width = canvas.clientWidth || innerWidth;
+        const height = canvas.clientHeight || innerHeight;
+        canvas.width = Math.max(1, Math.floor(width * ratio));
+        canvas.height = Math.max(1, Math.floor(height * ratio));
+        feedbackCanvas.width = channelCanvas.width = canvas.width;
+        feedbackCanvas.height = channelCanvas.height = canvas.height;
       };
       const drawField = () => {
         if (!canvas || !ctx) return;
@@ -583,10 +597,35 @@ const sequence = [
           const k = key as keyof typeof look;
           look[k] += (targetLook[k] - look[k]) * (reduced ? 1 : 0.025);
         });
+        if (feedbackCtx) {
+          feedbackCtx.globalCompositeOperation = 'copy';
+          feedbackCtx.drawImage(canvas, 0, 0);
+        }
         ctx.globalCompositeOperation = 'source-over';
-        ctx.fillStyle = reduced ? '#0b0e12' : 'rgba(7,9,12,.075)';
+        ctx.fillStyle = reduced ? '#0b0e12' : 'rgba(7,9,12,.13)';
         ctx.fillRect(0, 0, w, h);
         const t = reduced ? 7 : visualTime;
+        if (!reduced && feedbackCtx) {
+          const sliceHeight = Math.max(10, Math.round(h / 46));
+          ctx.save();
+          ctx.globalAlpha = 0.36 + look.fog * 0.12;
+          for (let y = 0; y < h; y += sliceHeight) {
+            const displacement =
+              Math.sin(y * 0.012 + t * 0.19) * (1.5 + look.fog * 7);
+            ctx.drawImage(
+              feedbackCanvas,
+              0,
+              y,
+              w,
+              sliceHeight,
+              displacement,
+              y + Math.cos(y * 0.009 + t * 0.11),
+              w,
+              sliceHeight
+            );
+          }
+          ctx.restore();
+        }
         for (let i = 0; i < 8; i++) {
           const phase = t * (0.07 + i * 0.006) + i * 2.17;
           const x = w * (0.5 + Math.sin(phase * 1.13) * 0.38);
@@ -619,6 +658,25 @@ const sequence = [
           ctx.strokeStyle = `rgba(${70 + i * 4},${112 + i * 3},124,${0.015 + look.energy * 0.022})`;
           ctx.lineWidth = 1 + look.bloom * 2;
           ctx.stroke();
+        }
+        const splitGate = reduced
+          ? 0
+          : Math.max(0, (Math.sin(t * 0.31) - 0.84) / 0.16) * look.split;
+        if (splitGate > 0 && channelCtx) {
+          const separation = 2 + splitGate * 10;
+          channelCtx.globalCompositeOperation = 'copy';
+          channelCtx.drawImage(feedbackCanvas, 0, 0);
+          channelCtx.globalCompositeOperation = 'source-in';
+          channelCtx.fillStyle = `rgba(69,200,232,${0.16 * splitGate})`;
+          channelCtx.fillRect(0, 0, w, h);
+          ctx.globalCompositeOperation = 'screen';
+          ctx.drawImage(channelCanvas, separation, 0);
+          channelCtx.globalCompositeOperation = 'copy';
+          channelCtx.drawImage(feedbackCanvas, 0, 0);
+          channelCtx.globalCompositeOperation = 'source-in';
+          channelCtx.fillStyle = `rgba(242,96,106,${0.13 * splitGate})`;
+          channelCtx.fillRect(0, 0, w, h);
+          ctx.drawImage(channelCanvas, -separation, 0);
         }
         ctx.globalCompositeOperation = 'source-over';
         for (let i = 0; i < Math.round(70 + look.energy * 170); i++) {
@@ -717,7 +775,7 @@ const sequence = [
       const heroGo = root.querySelector<HTMLButtonElement>('[data-hero-go]');
       const runConsole = root.querySelector<HTMLElement>('.run-console');
 
-      const renderCue = () => {
+      const renderCue = (startProgress = false) => {
         const current = cueStates[nowIndex];
         const next = cueStates[(nowIndex + 1) % cueStates.length];
         if (nowNumber) nowNumber.textContent = current.number;
@@ -729,7 +787,8 @@ const sequence = [
         if (goTarget) goTarget.textContent = `Run cue ${next.number}`;
         if (progress) {
           progress.classList.remove('is-running');
-          requestAnimationFrame(() => progress.classList.add('is-running'));
+          if (startProgress)
+            requestAnimationFrame(() => progress.classList.add('is-running'));
         }
       };
 
@@ -740,7 +799,7 @@ const sequence = [
           fog: Math.min(0.9, targetLook.fog + 0.18),
           split: 0.34
         };
-        renderCue();
+        renderCue(true);
       };
 
       heroGo?.addEventListener('click', advanceCue);
@@ -750,7 +809,7 @@ const sequence = [
           advanceCue();
         }
       });
-      renderCue();
+      renderCue(false);
 
       const buildDemo = root.querySelector<HTMLElement>('[data-build-demo]');
       if (buildDemo) {
@@ -816,16 +875,29 @@ const sequence = [
 
         buildGo?.addEventListener('click', () => {
           const target = selectedResource?.dataset.target || '0.8';
+          const targetNumber = Number(target);
           buildDemo.classList.remove('is-running');
           fogField?.style.setProperty('--fog-level', '0');
           if (fogOutput) fogOutput.textContent = '0.00';
           requestAnimationFrame(() => {
             buildDemo.classList.add('is-running');
             fogField?.style.setProperty('--fog-level', target);
-            if (fogOutput) fogOutput.textContent = Number(target).toFixed(2);
+            if (fogOutput) {
+              if (reduced) fogOutput.textContent = targetNumber.toFixed(2);
+              else {
+                const start = performance.now();
+                const updateFogReadout = (time: number) => {
+                  const progress = Math.min(1, (time - start) / 1000);
+                  const eased = 1 - Math.pow(1 - progress, 4);
+                  fogOutput.textContent = (targetNumber * eased).toFixed(2);
+                  if (progress < 1) requestAnimationFrame(updateFogReadout);
+                };
+                requestAnimationFrame(updateFogReadout);
+              }
+            }
             targetLook = {
               ...targetLook,
-              fog: Number(target),
+              fog: targetNumber,
               bloom: 0.62,
               energy: 0.7
             };
@@ -865,6 +937,15 @@ const sequence = [
         const particleOutput = liveConsole.querySelector<HTMLOutputElement>(
           '[data-particle-output]'
         );
+        const bloomMeter =
+          liveConsole.querySelector<HTMLElement>('[data-bloom-meter]');
+        const particleMeter = liveConsole.querySelector<HTMLElement>(
+          '[data-particle-meter]'
+        );
+        const timecodeOutput = liveConsole.querySelector<HTMLOutputElement>(
+          '[data-timecode-output]'
+        );
+        let lastManualLiveUpdate = 0;
 
         const renderLive = () => {
           const raw = Number(slider?.value || 64);
@@ -882,16 +963,16 @@ const sequence = [
           if (bloomOutput) bloomOutput.textContent = (bloom / 40).toFixed(2);
           if (particleOutput)
             particleOutput.textContent = `${Math.round(particles * 12.12)}k`;
-          bloomSlider?.previousElementSibling
-            ?.querySelector<HTMLElement>('b')
-            ?.style.setProperty('width', `${bloom}%`);
-          particleSlider?.previousElementSibling
-            ?.querySelector<HTMLElement>('b')
-            ?.style.setProperty('width', `${particles}%`);
+          if (bloomMeter) bloomMeter.style.width = `${bloom}%`;
+          if (particleMeter) particleMeter.style.width = `${particles}%`;
         };
-        slider?.addEventListener('input', renderLive);
-        bloomSlider?.addEventListener('input', renderLive);
-        particleSlider?.addEventListener('input', renderLive);
+        const renderManualLive = () => {
+          lastManualLiveUpdate = Date.now();
+          renderLive();
+        };
+        slider?.addEventListener('input', renderManualLive);
+        bloomSlider?.addEventListener('input', renderManualLive);
+        particleSlider?.addEventListener('input', renderManualLive);
         midiButton?.addEventListener('click', () => {
           const next = Math.round(32 + Math.random() * 95);
           if (midiValue) midiValue.textContent = String(next);
@@ -899,46 +980,142 @@ const sequence = [
           requestAnimationFrame(() => midiButton.classList.add('is-pulsing'));
         });
         renderLive();
+        if (!reduced) {
+          let timecodeFrames = (1 * 60 * 60 + 12 * 60 + 8) * 25 + 14;
+          let liveTicks = 0;
+          window.setInterval(() => {
+            if (root.dataset.scene !== '3') return;
+            timecodeFrames += 5;
+            const totalSeconds = Math.floor(timecodeFrames / 25);
+            const frames = timecodeFrames % 25;
+            const seconds = totalSeconds % 60;
+            const minutes = Math.floor(totalSeconds / 60) % 60;
+            const hours = Math.floor(totalSeconds / 3600) % 24;
+            if (timecodeOutput)
+              timecodeOutput.textContent = [hours, minutes, seconds, frames]
+                .map((part) => String(part).padStart(2, '0'))
+                .join(':');
+            liveTicks += 1;
+            if (
+              liveTicks % 3 === 0 &&
+              Date.now() - lastManualLiveUpdate > 1600
+            ) {
+              if (slider) {
+                const base = Number(slider.value);
+                slider.value = String(
+                  Math.max(0, Math.min(100, base + (liveTicks % 2 ? 1 : -1)))
+                );
+              }
+              renderLive();
+              if (midiValue)
+                midiValue.textContent = String(72 + ((liveTicks * 7) % 42));
+              midiButton?.classList.remove('is-pulsing');
+              requestAnimationFrame(() =>
+                midiButton?.classList.add('is-pulsing')
+              );
+            }
+          }, 200);
+        }
       }
 
       const runGo = root.querySelector<HTMLButtonElement>('[data-run-go]');
+      let runAdvanced = false;
       runGo?.addEventListener('click', () => {
+        if (runAdvanced) return;
+        runAdvanced = true;
         const now = root.querySelector<HTMLElement>('.operator-now');
         const next = root.querySelector<HTMLElement>('.operator-next');
-        const inspector = root.querySelector<HTMLElement>('.inspector-title');
-        now?.classList.add('is-complete');
+        const playingRow = root.querySelector<HTMLElement>('.cue-row.playing');
+        const nextRow = root.querySelector<HTMLElement>('.cue-row.next');
+        const attachedActions =
+          root.querySelector<HTMLElement>('.attached-actions');
+        const setText = (selector: string, value: string) => {
+          const element = root.querySelector<HTMLElement>(selector);
+          if (element) element.textContent = value;
+        };
+        if (now) {
+          setText('.operator-now > b', '08');
+          setText('.operator-now > strong', 'Smoke Field');
+          setText('.operator-now time', '00:00.0');
+          setText('.operator-now .time-pair small', 'hold');
+          now.animate(
+            reduced
+              ? [{ opacity: 0.5 }, { opacity: 1 }]
+              : [
+                  {
+                    transform: 'translateX(100%)',
+                    background: '#121a16',
+                    borderColor: '#57c878'
+                  },
+                  {
+                    transform: 'translateX(0)',
+                    background: '#1f1518',
+                    borderColor: '#f2606a'
+                  }
+                ],
+            {
+              duration: reduced ? 1 : 900,
+              easing: 'cubic-bezier(.22, 1, .36, 1)'
+            }
+          );
+          const runProgress = now.querySelector<HTMLElement>(':scope > i');
+          runProgress?.classList.remove('is-running');
+          requestAnimationFrame(() => runProgress?.classList.add('is-running'));
+        }
+        setText('.operator-next > b', '09');
+        setText('.operator-next > strong', 'Leaves_Cold_Snowflakes');
+        setText('.operator-next > small', 'Program · L3 · 03:10.0');
         next?.animate(
           reduced
             ? [{ opacity: 0.5 }, { opacity: 1 }]
             : [
-                { transform: 'translateX(18px)', opacity: 0.35 },
+                { transform: 'translateX(24px)', opacity: 0 },
                 { transform: 'translateX(0)', opacity: 1 }
               ],
           {
             duration: reduced ? 1 : 340,
+            delay: reduced ? 0 : 360,
             easing: 'cubic-bezier(.22, 1, .36, 1)'
           }
         );
-        if (now)
-          now.innerHTML =
-            '<span>PLAYING</span><b>08</b><strong>Smoke Field</strong><div class="time-pair"><time>00:00.0</time><small>hold</small></div><i aria-hidden="true"></i>';
-        if (next)
-          next.innerHTML =
-            '<span>NEXT</span><b>09</b><strong>Leaves_Cold_Snowflakes</strong><small>Program · L3 · 03:10.0</small>';
-        if (inspector)
-          inspector.innerHTML =
-            '<span>CUE INSPECTOR</span><b>08 · Smoke Field</b><small>▶ PLAYING</small>';
-        runGo.querySelector('small')!.textContent = 'CUE 09';
+        if (playingRow) {
+          playingRow.querySelector(':scope > b')!.textContent = '08';
+          playingRow.querySelector('strong')!.textContent = 'Smoke Field';
+          playingRow.querySelector('small')!.textContent =
+            'Program · L2 · hold';
+        }
+        if (nextRow) {
+          nextRow.querySelector(':scope > b')!.textContent = '09';
+          nextRow.querySelector('strong')!.textContent =
+            'Leaves_Cold_Snowflakes';
+          nextRow.querySelector('small')!.textContent =
+            'Program · L3 · 03:10.0';
+        }
+        if (attachedActions)
+          attachedActions.innerHTML =
+            '<div><i class="running"></i><span>08.1 · Fog density</span><b>0 → 0.8</b></div><div><i class="running"></i><span>08.2 · Bloom</span><b>0.4 → 1.2</b></div><div><i class="live"></i><span>08.3 · Fog density</span><b>OSC · 0.64</b></div>';
+        setText('[data-run-inspector-title]', '08 · Smoke Field');
+        setText('[data-run-inspector-state]', '● PLAYING');
+        setText('[data-run-resource]', 'Smoke_Field.nblock');
+        setText('[data-run-duration]', 'hold');
+        setText('[data-run-output]', 'Program · L2');
+        setText('[data-run-actions]', '3 · running');
+        setText('[data-run-live-label]', 'FOG DENSITY');
+        setText('[data-run-live-value]', '0.00 → 0.80 · ON PLAY');
+        const targetLabel = runGo.querySelector('small');
+        if (targetLabel) targetLabel.textContent = 'CUE 09 READY';
         targetLook = { ...targetLook, energy: 0.82, bloom: 0.7 };
       });
 
       root.querySelectorAll<HTMLElement>('[data-route]').forEach((node) => {
         const toggle = (active: boolean) =>
-          root
-            .querySelector<SVGPathElement>(
-              `[data-route-path="${node.dataset.route}"]`
-            )
-            ?.classList.toggle('is-route-active', active);
+          (node.dataset.route || '')
+            .split(',')
+            .forEach((route) =>
+              root
+                .querySelector<SVGPathElement>(`[data-route-path="${route}"]`)
+                ?.classList.toggle('is-route-active', active)
+            );
         node.addEventListener('pointerenter', () => toggle(true));
         node.addEventListener('pointerleave', () => toggle(false));
         node.addEventListener('focus', () => toggle(true));
@@ -959,7 +1136,12 @@ const sequence = [
             fill: 'forwards'
           }
         );
-        inspector?.classList.add('is-visible');
+        inspector?.removeAttribute('hidden');
+        inspector?.removeAttribute('inert');
+        if (inspector) {
+          void inspector.offsetHeight;
+          inspector.classList.add('is-visible');
+        }
         inspector
           ?.querySelector<HTMLInputElement>('input')
           ?.focus({ preventScroll: true });
@@ -1054,6 +1236,7 @@ const sequence = [
     align-items: center;
     color: var(--sm-text-faint);
     font-size: 11px;
+    transition: color 320ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   .sequence-rail a::before {
     z-index: 1;
@@ -1063,6 +1246,9 @@ const sequence = [
     background: var(--sm-bg-shell);
     content: '';
     transform: rotate(45deg);
+    transition:
+      border-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 320ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   .sequence-rail a > span {
     display: none;
@@ -1118,12 +1304,7 @@ const sequence = [
     padding: 112px 0 120px 64px;
     border-bottom: 1px solid var(--sm-border);
     scroll-margin-top: 64px;
-    background: linear-gradient(
-      90deg,
-      rgb(10 12 15 / 94%) 0%,
-      rgb(10 12 15 / 74%) 52%,
-      rgb(10 12 15 / 38%) 100%
-    );
+    background: rgb(10 12 15 / 84%);
   }
   .hero {
     min-height: calc(100vh - 64px);
@@ -1378,7 +1559,7 @@ const sequence = [
   }
   .build-section,
   .live-section {
-    background: var(--sm-bg-workspace);
+    background: rgb(20 23 29 / 89%);
   }
   .build-demo {
     overflow: hidden;
@@ -1398,7 +1579,7 @@ const sequence = [
     position: absolute;
     inset: 0;
     opacity: calc(0.08 + var(--fog-level) * 0.9);
-    transition: opacity 800ms ease;
+    transition: opacity 1000ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   .fog-field span,
   .parameter-visual > span {
@@ -1441,6 +1622,53 @@ const sequence = [
   }
   .flow-stage {
     min-width: 0;
+  }
+  .is-choreographed [data-stage='1']:not([data-revealed]) .flow-stage,
+  .is-choreographed [data-stage='1']:not([data-revealed]) .flow-link {
+    opacity: 0;
+  }
+  [data-stage='1'][data-revealed] .resource-stage {
+    animation: assemble-from-left 640ms cubic-bezier(0.22, 1, 0.36, 1) 160ms
+      both;
+  }
+  [data-stage='1'][data-revealed] .action-stage {
+    animation: assemble-from-bottom 640ms cubic-bezier(0.22, 1, 0.36, 1) 240ms
+      both;
+  }
+  [data-stage='1'][data-revealed] .trigger-stage {
+    animation: assemble-from-right 640ms cubic-bezier(0.22, 1, 0.36, 1) 320ms
+      both;
+  }
+  [data-stage='1'][data-revealed] .flow-link {
+    animation: reveal-connector 600ms cubic-bezier(0.22, 1, 0.36, 1) 480ms both;
+  }
+  @keyframes assemble-from-left {
+    from {
+      opacity: 0;
+      transform: translateX(-28px);
+    }
+  }
+  @keyframes assemble-from-bottom {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+  @keyframes assemble-from-right {
+    from {
+      opacity: 0;
+      transform: translateX(28px);
+    }
+  }
+  @keyframes reveal-connector {
+    from {
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0);
+    }
   }
   .resource-list,
   .trigger-options {
@@ -1613,11 +1841,20 @@ const sequence = [
     bottom: 0;
     left: 0;
     height: 4px;
-    background: linear-gradient(
-      to right,
-      var(--sm-playing) 62%,
-      rgb(255 255 255 / 5%) 62%
-    );
+    background: var(--sm-playing);
+    transform: scaleX(0.62);
+    transform-origin: left;
+  }
+  .operator-now > i.is-running {
+    animation: operator-progress 8s linear forwards;
+  }
+  @keyframes operator-progress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
   }
   .operator-go {
     display: grid;
@@ -1949,7 +2186,6 @@ const sequence = [
   .systems-map path.is-route-active {
     stroke: var(--sm-live);
     stroke-width: 2.2;
-    filter: drop-shadow(0 0 5px rgb(69 200 232 / 70%));
   }
   @keyframes signal-route {
     to {
@@ -2174,11 +2410,26 @@ const sequence = [
   .meter-control {
     grid-template-columns: 100px 1fr 44px !important;
   }
-  .meter-control input {
+  .meter-control > span {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .meter-control > i {
     grid-column: 2;
+    grid-row: 1;
+  }
+  .meter-control > output {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .meter-control input {
+    position: relative;
+    z-index: 2;
+    grid-column: 2;
+    grid-row: 1;
     width: 100%;
-    height: 8px;
-    margin-top: -9px;
+    height: 27px;
+    margin: 0;
     opacity: 0;
     cursor: ew-resize;
   }
@@ -2457,6 +2708,17 @@ const sequence = [
     .progress-track span.is-running {
       animation: none;
       width: 62%;
+    }
+    .operator-now > i.is-running {
+      animation: none;
+      transform: scaleX(0.62);
+    }
+    .is-choreographed [data-stage='1'] .flow-stage,
+    .is-choreographed [data-stage='1'] .flow-link {
+      opacity: 1;
+      animation: none;
+      clip-path: none;
+      transform: none;
     }
     .fog-field,
     .parameter-visual > span {
