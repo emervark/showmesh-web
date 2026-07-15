@@ -4,11 +4,16 @@ const sequence = [
   ['02', 'Automate', 'build'],
   ['03', 'Run', 'run'],
   ['04', 'See what is live', 'live'],
-  ['05', 'Control what happens next', 'systems']
+  ['05', 'Control what happens next', 'systems'],
+  ['06', 'Early access', 'contact']
 ];
 ---
 
 <div class="sequence-experience" data-sequence-root data-scene="0">
+  <div class="visual-field" aria-hidden="true">
+    <canvas data-visual-field></canvas>
+    <span class="visual-field-status">PROGRAM / GENERATIVE FIELD</span>
+  </div>
   <aside class="sequence-rail" aria-label="Page sequence">
     <span class="rail-title">SHOW SEQUENCE</span>
     <ol>
@@ -229,7 +234,9 @@ const sequence = [
           <span>NEXT</span><b>08</b><strong>Smoke Field</strong>
           <small>Starts block · Fog 0 → 0.8 · holds until stopped</small>
         </div>
-        <div class="operator-go"><span>GO</span><small>CUE 08</small></div>
+        <button type="button" class="operator-go" data-run-go
+          ><span>GO</span><small>CUE 08</small></button
+        >
       </div>
 
       <div class="cue-context">
@@ -275,17 +282,21 @@ const sequence = [
 
         <aside class="inspector-fragment">
           <div class="inspector-title">
-            <span>CUE INSPECTOR</span><b>08 · Smoke Field</b><small
-              >▶ NEXT</small
-            >
+            <span>CUE INSPECTOR</span><b data-run-inspector-title
+              >08 · Smoke Field</b
+            ><small data-run-inspector-state>▶ NEXT</small>
           </div>
           <dl>
-            <div><dt>RESOURCE</dt><dd>Smoke_Field.nblock</dd></div>
-            <div><dt>DURATION</dt><dd>hold</dd></div>
-            <div><dt>OUTPUT</dt><dd>Program · L2</dd></div>
-            <div><dt>ACTIONS</dt><dd>3 · triggers</dd></div>
+            <div>
+              <dt>RESOURCE</dt><dd data-run-resource>Smoke_Field.nblock</dd>
+            </div>
+            <div><dt>DURATION</dt><dd data-run-duration>hold</dd></div>
+            <div><dt>OUTPUT</dt><dd data-run-output>Program · L2</dd></div>
+            <div><dt>ACTIONS</dt><dd data-run-actions>3 · triggers</dd></div>
             <div class="live-field">
-              <dt>FOG DENSITY</dt><dd>0.64 · OSC live</dd>
+              <dt data-run-live-label>FOG DENSITY</dt><dd data-run-live-value>
+                0.64 · OSC live
+              </dd>
             </div>
           </dl>
         </aside>
@@ -333,7 +344,7 @@ const sequence = [
           </button>
           <div class="input-row">
             <span><i></i> TIMECODE</span><b>LTC · 25 fps</b><output
-              >01:12:08:14</output
+              data-timecode-output>01:12:08:14</output
             >
           </div>
         </div>
@@ -353,15 +364,30 @@ const sequence = [
                 data-live-meter>64%</output
               >
             </div>
-            <div>
-              <span>Bloom</span><i><b style="width:48%"></b></i><output
-                >1.20</output
-              >
+            <div class="meter-control">
+              <span>Bloom</span><i><b data-bloom-meter style="width:48%"></b></i
+              ><output data-bloom-output>1.20</output>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value="48"
+                aria-label="Bloom"
+                data-bloom-slider
+              />
             </div>
-            <div>
-              <span>Particle count</span><i><b style="width:66%"></b></i><output
-                >800k</output
-              >
+            <div class="meter-control">
+              <span>Particle count</span><i
+                ><b data-particle-meter style="width:66%"></b></i
+              ><output data-particle-output>800k</output>
+              <input
+                type="range"
+                min="10"
+                max="100"
+                value="66"
+                aria-label="Particle count"
+                data-particle-slider
+              />
             </div>
           </div>
         </div>
@@ -384,16 +410,16 @@ const sequence = [
       </header>
 
       <div class="systems-map" aria-label="Showmesh connected systems">
-        <div class="system-node media">
+        <div class="system-node media" tabindex="0" data-route="0,3">
           <span>MEDIA</span><b>Video + audio</b><small>Core</small>
         </div>
         <div class="system-node control">
           <span>CONTROL</span><b>OSC + MIDI</b><small>Planned</small>
         </div>
-        <div class="system-node realtime">
+        <div class="system-node realtime" tabindex="0" data-route="2,3">
           <span>REALTIME</span><b>Notch Blocks</b><small>Exploratory</small>
         </div>
-        <div class="system-node output">
+        <div class="system-node output" tabindex="0" data-route="3">
           <span>OUTPUT</span><b>Program</b><small>Core</small>
         </div>
         <div class="system-core">
@@ -407,10 +433,12 @@ const sequence = [
           aria-hidden="true"
           preserveAspectRatio="none"
         >
-          <path d="M210 90 C360 90 350 210 500 210"></path>
+          <path data-route-path="0" d="M210 90 C360 90 350 210 500 210"></path>
           <path d="M790 90 C640 90 650 210 500 210"></path>
-          <path d="M210 330 C360 330 350 210 500 210"></path>
-          <path d="M790 330 C640 330 650 210 500 210"></path>
+          <path data-route-path="2" d="M210 330 C360 330 350 210 500 210"
+          ></path>
+          <path data-route-path="3" d="M500 210 C650 210 640 330 790 330"
+          ></path>
         </svg>
       </div>
 
@@ -424,7 +452,12 @@ const sequence = [
       </div>
     </section>
 
-    <section id="contact" class="sequence-section final-go">
+    <section
+      id="contact"
+      class="sequence-section final-go"
+      data-sequence-section
+      data-stage="5"
+    >
       <div class="final-next">
         <span>NEXT</span><b>12</b>
         <div>
@@ -432,17 +465,49 @@ const sequence = [
             >Showmesh early access</small
           >
         </div>
-        <a
-          class="final-go-button"
-          href="mailto:hello@showmesh.app?subject=Showmesh%20early%20access"
-        >
+        <button class="final-go-button" type="button" data-final-go>
           <span>GO</span><small>Request early access</small>
-        </a>
+        </button>
       </div>
       <p>
         Showmesh is in early development. Tell us about the systems, rooms, and
         cues you need to run.
       </p>
+      <form
+        class="access-inspector"
+        data-access-inspector
+        hidden
+        inert
+        action="mailto:hello@showmesh.app"
+        method="post"
+        enctype="text/plain"
+      >
+        <header>
+          <span>CUE INSPECTOR</span><b>12 · EARLY ACCESS</b><small>READY</small>
+        </header>
+        <label
+          ><span>NAME</span><input
+            name="name"
+            autocomplete="name"
+            required
+          /></label
+        >
+        <label
+          ><span>EMAIL</span><input
+            type="email"
+            name="email"
+            autocomplete="email"
+            required
+          /></label
+        >
+        <label
+          ><span>SHOW / SYSTEMS</span><textarea
+            name="systems"
+            rows="3"
+            placeholder="Theatre, concert, installation…"></textarea></label
+        >
+        <button class="btn primary" type="submit">SEND REQUEST</button>
+      </form>
     </section>
   </div>
 </div>
@@ -484,18 +549,159 @@ const sequence = [
   document
     .querySelectorAll<HTMLElement>('[data-sequence-root]')
     .forEach((root) => {
+      root.classList.add('is-choreographed');
       const railLinks = Array.from(
         root.querySelectorAll<HTMLElement>('[data-rail-cue]')
       );
       const sections = Array.from(
         root.querySelectorAll<HTMLElement>('[data-sequence-section]')
       );
+      const reduced = window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      ).matches;
+      const canvas = root.querySelector<HTMLCanvasElement>(
+        '[data-visual-field]'
+      );
+      const ctx = canvas?.getContext('2d', { alpha: false });
+      const feedbackCanvas = document.createElement('canvas');
+      const feedbackCtx = feedbackCanvas.getContext('2d');
+      const channelCanvas = document.createElement('canvas');
+      const channelCtx = channelCanvas.getContext('2d');
+      const sceneLooks = [
+        { fog: 0.28, bloom: 0.28, energy: 0.32, split: 0.15 },
+        { fog: 0.46, bloom: 0.4, energy: 0.42, split: 0.08 },
+        { fog: 0.34, bloom: 0.56, energy: 0.7, split: 0.22 },
+        { fog: 0.64, bloom: 0.68, energy: 0.58, split: 0.14 },
+        { fog: 0.3, bloom: 0.42, energy: 0.82, split: 0.28 },
+        { fog: 0.08, bloom: 0.12, energy: 0.08, split: 0 }
+      ];
+      let look = { ...sceneLooks[0] };
+      let targetLook = { ...look };
+      let visualTime = 0;
+
+      const resizeField = () => {
+        if (!canvas) return;
+        const ratio = Math.min(devicePixelRatio, 1.5);
+        const width = canvas.clientWidth || innerWidth;
+        const height = canvas.clientHeight || innerHeight;
+        canvas.width = Math.max(1, Math.floor(width * ratio));
+        canvas.height = Math.max(1, Math.floor(height * ratio));
+        feedbackCanvas.width = channelCanvas.width = canvas.width;
+        feedbackCanvas.height = channelCanvas.height = canvas.height;
+      };
+      const drawField = () => {
+        if (!canvas || !ctx) return;
+        const w = canvas.width,
+          h = canvas.height;
+        Object.keys(look).forEach((key) => {
+          const k = key as keyof typeof look;
+          look[k] += (targetLook[k] - look[k]) * (reduced ? 1 : 0.025);
+        });
+        if (feedbackCtx) {
+          feedbackCtx.globalCompositeOperation = 'copy';
+          feedbackCtx.drawImage(canvas, 0, 0);
+        }
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = reduced ? '#0b0e12' : 'rgba(7,9,12,.13)';
+        ctx.fillRect(0, 0, w, h);
+        const t = reduced ? 7 : visualTime;
+        if (!reduced && feedbackCtx) {
+          const sliceHeight = Math.max(10, Math.round(h / 46));
+          ctx.save();
+          ctx.globalAlpha = 0.36 + look.fog * 0.12;
+          for (let y = 0; y < h; y += sliceHeight) {
+            const displacement =
+              Math.sin(y * 0.012 + t * 0.19) * (1.5 + look.fog * 7);
+            ctx.drawImage(
+              feedbackCanvas,
+              0,
+              y,
+              w,
+              sliceHeight,
+              displacement,
+              y + Math.cos(y * 0.009 + t * 0.11),
+              w,
+              sliceHeight
+            );
+          }
+          ctx.restore();
+        }
+        for (let i = 0; i < 8; i++) {
+          const phase = t * (0.07 + i * 0.006) + i * 2.17;
+          const x = w * (0.5 + Math.sin(phase * 1.13) * 0.38);
+          const y = h * (0.5 + Math.cos(phase * 0.83) * 0.4);
+          const radius =
+            Math.min(w, h) * (0.16 + look.fog * 0.28 + (i % 3) * 0.025);
+          const grad = ctx.createRadialGradient(x, y, 0, x, y, radius);
+          const coral = i % 4 === 0;
+          grad.addColorStop(
+            0,
+            coral
+              ? `rgba(242,96,106,${0.018 + look.bloom * 0.06})`
+              : `rgba(112,137,151,${0.02 + look.fog * 0.075})`
+          );
+          grad.addColorStop(0.45, `rgba(44,75,86,${0.018 + look.fog * 0.045})`);
+          grad.addColorStop(1, 'rgba(5,7,9,0)');
+          ctx.fillStyle = grad;
+          ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+        }
+        ctx.globalCompositeOperation = 'screen';
+        const bands = 3 + Math.round(look.energy * 5);
+        for (let i = 0; i < bands; i++) {
+          ctx.beginPath();
+          for (let x = -20; x <= w + 20; x += 18) {
+            const y =
+              h * (0.18 + (i / (bands + 1)) * 0.68) +
+              Math.sin(x * 0.006 + t * 0.3 + i) * (18 + look.fog * 46);
+            x < 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+          }
+          ctx.strokeStyle = `rgba(${70 + i * 4},${112 + i * 3},124,${0.015 + look.energy * 0.022})`;
+          ctx.lineWidth = 1 + look.bloom * 2;
+          ctx.stroke();
+        }
+        const splitGate = reduced
+          ? 0
+          : Math.max(0, (Math.sin(t * 0.31) - 0.84) / 0.16) * look.split;
+        if (splitGate > 0 && channelCtx) {
+          const separation = 2 + splitGate * 10;
+          channelCtx.globalCompositeOperation = 'copy';
+          channelCtx.drawImage(feedbackCanvas, 0, 0);
+          channelCtx.globalCompositeOperation = 'source-in';
+          channelCtx.fillStyle = `rgba(69,200,232,${0.16 * splitGate})`;
+          channelCtx.fillRect(0, 0, w, h);
+          ctx.globalCompositeOperation = 'screen';
+          ctx.drawImage(channelCanvas, separation, 0);
+          channelCtx.globalCompositeOperation = 'copy';
+          channelCtx.drawImage(feedbackCanvas, 0, 0);
+          channelCtx.globalCompositeOperation = 'source-in';
+          channelCtx.fillStyle = `rgba(242,96,106,${0.13 * splitGate})`;
+          channelCtx.fillRect(0, 0, w, h);
+          ctx.drawImage(channelCanvas, -separation, 0);
+        }
+        ctx.globalCompositeOperation = 'source-over';
+        for (let i = 0; i < Math.round(70 + look.energy * 170); i++) {
+          const n = Math.sin(i * 91.17 + t * 0.07) * 43758.5453;
+          const m = Math.sin(i * 47.11 + t * 0.05) * 24634.6345;
+          ctx.fillStyle = `rgba(220,226,230,${0.012 + look.energy * 0.02})`;
+          ctx.fillRect((n - Math.floor(n)) * w, (m - Math.floor(m)) * h, 1, 1);
+        }
+        if (!reduced) {
+          visualTime += 0.16;
+          requestAnimationFrame(drawField);
+        }
+      };
+      resizeField();
+      addEventListener('resize', resizeField, { passive: true });
+      drawField();
 
       const setActiveStage = (stage: number) => {
         root.dataset.scene = String(stage);
+        targetLook = { ...(sceneLooks[stage] || sceneLooks[0]) };
+        if (reduced) drawField();
         railLinks.forEach((link, index) => {
           if (index === stage) link.setAttribute('aria-current', 'step');
           else link.removeAttribute('aria-current');
+          link.classList.toggle('is-complete', index < stage);
         });
       };
 
@@ -506,7 +712,51 @@ const sequence = [
               .filter((entry) => entry.isIntersecting)
               .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
             if (!(visible?.target instanceof HTMLElement)) return;
-            setActiveStage(Number(visible.target.dataset.stage || 0));
+            const stage = Number(visible.target.dataset.stage || 0);
+            setActiveStage(stage);
+            if (!visible.target.dataset.revealed) {
+              visible.target.dataset.revealed = 'true';
+              const heading =
+                visible.target.querySelector<HTMLElement>('h1, h2');
+              const blocks = Array.from(
+                visible.target.querySelectorAll<HTMLElement>(
+                  '.section-intro > p, .hero-copy > p, .hero-actions, .run-console, .build-demo, .operator-strip, .cue-context, .live-console, .systems-map, .telemetry-bar, .final-next'
+                )
+              );
+              if (heading)
+                heading.animate(
+                  reduced
+                    ? [{ opacity: 0 }, { opacity: 1 }]
+                    : [
+                        {
+                          clipPath: 'inset(100% 0 0)',
+                          transform: 'translateY(24px)'
+                        },
+                        { clipPath: 'inset(0 0 0)', transform: 'translateY(0)' }
+                      ],
+                  {
+                    duration: reduced ? 1 : 640,
+                    easing: 'cubic-bezier(.22, 1, .36, 1)',
+                    fill: 'both'
+                  }
+                );
+              blocks.forEach((block, index) =>
+                block.animate(
+                  reduced
+                    ? [{ opacity: 0 }, { opacity: 1 }]
+                    : [
+                        { opacity: 0, transform: 'translateY(18px)' },
+                        { opacity: 1, transform: 'translateY(0)' }
+                      ],
+                  {
+                    duration: reduced ? 1 : 600,
+                    delay: reduced ? 0 : 80 + index * 70,
+                    easing: 'cubic-bezier(.22, 1, .36, 1)',
+                    fill: 'both'
+                  }
+                )
+              );
+            }
           },
           { rootMargin: '-24% 0px -55% 0px', threshold: [0.08, 0.25, 0.5] }
         );
@@ -525,7 +775,7 @@ const sequence = [
       const heroGo = root.querySelector<HTMLButtonElement>('[data-hero-go]');
       const runConsole = root.querySelector<HTMLElement>('.run-console');
 
-      const renderCue = () => {
+      const renderCue = (startProgress = false) => {
         const current = cueStates[nowIndex];
         const next = cueStates[(nowIndex + 1) % cueStates.length];
         if (nowNumber) nowNumber.textContent = current.number;
@@ -537,13 +787,19 @@ const sequence = [
         if (goTarget) goTarget.textContent = `Run cue ${next.number}`;
         if (progress) {
           progress.classList.remove('is-running');
-          requestAnimationFrame(() => progress.classList.add('is-running'));
+          if (startProgress)
+            requestAnimationFrame(() => progress.classList.add('is-running'));
         }
       };
 
       const advanceCue = () => {
         nowIndex = (nowIndex + 1) % cueStates.length;
-        renderCue();
+        targetLook = {
+          ...targetLook,
+          fog: Math.min(0.9, targetLook.fog + 0.18),
+          split: 0.34
+        };
+        renderCue(true);
       };
 
       heroGo?.addEventListener('click', advanceCue);
@@ -553,7 +809,7 @@ const sequence = [
           advanceCue();
         }
       });
-      renderCue();
+      renderCue(false);
 
       const buildDemo = root.querySelector<HTMLElement>('[data-build-demo]');
       if (buildDemo) {
@@ -619,13 +875,32 @@ const sequence = [
 
         buildGo?.addEventListener('click', () => {
           const target = selectedResource?.dataset.target || '0.8';
+          const targetNumber = Number(target);
           buildDemo.classList.remove('is-running');
           fogField?.style.setProperty('--fog-level', '0');
           if (fogOutput) fogOutput.textContent = '0.00';
           requestAnimationFrame(() => {
             buildDemo.classList.add('is-running');
             fogField?.style.setProperty('--fog-level', target);
-            if (fogOutput) fogOutput.textContent = Number(target).toFixed(2);
+            if (fogOutput) {
+              if (reduced) fogOutput.textContent = targetNumber.toFixed(2);
+              else {
+                const start = performance.now();
+                const updateFogReadout = (time: number) => {
+                  const progress = Math.min(1, (time - start) / 1000);
+                  const eased = 1 - Math.pow(1 - progress, 4);
+                  fogOutput.textContent = (targetNumber * eased).toFixed(2);
+                  if (progress < 1) requestAnimationFrame(updateFogReadout);
+                };
+                requestAnimationFrame(updateFogReadout);
+              }
+            }
+            targetLook = {
+              ...targetLook,
+              fog: targetNumber,
+              bloom: 0.62,
+              energy: 0.7
+            };
           });
         });
         renderBuild();
@@ -650,6 +925,27 @@ const sequence = [
           liveConsole.querySelector<HTMLButtonElement>('[data-midi-pulse]');
         const midiValue =
           liveConsole.querySelector<HTMLOutputElement>('[data-midi-value]');
+        const bloomSlider = liveConsole.querySelector<HTMLInputElement>(
+          '[data-bloom-slider]'
+        );
+        const particleSlider = liveConsole.querySelector<HTMLInputElement>(
+          '[data-particle-slider]'
+        );
+        const bloomOutput = liveConsole.querySelector<HTMLOutputElement>(
+          '[data-bloom-output]'
+        );
+        const particleOutput = liveConsole.querySelector<HTMLOutputElement>(
+          '[data-particle-output]'
+        );
+        const bloomMeter =
+          liveConsole.querySelector<HTMLElement>('[data-bloom-meter]');
+        const particleMeter = liveConsole.querySelector<HTMLElement>(
+          '[data-particle-meter]'
+        );
+        const timecodeOutput = liveConsole.querySelector<HTMLOutputElement>(
+          '[data-timecode-output]'
+        );
+        let lastManualLiveUpdate = 0;
 
         const renderLive = () => {
           const raw = Number(slider?.value || 64);
@@ -659,8 +955,24 @@ const sequence = [
           if (liveMeter) liveMeter.textContent = `${raw}%`;
           if (meter) meter.style.width = `${raw}%`;
           fog?.style.setProperty('--fog-level', String(raw / 100));
+          targetLook.fog = raw / 100;
+          const bloom = Number(bloomSlider?.value || 48);
+          const particles = Number(particleSlider?.value || 66);
+          targetLook.bloom = bloom / 100;
+          targetLook.energy = particles / 100;
+          if (bloomOutput) bloomOutput.textContent = (bloom / 40).toFixed(2);
+          if (particleOutput)
+            particleOutput.textContent = `${Math.round(particles * 12.12)}k`;
+          if (bloomMeter) bloomMeter.style.width = `${bloom}%`;
+          if (particleMeter) particleMeter.style.width = `${particles}%`;
         };
-        slider?.addEventListener('input', renderLive);
+        const renderManualLive = () => {
+          lastManualLiveUpdate = Date.now();
+          renderLive();
+        };
+        slider?.addEventListener('input', renderManualLive);
+        bloomSlider?.addEventListener('input', renderManualLive);
+        particleSlider?.addEventListener('input', renderManualLive);
         midiButton?.addEventListener('click', () => {
           const next = Math.round(32 + Math.random() * 95);
           if (midiValue) midiValue.textContent = String(next);
@@ -668,15 +980,216 @@ const sequence = [
           requestAnimationFrame(() => midiButton.classList.add('is-pulsing'));
         });
         renderLive();
+        if (!reduced) {
+          let timecodeFrames = (1 * 60 * 60 + 12 * 60 + 8) * 25 + 14;
+          let liveTicks = 0;
+          window.setInterval(() => {
+            if (root.dataset.scene !== '3') return;
+            timecodeFrames += 5;
+            const totalSeconds = Math.floor(timecodeFrames / 25);
+            const frames = timecodeFrames % 25;
+            const seconds = totalSeconds % 60;
+            const minutes = Math.floor(totalSeconds / 60) % 60;
+            const hours = Math.floor(totalSeconds / 3600) % 24;
+            if (timecodeOutput)
+              timecodeOutput.textContent = [hours, minutes, seconds, frames]
+                .map((part) => String(part).padStart(2, '0'))
+                .join(':');
+            liveTicks += 1;
+            if (
+              liveTicks % 3 === 0 &&
+              Date.now() - lastManualLiveUpdate > 1600
+            ) {
+              if (slider) {
+                const base = Number(slider.value);
+                slider.value = String(
+                  Math.max(0, Math.min(100, base + (liveTicks % 2 ? 1 : -1)))
+                );
+              }
+              renderLive();
+              if (midiValue)
+                midiValue.textContent = String(72 + ((liveTicks * 7) % 42));
+              midiButton?.classList.remove('is-pulsing');
+              requestAnimationFrame(() =>
+                midiButton?.classList.add('is-pulsing')
+              );
+            }
+          }, 200);
+        }
       }
+
+      const runGo = root.querySelector<HTMLButtonElement>('[data-run-go]');
+      let runAdvanced = false;
+      runGo?.addEventListener('click', () => {
+        if (runAdvanced) return;
+        runAdvanced = true;
+        const now = root.querySelector<HTMLElement>('.operator-now');
+        const next = root.querySelector<HTMLElement>('.operator-next');
+        const playingRow = root.querySelector<HTMLElement>('.cue-row.playing');
+        const nextRow = root.querySelector<HTMLElement>('.cue-row.next');
+        const attachedActions =
+          root.querySelector<HTMLElement>('.attached-actions');
+        const setText = (selector: string, value: string) => {
+          const element = root.querySelector<HTMLElement>(selector);
+          if (element) element.textContent = value;
+        };
+        if (now) {
+          setText('.operator-now > b', '08');
+          setText('.operator-now > strong', 'Smoke Field');
+          setText('.operator-now time', '00:00.0');
+          setText('.operator-now .time-pair small', 'hold');
+          now.animate(
+            reduced
+              ? [{ opacity: 0.5 }, { opacity: 1 }]
+              : [
+                  {
+                    transform: 'translateX(100%)',
+                    background: '#121a16',
+                    borderColor: '#57c878'
+                  },
+                  {
+                    transform: 'translateX(0)',
+                    background: '#1f1518',
+                    borderColor: '#f2606a'
+                  }
+                ],
+            {
+              duration: reduced ? 1 : 900,
+              easing: 'cubic-bezier(.22, 1, .36, 1)'
+            }
+          );
+          const runProgress = now.querySelector<HTMLElement>(':scope > i');
+          runProgress?.classList.remove('is-running');
+          requestAnimationFrame(() => runProgress?.classList.add('is-running'));
+        }
+        setText('.operator-next > b', '09');
+        setText('.operator-next > strong', 'Leaves_Cold_Snowflakes');
+        setText('.operator-next > small', 'Program · L3 · 03:10.0');
+        next?.animate(
+          reduced
+            ? [{ opacity: 0.5 }, { opacity: 1 }]
+            : [
+                { transform: 'translateX(24px)', opacity: 0 },
+                { transform: 'translateX(0)', opacity: 1 }
+              ],
+          {
+            duration: reduced ? 1 : 340,
+            delay: reduced ? 0 : 360,
+            easing: 'cubic-bezier(.22, 1, .36, 1)'
+          }
+        );
+        if (playingRow) {
+          playingRow.querySelector(':scope > b')!.textContent = '08';
+          playingRow.querySelector('strong')!.textContent = 'Smoke Field';
+          playingRow.querySelector('small')!.textContent =
+            'Program · L2 · hold';
+        }
+        if (nextRow) {
+          nextRow.querySelector(':scope > b')!.textContent = '09';
+          nextRow.querySelector('strong')!.textContent =
+            'Leaves_Cold_Snowflakes';
+          nextRow.querySelector('small')!.textContent =
+            'Program · L3 · 03:10.0';
+        }
+        if (attachedActions)
+          attachedActions.innerHTML =
+            '<div><i class="running"></i><span>08.1 · Fog density</span><b>0 → 0.8</b></div><div><i class="running"></i><span>08.2 · Bloom</span><b>0.4 → 1.2</b></div><div><i class="live"></i><span>08.3 · Fog density</span><b>OSC · 0.64</b></div>';
+        setText('[data-run-inspector-title]', '08 · Smoke Field');
+        setText('[data-run-inspector-state]', '● PLAYING');
+        setText('[data-run-resource]', 'Smoke_Field.nblock');
+        setText('[data-run-duration]', 'hold');
+        setText('[data-run-output]', 'Program · L2');
+        setText('[data-run-actions]', '3 · running');
+        setText('[data-run-live-label]', 'FOG DENSITY');
+        setText('[data-run-live-value]', '0.00 → 0.80 · ON PLAY');
+        const targetLabel = runGo.querySelector('small');
+        if (targetLabel) targetLabel.textContent = 'CUE 09 READY';
+        targetLook = { ...targetLook, energy: 0.82, bloom: 0.7 };
+      });
+
+      root.querySelectorAll<HTMLElement>('[data-route]').forEach((node) => {
+        const toggle = (active: boolean) =>
+          (node.dataset.route || '')
+            .split(',')
+            .forEach((route) =>
+              root
+                .querySelector<SVGPathElement>(`[data-route-path="${route}"]`)
+                ?.classList.toggle('is-route-active', active)
+            );
+        node.addEventListener('pointerenter', () => toggle(true));
+        node.addEventListener('pointerleave', () => toggle(false));
+        node.addEventListener('focus', () => toggle(true));
+        node.addEventListener('blur', () => toggle(false));
+      });
+
+      const finalGo = root.querySelector<HTMLButtonElement>('[data-final-go]');
+      const inspector = root.querySelector<HTMLElement>(
+        '[data-access-inspector]'
+      );
+      finalGo?.addEventListener('click', () => {
+        targetLook = { fog: 0, bloom: 0, energy: 0, split: 0 };
+        canvas?.animate(
+          [{ opacity: 1 }, { opacity: 0.06 }, { opacity: 0.28 }],
+          {
+            duration: reduced ? 1 : 1050,
+            easing: 'cubic-bezier(.22, 1, .36, 1)',
+            fill: 'forwards'
+          }
+        );
+        inspector?.removeAttribute('hidden');
+        inspector?.removeAttribute('inert');
+        if (inspector) {
+          void inspector.offsetHeight;
+          inspector.classList.add('is-visible');
+        }
+        inspector
+          ?.querySelector<HTMLInputElement>('input')
+          ?.focus({ preventScroll: true });
+        finalGo.disabled = true;
+        finalGo.querySelector('small')!.textContent = 'SEQUENCE COMPLETE';
+      });
     });
 </script>
 
 <style>
+  .visual-field {
+    position: fixed;
+    inset: 64px 0 0;
+    z-index: -1;
+    overflow: hidden;
+    background: #080a0d;
+    pointer-events: none;
+  }
+  .visual-field::after {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgb(255 255 255 / 1.2%) 0 1px,
+      transparent 1px 4px
+    );
+    content: '';
+    opacity: 0.22;
+    mix-blend-mode: soft-light;
+  }
+  .visual-field canvas {
+    width: 100%;
+    height: 100%;
+    filter: saturate(0.72) contrast(1.08);
+  }
+  .visual-field-status {
+    position: absolute;
+    right: 18px;
+    bottom: 14px;
+    color: rgb(210 221 226 / 28%);
+    font: 8px/1 var(--mono);
+    letter-spacing: 0.12em;
+  }
   .sequence-experience {
     position: relative;
     width: min(var(--sm-content-max), calc(100% - 64px));
     margin: 0 auto;
+    isolation: isolate;
   }
   .sequence-rail {
     position: fixed;
@@ -688,7 +1201,8 @@ const sequence = [
     flex-direction: column;
     padding: 32px 20px 24px 0;
     border-right: 1px solid var(--sm-border);
-    background: var(--sm-bg-shell);
+    background: rgb(10 12 15 / 92%);
+    backdrop-filter: blur(16px);
   }
   .rail-title,
   .rail-status {
@@ -722,6 +1236,7 @@ const sequence = [
     align-items: center;
     color: var(--sm-text-faint);
     font-size: 11px;
+    transition: color 320ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   .sequence-rail a::before {
     z-index: 1;
@@ -731,6 +1246,9 @@ const sequence = [
     background: var(--sm-bg-shell);
     content: '';
     transform: rotate(45deg);
+    transition:
+      border-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 320ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   .sequence-rail a > span {
     display: none;
@@ -745,6 +1263,19 @@ const sequence = [
   .sequence-rail a[aria-current='step']::before {
     border-color: var(--sm-ready);
     background: var(--sm-ready);
+  }
+  .sequence-rail a.is-complete {
+    color: var(--sm-text-muted);
+  }
+  .sequence-rail a.is-complete::before {
+    border-color: var(--sm-playing);
+    background: rgb(242 96 106 / 24%);
+  }
+  .sequence-rail a.is-complete b::before {
+    display: block;
+    color: var(--sm-text-faint);
+    content: 'DONE';
+    font: 9px/1.3 var(--mono);
   }
   .sequence-rail a[aria-current='step'] b::before {
     display: block;
@@ -773,6 +1304,7 @@ const sequence = [
     padding: 112px 0 120px 64px;
     border-bottom: 1px solid var(--sm-border);
     scroll-margin-top: 64px;
+    background: rgb(10 12 15 / 84%);
   }
   .hero {
     min-height: calc(100vh - 64px);
@@ -1027,7 +1559,7 @@ const sequence = [
   }
   .build-section,
   .live-section {
-    background: var(--sm-bg-workspace);
+    background: rgb(20 23 29 / 89%);
   }
   .build-demo {
     overflow: hidden;
@@ -1047,7 +1579,7 @@ const sequence = [
     position: absolute;
     inset: 0;
     opacity: calc(0.08 + var(--fog-level) * 0.9);
-    transition: opacity 800ms ease;
+    transition: opacity 1000ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   .fog-field span,
   .parameter-visual > span {
@@ -1090,6 +1622,53 @@ const sequence = [
   }
   .flow-stage {
     min-width: 0;
+  }
+  .is-choreographed [data-stage='1']:not([data-revealed]) .flow-stage,
+  .is-choreographed [data-stage='1']:not([data-revealed]) .flow-link {
+    opacity: 0;
+  }
+  [data-stage='1'][data-revealed] .resource-stage {
+    animation: assemble-from-left 640ms cubic-bezier(0.22, 1, 0.36, 1) 160ms
+      both;
+  }
+  [data-stage='1'][data-revealed] .action-stage {
+    animation: assemble-from-bottom 640ms cubic-bezier(0.22, 1, 0.36, 1) 240ms
+      both;
+  }
+  [data-stage='1'][data-revealed] .trigger-stage {
+    animation: assemble-from-right 640ms cubic-bezier(0.22, 1, 0.36, 1) 320ms
+      both;
+  }
+  [data-stage='1'][data-revealed] .flow-link {
+    animation: reveal-connector 600ms cubic-bezier(0.22, 1, 0.36, 1) 480ms both;
+  }
+  @keyframes assemble-from-left {
+    from {
+      opacity: 0;
+      transform: translateX(-28px);
+    }
+  }
+  @keyframes assemble-from-bottom {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+  @keyframes assemble-from-right {
+    from {
+      opacity: 0;
+      transform: translateX(28px);
+    }
+  }
+  @keyframes reveal-connector {
+    from {
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0);
+    }
   }
   .resource-list,
   .trigger-options {
@@ -1262,11 +1841,20 @@ const sequence = [
     bottom: 0;
     left: 0;
     height: 4px;
-    background: linear-gradient(
-      to right,
-      var(--sm-playing) 62%,
-      rgb(255 255 255 / 5%) 62%
-    );
+    background: var(--sm-playing);
+    transform: scaleX(0.62);
+    transform-origin: left;
+  }
+  .operator-now > i.is-running {
+    animation: operator-progress 8s linear forwards;
+  }
+  @keyframes operator-progress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
   }
   .operator-go {
     display: grid;
@@ -1592,6 +2180,28 @@ const sequence = [
     stroke: rgb(69 200 232 / 32%);
     stroke-width: 1.2;
     vector-effect: non-scaling-stroke;
+    stroke-dasharray: 8 10;
+    animation: signal-route 5s linear infinite;
+  }
+  .systems-map path.is-route-active {
+    stroke: var(--sm-live);
+    stroke-width: 2.2;
+  }
+  @keyframes signal-route {
+    to {
+      stroke-dashoffset: -72;
+    }
+  }
+  .system-node {
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease;
+  }
+  .system-node:hover,
+  .system-node:focus {
+    border-color: rgb(69 200 232 / 65%);
+    background: #121a20;
+    outline: none;
   }
   .system-node,
   .system-core {
@@ -1729,6 +2339,100 @@ const sequence = [
     margin: 20px 0 0;
     color: var(--sm-text-muted);
   }
+  .final-go-button {
+    border: 0;
+    color: var(--sm-bg-shell);
+    background: var(--sm-go);
+    cursor: pointer;
+  }
+  .final-go-button:disabled {
+    background: var(--sm-playing);
+  }
+  .access-inspector {
+    max-width: 720px;
+    max-height: 0;
+    display: grid;
+    gap: 12px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      max-height 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 340ms ease,
+      transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .access-inspector.is-visible {
+    max-height: 520px;
+    margin-top: 32px;
+    padding: 18px;
+    border: 1px solid var(--sm-border-strong);
+    border-left: 3px solid var(--sm-playing);
+    background: rgb(13 15 19 / 94%);
+    opacity: 1;
+    transform: none;
+  }
+  .access-inspector header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--sm-border);
+    color: var(--sm-text-muted);
+    font: 9px/1.3 var(--mono);
+  }
+  .access-inspector header b {
+    grid-row: 2;
+    color: var(--sm-text-primary);
+    font-size: 13px;
+  }
+  .access-inspector header small {
+    grid-row: 1 / 3;
+    grid-column: 2;
+    align-self: center;
+    color: var(--sm-playing);
+  }
+  .access-inspector label {
+    display: grid;
+    gap: 5px;
+    color: var(--sm-text-muted);
+    font: 9px/1.3 var(--mono);
+  }
+  .access-inspector input,
+  .access-inspector textarea {
+    width: 100%;
+    border: 1px solid var(--sm-border-strong);
+    border-radius: 4px;
+    padding: 10px 12px;
+    resize: vertical;
+    background: var(--sm-bg-workspace);
+    color: var(--sm-text-primary);
+    font: 13px/1.4 var(--font);
+  }
+  .meter-control {
+    grid-template-columns: 100px 1fr 44px !important;
+  }
+  .meter-control > span {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .meter-control > i {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .meter-control > output {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .meter-control input {
+    position: relative;
+    z-index: 2;
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    height: 27px;
+    margin: 0;
+    opacity: 0;
+    cursor: ew-resize;
+  }
 
   @media (max-width: 1199px) {
     .sequence-experience {
@@ -1785,7 +2489,7 @@ const sequence = [
       display: none;
     }
     .sequence-rail ol {
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       margin: 0;
     }
     .sequence-rail ol::before {
@@ -1987,9 +2691,34 @@ const sequence = [
     }
   }
   @media (prefers-reduced-motion: reduce) {
+    .visual-field canvas {
+      filter: none;
+    }
+    .visual-field::after {
+      display: none;
+    }
+    .systems-map path {
+      animation: none;
+      stroke-dasharray: none;
+    }
+    .access-inspector {
+      transition: none;
+      transform: none;
+    }
     .progress-track span.is-running {
       animation: none;
       width: 62%;
+    }
+    .operator-now > i.is-running {
+      animation: none;
+      transform: scaleX(0.62);
+    }
+    .is-choreographed [data-stage='1'] .flow-stage,
+    .is-choreographed [data-stage='1'] .flow-link {
+      opacity: 1;
+      animation: none;
+      clip-path: none;
+      transform: none;
     }
     .fog-field,
     .parameter-visual > span {
