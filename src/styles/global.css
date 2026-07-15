@@ -39,6 +39,9 @@
 * {
   box-sizing: border-box;
 }
+[hidden] {
+  display: none !important;
+}
 html {
   scroll-behavior: smooth;
   background: var(--sm-bg-shell);
@@ -155,6 +158,24 @@ summary:focus-visible {
 ::selection {
   color: var(--sm-bg-shell);
   background: var(--sm-ready);
+}
+@keyframes smPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+@keyframes smFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 @media (max-width: 1099px) {
   .container {

@@ -1,0 +1,107 @@
+---
+const product = [
+  { href: '#model', label: 'Product' },
+  { href: '#model', label: 'How it works' },
+  { href: '#operator', label: 'Live operation' },
+  { href: '#integrations', label: 'Integrations' },
+  { href: '#access', label: 'Development' }
+];
+const company = [
+  { href: '#access', label: 'Contact' },
+  { href: '#access', label: 'Request early access' },
+  { href: '/showmesh-ui.html', label: 'Operator UI concept' }
+];
+---
+
+<footer class="site-footer">
+  <div class="site-footer__cols">
+    <div class="site-footer__about">
+      <span class="brand">
+        <span class="brand__mark" aria-hidden="true">◆</span><span
+          >Showmesh</span
+        >
+      </span>
+      <p>
+        Showmesh is a Windows-first realtime show automation system for media,
+        realtime graphics and control.
+      </p>
+    </div>
+    <div class="site-footer__group">
+      <div class="site-footer__label">Product</div>
+      <div class="site-footer__links">
+        {product.map((l) => <a href={l.href}>{l.label}</a>)}
+      </div>
+    </div>
+    <div class="site-footer__group">
+      <div class="site-footer__label">Company</div>
+      <div class="site-footer__links">
+        {company.map((l) => <a href={l.href}>{l.label}</a>)}
+      </div>
+    </div>
+  </div>
+  <div class="site-footer__base">
+    © 2026 Showmesh. Connect, automate and run the show.
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--sm-border);
+    padding: 56px 24px 34px;
+  }
+  .site-footer__cols {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--sm-text-strong);
+    margin-bottom: 12px;
+  }
+  .brand__mark {
+    color: var(--sm-ready);
+  }
+  .site-footer__about p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--sm-text-faint);
+    max-width: 280px;
+    margin: 0;
+  }
+  .site-footer__label {
+    font-size: 11.5px;
+    font-weight: 650;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #4e555f;
+    margin-bottom: 14px;
+  }
+  .site-footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .site-footer__links a {
+    font-size: 13.5px;
+    color: var(--sm-text-muted);
+    transition: color 160ms ease;
+  }
+  .site-footer__links a:hover {
+    color: var(--sm-text-strong);
+  }
+  .site-footer__base {
+    max-width: 1180px;
+    margin: 40px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--sm-border);
+    font-size: 12px;
+    color: #3f454e;
+  }
+</style>

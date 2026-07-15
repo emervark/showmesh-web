@@ -1,47 +1,1961 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import SequenceExperience from '../components/SequenceExperience.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const cues = [
+  {
+    num: '1',
+    icon: '▶',
+    name: 'House out',
+    dur: 2,
+    sub: 'Manual — GO when actor says “dog”.'
+  },
+  {
+    num: '2',
+    icon: '▶',
+    name: 'Opening video',
+    dur: 45,
+    sub: 'Program · Output A'
+  },
+  {
+    num: '3',
+    icon: '⇄',
+    name: 'Fade house to 0',
+    dur: 3,
+    sub: '↳ fades out 1 · House out'
+  },
+  {
+    num: '4',
+    icon: '◈',
+    name: 'Send OSC /scene/2',
+    dur: 1,
+    sub: 'OSC → Notch'
+  },
+  {
+    num: '5',
+    icon: '⧉',
+    name: 'Act I transition',
+    dur: 8,
+    sub: 'Group · 3 actions'
+  },
+  {
+    num: '6',
+    icon: '♪',
+    name: 'Underscore loop',
+    dur: 120,
+    sub: 'Audio · loops'
+  }
+];
+
+const keyOutcomes = [
+  'Fewer disconnected control surfaces during a show',
+  'Less manual coordination between media and external systems',
+  'A clearer relationship between cues, actions and triggers',
+  'Better visibility of current state, next state and system health',
+  'One workflow from programming and rehearsal to live operation'
+];
+
+const valueCards = [
+  {
+    icon: '◈',
+    color: 'var(--sm-live)',
+    tint: 'rgb(69 200 232 / 12%)',
+    title: 'Bring the systems together.',
+    copy: 'Organise media, outputs, control connections and realtime engines as reusable resources. Keep the systems that make the show visible and available from one project.'
+  },
+  {
+    icon: '⇄',
+    color: 'var(--sm-warning)',
+    tint: 'rgb(227 169 79 / 12%)',
+    title: 'Describe the outcome once.',
+    copy: 'Define what should change, when it should happen and what should trigger it. Build repeatable cue behaviour instead of coordinating the same steps by hand every night.'
+  },
+  {
+    icon: '▶',
+    color: 'var(--sm-ready)',
+    tint: 'rgb(87 200 120 / 12%)',
+    title: 'Operate with confidence.',
+    copy: 'See the current cue, remaining time, next cue, active actions, incoming control and warnings without losing the run order.'
+  }
+];
+
+const model = [
+  {
+    label: 'What can be controlled',
+    color: 'var(--sm-live)',
+    title: 'Resource',
+    copy: 'A video, audio file, image, output, connection, realtime engine or other system used by the show.'
+  },
+  {
+    label: 'What changes',
+    color: 'var(--sm-warning)',
+    title: 'Action',
+    copy: 'Fade a parameter, change volume, route an output, send a command or control another resource.'
+  },
+  {
+    label: 'When it happens',
+    color: 'var(--sm-ready)',
+    title: 'Trigger',
+    copy: 'Cue start, cue stop, timeline position, timecode, OSC, MIDI or deliberate manual execution.'
+  }
+];
+
+const benefits = [
+  'Clear current and next cue',
+  'Elapsed, remaining and total time',
+  'Visible cue and action progress',
+  'Live connection and input state',
+  'Warnings next to the affected cue',
+  'Safe inspection and editing during rehearsal or playback',
+  'Deliberate separation between GO and emergency controls'
+];
+
+const liveSignals = [
+  { label: 'OSC · /scene/2', status: '3 active', pulse: '1.6s' },
+  { label: 'MIDI · Note On Ch1', status: 'idle', pulse: '2.1s' },
+  { label: 'Timecode · LTC', status: 'locked', pulse: '1.3s' }
+];
+
+const capabilityGroups = [
+  {
+    title: 'Media playback',
+    copy: 'Video, audio, images and text organised in a cue-based sequence.'
+  },
+  {
+    title: 'Realtime graphics',
+    copy: 'Parameters, states and external visual engines controlled from the same show structure.'
+  },
+  {
+    title: 'Outputs and routing',
+    copy: 'Program outputs and network video workflows kept visible alongside the cues that use them.'
+  },
+  {
+    title: 'External control',
+    copy: 'Commands and live data exchanged with the systems already used in the production.'
+  }
+];
+
+const supportingPoints = [
+  'Windows-native product direction',
+  'Dedicated separation between operator workflow and playback work',
+  'Hardware-accelerated media and graphics paths',
+  'Support for Windows production technologies such as Spout',
+  'Visible timing, output and engine health'
+];
+
+const reliabilityThemes = [
+  'Resource and cue validation',
+  'Missing-target and missing-resource warnings',
+  'Connection and input status',
+  'Output, audio and engine telemetry',
+  'Autosave and project recovery',
+  'Logs that help explain what happened',
+  'Safe editing and deliberate destructive actions'
+];
+
+const useCases = [
+  {
+    title: 'Theatre',
+    copy: 'Run video, sound, graphics and control cues from a sequence that remains clear through rehearsals, changes and performance.'
+  },
+  {
+    title: 'Concerts and touring',
+    copy: 'Coordinate playback, visuals, outputs and external systems in a workflow designed for repeatable live operation.'
+  },
+  {
+    title: 'Immersive installations',
+    copy: 'Connect scheduled events, live inputs, sensors and realtime visual systems without reducing the installation to a fixed playlist.'
+  },
+  {
+    title: 'Events and experiences',
+    copy: 'Build dependable sequences for launches, conferences, exhibitions and branded experiences where multiple systems must act together.'
+  },
+  {
+    title: 'Studios and creative technology',
+    copy: 'Prototype and operate workflows that move between recorded media, realtime rendering and network control.'
+  }
+];
+
+const integrations = [
+  {
+    name: 'Video and audio playback',
+    status: 'Core',
+    color: 'var(--sm-ready)'
+  },
+  { name: 'Images and text', status: 'Core', color: 'var(--sm-ready)' },
+  { name: 'NDI and Spout', status: 'In development', color: 'var(--sm-live)' },
+  { name: 'OSC and MIDI', status: 'In development', color: 'var(--sm-live)' },
+  { name: 'DMX and timecode', status: 'Planned', color: 'var(--sm-warning)' },
+  { name: 'Notch Blocks', status: 'Planned', color: 'var(--sm-warning)' },
+  {
+    name: 'Unreal Engine',
+    status: 'Exploratory',
+    color: 'var(--sm-text-faint)'
+  },
+  {
+    name: 'TouchDesigner',
+    status: 'Exploratory',
+    color: 'var(--sm-text-faint)'
+  },
+  {
+    name: 'HTTP, scripts & plugins',
+    status: 'Planned',
+    color: 'var(--sm-warning)'
+  }
+];
+
+const whySummary = [
+  'Cue-first enough to learn quickly',
+  'Extensible enough for complex automation',
+  'Windows-first for modern production environments',
+  'Designed around live operator confidence',
+  'Built to connect media and realtime systems',
+  'Honest about system state and development state'
+];
+
+const accessFields = [
+  { id: 'name', label: 'Name', span: false, type: 'input' },
+  { id: 'email', label: 'Work email', span: false, type: 'input' },
+  {
+    id: 'company',
+    label: 'Company or organisation',
+    span: false,
+    type: 'input'
+  },
+  { id: 'role', label: 'Role', span: false, type: 'input' },
+  { id: 'prod', label: 'Type of productions', span: true, type: 'input' },
+  {
+    id: 'systems',
+    label: 'Systems and protocols you use',
+    span: true,
+    type: 'input'
+  },
+  {
+    id: 'problem',
+    label: 'The biggest problem in your current workflow',
+    span: true,
+    type: 'textarea'
+  }
+];
+
+const faqs = [
+  {
+    q: 'What is Showmesh?',
+    a: 'Showmesh is a Windows-native realtime show automation workspace in development. It is designed to bring media playback, realtime graphics, control signals and external systems into one cue-based operating model.'
+  },
+  {
+    q: 'Who is Showmesh for?',
+    a: 'Showmesh is intended for show operators, technical directors, designers, programmers, venues and production teams working across theatre, concerts, installations, events and other live experiences.'
+  },
+  {
+    q: 'Is Showmesh available now?',
+    a: 'Showmesh is currently in active development. You can request early access and tell us about the workflows you would like the product to support.'
+  },
+  {
+    q: 'Is Showmesh only for Windows?',
+    a: 'The current product direction is Windows-first. This allows Showmesh to focus on native Windows media, graphics, audio and output workflows, including technologies commonly used in Windows-based production systems.'
+  },
+  {
+    q: 'What can Showmesh control?',
+    a: 'The product model is designed for media, outputs, control connections, realtime engines and other show systems. Individual capabilities and integrations will be labelled clearly according to their development state.'
+  },
+  {
+    q: 'How does the cue model work?',
+    a: 'Showmesh separates resources, actions and triggers. A resource defines what can be controlled, an action defines what changes and a trigger defines when it happens. Native media playback remains part of the cue lifecycle.'
+  },
+  {
+    q: 'Will Showmesh support OSC and MIDI?',
+    a: 'OSC and MIDI are part of the planned control model. Specific availability and scope will be communicated as development progresses.'
+  },
+  {
+    q: 'Will Showmesh support NDI and Spout?',
+    a: 'NDI and Spout are part of the product direction for Windows-based media and output workflows. Their availability will be labelled according to development state.'
+  },
+  {
+    q: 'Can I suggest an integration or workflow?',
+    a: 'Yes. Early product conversations are specifically intended to identify the combinations of media, control and realtime systems that matter most in real productions.'
+  }
+];
+
+const fmt = (sec: number) => {
+  const s = Math.max(0, sec);
+  const m = Math.floor(s / 60);
+  const r = Math.floor(s % 60);
+  return `${m}:${String(r).padStart(2, '0')}`;
+};
+
+// Initial demo state (matches the client controller: index 1, progress 20%).
+const startIndex = 1;
+const startProgress = 20;
+const startNext = (startIndex + 1) % cues.length;
+const startCur = cues[startIndex];
+const startNextCue = cues[startNext];
+const cueData = JSON.stringify(
+  cues.map((c) => ({ num: c.num, name: c.name, dur: c.dur }))
+);
 ---
 
 <BaseLayout
-  title="Showmesh — Everything that makes the show. One sequence that runs it."
-  description="Showmesh brings media, realtime graphics, control signals, and external systems into one Windows-native cue sequence."
+  title="Showmesh — Run media, realtime systems and control from one show sequence."
+  description="Showmesh is a Windows-native show automation workspace. Bring playback, realtime graphics, control signals and external systems into one cue-based workflow."
 >
-  <Header />
-  <main id="main-content">
-    <SequenceExperience />
+  <SiteNav />
+  <main id="main-content" data-cues={cueData}>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__copy">
+        <div class="eyebrow eyebrow--ready">
+          Realtime show automation for Windows
+        </div>
+        <h1>Run media, realtime systems and control from one show sequence.</h1>
+        <p>
+          Showmesh is a Windows-native show automation workspace for building
+          and operating live shows. Bring playback, realtime graphics, control
+          signals and external systems into one cue-based workflow—then see
+          exactly what is live, what comes next and what the system is doing.
+        </p>
+        <div class="hero__actions">
+          <a class="btn-solid" href="#access">Request early access</a>
+          <a class="btn-outline" href="#model">Explore how it works</a>
+        </div>
+        <div class="hero__note">
+          Showmesh is in active development. Early access is for operators,
+          designers and technical teams who want to help shape the product.
+        </div>
+      </div>
+
+      <!-- transport strip -->
+      <div class="transport" data-transport>
+        <div class="transport__now">
+          <div class="transport__now-head">
+            <span class="dot dot--playing" aria-hidden="true"></span>
+            <span class="mono transport__cur-num" data-cur-num
+              >{startCur.num}</span
+            >
+            <span class="transport__cur-name" data-cur-name
+              >{startCur.name}</span
+            >
+            <span class="transport__time">
+              <span class="mono" data-cur-elapsed
+                >{fmt((startProgress / 100) * startCur.dur)}</span
+              >
+              <span class="mono transport__dur" data-cur-dur
+                >/ {fmt(startCur.dur)}</span
+              >
+            </span>
+          </div>
+          <div class="transport__bar">
+            <i data-cur-bar style={`width:${startProgress}%`}></i>
+          </div>
+        </div>
+        <div class="transport__next">
+          <span class="transport__next-label">Next</span>
+          <span class="mono transport__next-num" data-next-num
+            >{startNextCue.num}</span
+          >
+          <span class="transport__next-name" data-next-name
+            >{startNextCue.name}</span
+          >
+        </div>
+        <div class="transport__controls">
+          <button type="button" class="go-btn" data-go>
+            <span class="mono">GO</span>
+          </button>
+          <button type="button" class="panic-btn" data-panic>
+            <b class="mono">PANIC</b>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="band reveal">
+      <div class="wrap grid-2 grid-2--top">
+        <div>
+          <div class="eyebrow eyebrow--playing">
+            One show. Too many disconnected tools.
+          </div>
+          <h2>
+            Your show already works as one system. Your software should too.
+          </h2>
+          <p class="lead">
+            Live productions rarely depend on a single type of content. A cue
+            may start a video, change a realtime visual, send control data,
+            route an output and prepare the next state—all while the operator
+            watches timing, connections and system health.
+          </p>
+          <p class="lead">
+            When those tasks are spread across separate applications, the
+            operator becomes the integration layer. Showmesh is being built to
+            bring that work into one readable sequence.
+          </p>
+        </div>
+        <ul class="checklist">
+          {
+            keyOutcomes.map((k) => (
+              <li>
+                <>
+                  <span class="check" aria-hidden="true">
+                    ✓
+                  </span>
+                  <span>{k}</span>
+                </>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- VALUE -->
+    <section class="band band--tight reveal">
+      <div class="wrap center">
+        <div class="eyebrow eyebrow--live">Connect. Automate. Run.</div>
+        <h2 class="h2-center">
+          One workspace for everything that makes the show.
+        </h2>
+        <div class="cards cards--3">
+          {
+            valueCards.map((c) => (
+              <article class="card">
+                <div
+                  class="card__icon"
+                  style={`background:${c.tint};color:${c.color}`}
+                >
+                  {c.icon}
+                </div>
+                <h3>{c.title}</h3>
+                <p>{c.copy}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- MODEL -->
+    <section id="model" class="band band--panel reveal">
+      <div class="wrap center">
+        <div class="eyebrow eyebrow--ready">Resource → Action → Trigger</div>
+        <h2 class="h2-center">
+          Build what should happen, not another workaround.
+        </h2>
+        <p class="lead lead--center">
+          Showmesh is based on a simple automation model that can scale across
+          different types of show technology.
+        </p>
+        <div class="model">
+          {
+            model.map((m, i) => (
+              <>
+                {i > 0 && (
+                  <div class="model__arrow" aria-hidden="true">
+                    →
+                  </div>
+                )}
+                <article class="card model__card">
+                  <div class="model__label" style={`color:${m.color}`}>
+                    {m.label}
+                  </div>
+                  <h3>{m.title}</h3>
+                  <p>{m.copy}</p>
+                </article>
+              </>
+            ))
+          }
+        </div>
+        <p class="lead lead--center note">
+          The same model can describe a simple playback cue or a coordinated
+          sequence across media, graphics and external systems. Your show
+          remains readable even as the automation becomes more capable.
+        </p>
+      </div>
+    </section>
+
+    <!-- OPERATOR -->
+    <section id="operator" class="band reveal">
+      <div class="wrap">
+        <div class="center intro">
+          <div class="eyebrow eyebrow--playing">
+            Built for the person pressing GO
+          </div>
+          <h2 class="h2-center">Know what is live. Know what is next.</h2>
+          <p class="lead lead--center">
+            During a live show, clarity is not a convenience. It is part of the
+            system. Showmesh keeps the run order at the centre while timing, cue
+            actions, live inputs, warnings and output state remain in context.
+          </p>
+        </div>
+
+        <div class="cuelist" data-cuelist>
+          <div class="cuelist__head">
+            <span>Cue list</span>
+            <span class="cuelist__hint"
+              >click a cue, or press GO · live demo</span
+            >
+          </div>
+          <div class="cuelist__rows">
+            {
+              cues.map((c, i) => (
+                <button
+                  type="button"
+                  class:list={[
+                    'cuerow',
+                    {
+                      'is-playing': i === startIndex,
+                      'is-next': i === startNext
+                    }
+                  ]}
+                  data-cue-index={i}
+                  aria-label={`Jump to cue ${c.num}, ${c.name}`}
+                >
+                  <span class="cuerow__rail" aria-hidden="true" />
+                  <span class="cuerow__num mono">{c.num}</span>
+                  <span class="cuerow__icon" aria-hidden="true">
+                    {c.icon}
+                  </span>
+                  <span class="cuerow__body">
+                    <span class="cuerow__name">{c.name}</span>
+                    <span
+                      class="cuerow__progress"
+                      data-progress
+                      hidden={i !== startIndex}
+                    >
+                      <span class="cuerow__track">
+                        <i
+                          data-progress-bar
+                          style={
+                            i === startIndex
+                              ? `width:${startProgress}%`
+                              : 'width:0%'
+                          }
+                        />
+                      </span>
+                      <span class="mono cuerow__time" data-progress-time />
+                    </span>
+                    <span
+                      class="cuerow__sub"
+                      data-sub
+                      hidden={i === startIndex}
+                    >
+                      {c.sub}
+                    </span>
+                  </span>
+                </button>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="benefits">
+          {
+            benefits.map((b) => (
+              <div class="benefits__item">
+                <>
+                  <span class="check" aria-hidden="true">
+                    ✓
+                  </span>
+                  <span>{b}</span>
+                </>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE SYSTEMS -->
+    <section class="band band--panel reveal">
+      <div class="wrap grid-2 grid-2--center">
+        <div>
+          <div class="eyebrow eyebrow--live">
+            Control that responds in realtime
+          </div>
+          <h2>Let live data become part of the cue.</h2>
+          <p class="lead">
+            A show does not always follow a fixed timeline. A performer moves, a
+            sensor changes, timecode advances or another system sends a command.
+          </p>
+          <p class="lead">
+            Showmesh is designed to let OSC, MIDI, timecode and realtime
+            parameters participate in the same cue workflow as media playback.
+            Operators can see where data comes from, what it controls and
+            whether it is live.
+          </p>
+          <p class="lead lead--accent">
+            From a simple GO command to a parameter continuously driven by live
+            input, the relationship remains visible inside the show sequence.
+          </p>
+        </div>
+        <div class="signals">
+          {
+            liveSignals.map((s) => (
+              <div class="signals__row">
+                <span
+                  class="dot dot--live"
+                  style={`animation-duration:${s.pulse}`}
+                  aria-hidden="true"
+                />
+                <span class="signals__label">{s.label}</span>
+                <span class="mono signals__status">{s.status}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- MEDIA -->
+    <section class="band reveal">
+      <div class="wrap">
+        <div class="center intro">
+          <div class="eyebrow eyebrow--warning">More than a playlist</div>
+          <h2 class="h2-center">
+            Move from playback to realtime without changing the operating model.
+          </h2>
+          <p class="lead lead--center">
+            Shows increasingly combine conventional media with generative
+            graphics, interactive visuals and GPU-driven effects. Showmesh is
+            being designed so those systems can live beside video, audio, images
+            and control cues without becoming a separate workflow for the
+            operator.
+          </p>
+        </div>
+        <div class="cards cards--4">
+          {
+            capabilityGroups.map((g) => (
+              <article class="card card--sm">
+                <h3>{g.title}</h3>
+                <p>{g.copy}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- WINDOWS -->
+    <section class="band band--panel reveal">
+      <div class="wrap grid-2 grid-2--center">
+        <div>
+          <div class="eyebrow eyebrow--ready">
+            Designed for Windows production systems
+          </div>
+          <h2>Built around the machines already running the room.</h2>
+          <p class="lead">
+            Windows is central to many media-server, realtime graphics and
+            live-production workflows. Showmesh is being built for that
+            environment from the beginning—not treated as a secondary platform.
+          </p>
+          <p class="lead">
+            The product direction combines a focused operator interface with
+            native playback, rendering, audio and output paths. The goal is a
+            system that remains responsive to edit and dependable when the show
+            is running.
+          </p>
+        </div>
+        <ul class="checklist">
+          {
+            supportingPoints.map((s) => (
+              <li>
+                <>
+                  <span class="check" aria-hidden="true">
+                    ✓
+                  </span>
+                  <span>{s}</span>
+                </>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- RELIABILITY -->
+    <section class="band reveal">
+      <div class="wrap">
+        <div class="center intro">
+          <div class="eyebrow eyebrow--warning">Confidence is a feature</div>
+          <h2 class="h2-center">
+            The operator should not have to guess whether the system is ready.
+          </h2>
+          <p class="lead lead--center">
+            A show-control system must communicate more than success or failure.
+            It should show what is connected, what is missing, what is running
+            and what needs attention before it becomes a live problem.
+          </p>
+        </div>
+        <div class="themes">
+          {
+            reliabilityThemes.map((r) => (
+              <div class="themes__item">
+                <>
+                  <span class="diamond" aria-hidden="true">
+                    ◆
+                  </span>
+                  <span>{r}</span>
+                </>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- USE CASES -->
+    <section class="band band--panel reveal">
+      <div class="wrap">
+        <div class="center intro">
+          <div class="eyebrow eyebrow--live">
+            Different rooms. One operating model.
+          </div>
+          <h2 class="h2-center">
+            Made for shows that combine media, timing and control.
+          </h2>
+        </div>
+        <div class="cards cards--auto">
+          {
+            useCases.map((u) => (
+              <article class="card card--sm">
+                <h3>{u.title}</h3>
+                <p>{u.copy}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- INTEGRATIONS -->
+    <section id="integrations" class="band reveal">
+      <div class="wrap">
+        <div class="center intro">
+          <div class="eyebrow eyebrow--ready">
+            Work with the systems around you
+          </div>
+          <h2 class="h2-center">Connect by role, not by logo count.</h2>
+          <p class="lead lead--center">
+            The purpose of an integration is not to make a longer compatibility
+            list. It is to make a real production workflow simpler, clearer and
+            more dependable.
+          </p>
+        </div>
+        <div class="chips">
+          {
+            integrations.map((i) => (
+              <span class="chip">
+                <span class="chip__name">{i.name}</span>
+                <span class="chip__status" style={`color:${i.color}`}>
+                  {i.status}
+                </span>
+              </span>
+            ))
+          }
+        </div>
+        <p class="fine">
+          Integration availability will be labelled clearly as core, in
+          development, planned or exploratory. Early-access conversations help
+          determine which production workflows should be prioritised first.
+        </p>
+      </div>
+    </section>
+
+    <!-- WHY -->
+    <section class="band band--panel reveal">
+      <div class="wrap grid-2 grid-2--center">
+        <div>
+          <div class="eyebrow eyebrow--playing">
+            A clearer way to build and run complex shows
+          </div>
+          <h2>Keep the power. Remove the fragmentation.</h2>
+          <p class="lead">
+            Showmesh is for technical teams who need more than playback but do
+            not want the operator juggling an improvised collection of control
+            panels. It brings the sequence, automation model and live state
+            together so the show can become more capable without becoming harder
+            to understand.
+          </p>
+        </div>
+        <ul class="checklist checklist--2col">
+          {
+            whySummary.map((w) => (
+              <li>
+                <>
+                  <span class="check" aria-hidden="true">
+                    ✓
+                  </span>
+                  <span>{w}</span>
+                </>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- ACCESS -->
+    <section id="access" class="band reveal">
+      <div class="wrap wrap--narrow">
+        <div class="center intro">
+          <div class="eyebrow eyebrow--ready">Help shape the product</div>
+          <h2 class="h2-center">
+            Showmesh is being built with the people who run real shows.
+          </h2>
+          <p class="lead lead--center">
+            Tell us what you run, which systems need to work together and where
+            your current workflow breaks down.
+          </p>
+        </div>
+
+        <form class="access-form" data-access-form novalidate>
+          {
+            accessFields.map((f) => (
+              <div class:list={['field', { 'field--span': f.span }]}>
+                <label for={`f-${f.id}`}>{f.label}</label>
+                {f.type === 'textarea' ? (
+                  <textarea id={`f-${f.id}`} name={f.id} rows="3" />
+                ) : (
+                  <input
+                    id={`f-${f.id}`}
+                    name={f.id}
+                    type={f.id === 'email' ? 'email' : 'text'}
+                  />
+                )}
+              </div>
+            ))
+          }
+          <div class="field field--span access-form__submit">
+            <button type="submit" class="btn-solid">Request access</button>
+          </div>
+        </form>
+
+        <div class="access-done" data-access-done hidden>
+          <div class="access-done__mark" aria-hidden="true">✓</div>
+          <p>
+            Thank you. We will review your workflow and contact you when there
+            is a relevant early-access opportunity.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="band band--panel reveal">
+      <div class="wrap wrap--narrow">
+        <h2 class="h2-center faq-title">Frequently asked questions</h2>
+        <div class="faq" data-faq>
+          {
+            faqs.map((f, i) => (
+              <div class="faq__item">
+                <button
+                  type="button"
+                  class="faq__q"
+                  aria-expanded="false"
+                  aria-controls={`faq-a-${i}`}
+                  data-faq-toggle
+                >
+                  <span>{f.q}</span>
+                  <span class="faq__icon" aria-hidden="true">
+                    +
+                  </span>
+                </button>
+                <div class="faq__a" id={`faq-a-${i}`} data-faq-panel hidden>
+                  {f.a}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="band final reveal">
+      <div class="final__glow" aria-hidden="true"></div>
+      <div class="wrap wrap--narrow center">
+        <div class="eyebrow eyebrow--ready">
+          Your systems already make one show
+        </div>
+        <h2 class="h2-center final__title">Run them from one sequence.</h2>
+        <p class="lead lead--center">
+          Tell us what you are building, which systems need to work together and
+          what a better live workflow would make possible.
+        </p>
+        <div class="final__actions">
+          <a class="btn-solid" href="#access">Request early access</a>
+          <a class="btn-outline" href="#access">Contact Showmesh</a>
+        </div>
+      </div>
+    </section>
   </main>
-  <footer>
-    <div class="container">
-      <span>© 2026 Showmesh</span>
-      <a href="/showmesh-ui.html" target="_blank">Full operator UI</a>
-      <a href="mailto:hello@showmesh.app">Contact</a>
-      <a href="#top">Back to cue 01</a>
-    </div>
-  </footer>
+  <SiteFooter />
 </BaseLayout>
 
+<script>
+  // ---- Scroll reveal ----
+  // Content is visible by default; only arm the hidden-then-animate behaviour
+  // when JS + motion are available, so a script error never blanks the page.
+  const reduceMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
+  const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
+  if (!reduceMotion && reveals.length) {
+    document.documentElement.classList.add('js-reveal');
+    // Reveal anything currently at or above the fold, then animate the rest in
+    // as they are scrolled to. A scroll sweep self-heals sections that an
+    // in-page anchor jump skipped over without ever intersecting.
+    const sweep = () => {
+      const limit = window.innerHeight * 0.88;
+      for (const el of reveals) {
+        if (
+          !el.classList.contains('is-visible') &&
+          el.getBoundingClientRect().top < limit
+        ) {
+          el.classList.add('is-visible');
+        }
+      }
+    };
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        sweep();
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    window.addEventListener('hashchange', onScroll);
+    sweep();
+  }
+
+  // ---- Shared cue demo (hero transport + operator cue list) ----
+  const main = document.getElementById('main-content');
+  type Cue = { num: string; name: string; dur: number };
+  let cues: Cue[] = [];
+  try {
+    cues = JSON.parse(main?.dataset.cues || '[]');
+  } catch {
+    cues = [];
+  }
+
+  const fmt = (sec: number) => {
+    const s = Math.max(0, sec);
+    const m = Math.floor(s / 60);
+    const r = Math.floor(s % 60);
+    return `${m}:${String(r).padStart(2, '0')}`;
+  };
+
+  const rows = Array.from(document.querySelectorAll<HTMLElement>('.cuerow'));
+
+  const t = {
+    curNum: document.querySelector<HTMLElement>('[data-cur-num]'),
+    curName: document.querySelector<HTMLElement>('[data-cur-name]'),
+    curElapsed: document.querySelector<HTMLElement>('[data-cur-elapsed]'),
+    curDur: document.querySelector<HTMLElement>('[data-cur-dur]'),
+    curBar: document.querySelector<HTMLElement>('[data-cur-bar]'),
+    nextNum: document.querySelector<HTMLElement>('[data-next-num]'),
+    nextName: document.querySelector<HTMLElement>('[data-next-name]')
+  };
+
+  if (cues.length) {
+    let index = 1;
+    let progress = 20;
+    let paused = false;
+    let panicReset = 0;
+
+    const render = () => {
+      const len = cues.length;
+      const nextIdx = (index + 1) % len;
+      const cur = cues[index];
+      const nxt = cues[nextIdx];
+
+      // transport
+      if (t.curNum) t.curNum.textContent = cur.num;
+      if (t.curName) t.curName.textContent = cur.name;
+      if (t.curElapsed)
+        t.curElapsed.textContent = fmt((progress / 100) * cur.dur);
+      if (t.curDur) t.curDur.textContent = `/ ${fmt(cur.dur)}`;
+      if (t.curBar) t.curBar.style.width = `${progress}%`;
+      if (t.nextNum) t.nextNum.textContent = nxt.num;
+      if (t.nextName) t.nextName.textContent = nxt.name;
+
+      // cue rows
+      rows.forEach((row, i) => {
+        const playing = i === index;
+        const isNext = i === nextIdx;
+        row.classList.toggle('is-playing', playing);
+        row.classList.toggle('is-next', isNext);
+        const progEl = row.querySelector<HTMLElement>('[data-progress]');
+        const subEl = row.querySelector<HTMLElement>('[data-sub]');
+        const bar = row.querySelector<HTMLElement>('[data-progress-bar]');
+        const time = row.querySelector<HTMLElement>('[data-progress-time]');
+        if (progEl) progEl.hidden = !playing;
+        if (subEl) subEl.hidden = playing;
+        if (playing) {
+          const dur = cues[i].dur;
+          if (bar) bar.style.width = `${progress}%`;
+          if (time)
+            time.textContent = `${fmt((progress / 100) * dur)} / ${fmt(dur)}`;
+        } else if (bar) {
+          bar.style.width = '0%';
+        }
+      });
+    };
+
+    const advance = () => {
+      index = (index + 1) % cues.length;
+      progress = 0;
+      render();
+    };
+
+    rows.forEach((row) => {
+      row.addEventListener('click', () => {
+        const i = Number(row.dataset.cueIndex);
+        if (!Number.isNaN(i)) {
+          index = i;
+          progress = 0;
+          render();
+        }
+      });
+    });
+
+    document.querySelector('[data-go]')?.addEventListener('click', advance);
+    document.querySelector('[data-panic]')?.addEventListener('click', () => {
+      paused = true;
+      progress = 0;
+      render();
+      window.clearTimeout(panicReset);
+      panicReset = window.setTimeout(() => {
+        paused = false;
+      }, 1100);
+    });
+
+    window.setInterval(() => {
+      if (paused) return;
+      progress += 1.6;
+      if (progress >= 100) {
+        advance();
+      } else {
+        render();
+      }
+    }, 140);
+
+    render();
+  }
+
+  // ---- FAQ accordion ----
+  document
+    .querySelectorAll<HTMLElement>('[data-faq] .faq__item')
+    .forEach((item) => {
+      const btn = item.querySelector<HTMLButtonElement>('[data-faq-toggle]');
+      const panel = item.querySelector<HTMLElement>('[data-faq-panel]');
+      const icon = item.querySelector<HTMLElement>('.faq__icon');
+      btn?.addEventListener('click', () => {
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+        if (panel) panel.hidden = open;
+        if (icon) icon.textContent = open ? '+' : '−';
+      });
+    });
+
+  // ---- Early access form ----
+  const form = document.querySelector<HTMLFormElement>('[data-access-form]');
+  const done = document.querySelector<HTMLElement>('[data-access-done]');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    form.hidden = true;
+    if (done) done.hidden = false;
+  });
+</script>
+
 <style>
-  footer {
-    border-top: 1px solid var(--sm-border);
-    padding: 28px 0;
+  main {
+    display: block;
+  }
+  .mono {
+    font-family: var(--mono);
+  }
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .wrap--narrow {
+    max-width: 720px;
+  }
+  .band {
+    padding: 110px 0;
+  }
+  .band--tight {
+    padding-top: 0;
+  }
+  .band--panel {
+    background: var(--sm-bg-panel);
+  }
+  .center {
+    text-align: center;
+  }
+  .intro {
+    max-width: 640px;
+    margin: 0 auto 48px;
+  }
+
+  /* Typography */
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .eyebrow--ready {
+    color: var(--sm-ready);
+  }
+  .eyebrow--playing {
+    color: var(--sm-playing);
+  }
+  .eyebrow--live {
+    color: var(--sm-live);
+  }
+  .eyebrow--warning {
+    color: var(--sm-warning);
+  }
+  h1 {
+    font-size: clamp(34px, 5.4vw, 56px);
+    font-weight: 750;
+    color: var(--sm-text-strong);
+    line-height: 1.12;
+    margin: 0 0 22px;
+    letter-spacing: -0.5px;
+  }
+  h2 {
+    font-size: clamp(26px, 3.6vw, 38px);
+    font-weight: 700;
+    color: var(--sm-text-strong);
+    line-height: 1.2;
+    margin: 0 0 20px;
+    letter-spacing: -0.02em;
+  }
+  .h2-center {
+    margin: 0 0 16px;
+  }
+  h3 {
+    font-size: 17px;
+    font-weight: 650;
+    color: var(--sm-text-strong);
+    margin: 0 0 10px;
+  }
+  .lead {
+    font-size: 15.5px;
+    line-height: 1.7;
     color: var(--sm-text-muted);
+    margin: 0 0 16px;
+  }
+  .lead:last-child {
+    margin-bottom: 0;
+  }
+  .lead--center {
+    max-width: 600px;
+    margin-inline: auto;
+  }
+  .lead--accent {
+    color: var(--sm-live);
+    font-size: 14.5px;
+    font-weight: 550;
+  }
+  .note {
+    color: var(--sm-text-faint);
+    max-width: 560px;
+    margin-top: 44px;
+  }
+  .fine {
+    font-size: 13px;
+    color: #4e555f;
+    text-align: center;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  /* Buttons */
+  .btn-solid,
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 26px;
+    border-radius: 8px;
+    font-size: 14.5px;
+    font-weight: 650;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease;
+  }
+  .btn-solid {
+    background: var(--sm-go);
+    color: #eafbf0;
+  }
+  .btn-solid:hover {
+    background: #35ae61;
+  }
+  .btn-outline {
+    border: 1px solid var(--sm-border-strong);
+    color: var(--sm-text-strong);
+    font-weight: 600;
+  }
+  .btn-outline:hover {
+    background: var(--sm-bg-soft);
+  }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    padding: 130px 24px 90px;
+    overflow: hidden;
+  }
+  .hero__glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse 900px 420px at 50% -10%,
+      rgb(87 200 120 / 9%),
+      transparent 62%
+    );
+  }
+  .hero__copy {
+    position: relative;
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .hero__copy p {
+    font-size: 16.5px;
+    line-height: 1.7;
+    color: var(--sm-text-muted);
+    max-width: 600px;
+    margin: 0 auto 30px;
+  }
+  .hero__actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hero__note {
+    font-size: 12.5px;
+    color: #4e555f;
+    margin-top: 20px;
+  }
+
+  /* Transport strip */
+  .transport {
+    position: relative;
+    max-width: 920px;
+    margin: 64px auto 0;
+    background: var(--sm-bg-workspace);
+    border-radius: 14px;
+    border: 1px solid var(--sm-border);
+    box-shadow: 0 40px 80px rgb(0 0 0 / 45%);
+    padding: 22px 26px;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    animation: smFloat 7s ease-in-out infinite;
+  }
+  .transport__now {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    padding: 6px 20px;
+    min-width: 0;
+    background: rgb(242 96 106 / 5%);
+    border-radius: 10px;
+  }
+  .transport__now-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    min-width: 0;
+  }
+  .transport__cur-num {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--sm-text-strong);
+  }
+  .transport__cur-name {
+    font-size: 15px;
+    font-weight: 650;
+    color: var(--sm-text-strong);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .transport__time {
+    margin-left: auto;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-shrink: 0;
+    font-size: 15px;
+    font-weight: 550;
+    color: var(--sm-text-strong);
+  }
+  .transport__dur {
+    font-size: 11px;
+    color: #4e555f;
+  }
+  .transport__bar {
+    height: 4px;
+    background: var(--sm-border);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    margin-left: 21px;
+  }
+  .transport__bar i {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: var(--sm-playing);
+    border-radius: 2px;
+    transition: width 0.15s linear;
+  }
+  .transport__next {
+    flex: 0.8;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 0 22px;
+    min-width: 0;
+  }
+  .transport__next-label {
+    font-size: 10px;
+    color: var(--sm-ready);
+    font-weight: 600;
+  }
+  .transport__next-num {
+    font-size: 13px;
+    font-weight: 600;
+    color: #c6cbd3;
+  }
+  .transport__next-name {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #c6cbd3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .transport__controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 16px;
+  }
+  .go-btn,
+  .panic-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 52px;
+    border: none;
+    border-radius: 7px;
+    transition: background-color 160ms ease;
+  }
+  .go-btn {
+    min-width: 82px;
+    background: var(--sm-go);
+    color: #eafbf0;
+    padding: 0 20px;
+  }
+  .go-btn span {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+  }
+  .go-btn:hover {
+    background: #35ae61;
+  }
+  .panic-btn {
+    min-width: 70px;
+    color: var(--sm-playing);
+    background: rgb(242 96 106 / 8%);
+  }
+  .panic-btn b {
+    font-size: 9.5px;
+    letter-spacing: 1.5px;
+  }
+  .panic-btn:hover {
+    background: rgb(242 96 106 / 15%);
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: smPulse 1.8s infinite;
+  }
+  .dot--playing {
+    width: 7px;
+    height: 7px;
+    background: var(--sm-playing);
+    align-self: center;
+  }
+  .dot--live {
+    background: var(--sm-live);
+  }
+
+  /* Layout helpers */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 56px;
+  }
+  .grid-2--top {
+    align-items: start;
+  }
+  .grid-2--center {
+    align-items: center;
+  }
+
+  /* Checklist */
+  .checklist {
+    list-style: none;
+    margin: 0;
+    padding: 6px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .checklist--2col {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px 20px;
+  }
+  .checklist li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .check {
+    color: var(--sm-ready);
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .checklist li span:last-child {
+    font-size: 14.5px;
+    color: #c6cbd3;
+    line-height: 1.5;
+  }
+
+  /* Cards */
+  .cards {
+    display: grid;
+    gap: 20px;
+    text-align: left;
+  }
+  .cards--3 {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    margin-top: 44px;
+  }
+  .cards--4 {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+  }
+  .cards--auto {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: var(--sm-bg-workspace);
+    border-radius: 12px;
+    padding: 30px;
+    border: 1px solid rgb(255 255 255 / 5%);
+  }
+  .card--sm {
+    padding: 26px;
+  }
+  .card--sm h3 {
+    font-size: 15.5px;
+  }
+  .card__icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    margin-bottom: 18px;
+  }
+  .card p {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--sm-text-muted);
+    margin: 0;
+  }
+  .card--sm p {
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+
+  /* Model */
+  .model {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: left;
+  }
+  .model__card {
+    width: 280px;
+    padding: 28px;
+  }
+  .model__card p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .model__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    color: #3f454e;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .model__label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  /* Cue list */
+  .cuelist {
+    background: var(--sm-bg-workspace);
+    border-radius: 14px;
+    border: 1px solid var(--sm-border);
+    overflow: hidden;
+    max-width: 820px;
+    margin: 0 auto 52px;
+    box-shadow: 0 30px 60px rgb(0 0 0 / 35%);
+  }
+  .cuelist__head {
+    display: flex;
+    align-items: center;
+    height: 42px;
+    padding: 0 20px;
+    border-bottom: 1px solid rgb(255 255 255 / 5%);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #7a828e;
+  }
+  .cuelist__hint {
+    margin-left: auto;
+    font-size: 10.5px;
+    font-weight: 400;
+    color: #4e555f;
+  }
+  .cuelist__rows {
+    padding: 8px 10px;
+  }
+  .cuerow {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 14px 10px 16px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    text-align: left;
+    transition: background-color 140ms ease;
+  }
+  .cuerow:hover {
+    background: rgb(255 255 255 / 3%);
+  }
+  .cuerow.is-playing {
+    background: rgb(242 96 106 / 7%);
+  }
+  .cuerow__rail {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    bottom: 8px;
+    width: 2.5px;
+    border-radius: 2px;
+    background: rgb(255 255 255 / 8%);
+  }
+  .cuerow.is-playing .cuerow__rail {
+    background: var(--sm-playing);
+  }
+  .cuerow.is-next .cuerow__rail {
+    background: var(--sm-ready);
+  }
+  .cuerow__num {
+    width: 38px;
+    text-align: right;
+    padding-right: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--sm-text-faint);
+    flex-shrink: 0;
+  }
+  .cuerow.is-playing .cuerow__num {
+    color: var(--sm-playing);
+  }
+  .cuerow.is-next .cuerow__num {
+    color: var(--sm-ready);
+  }
+  .cuerow__icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: rgb(255 255 255 / 3.5%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #6b727d;
+    flex-shrink: 0;
+    margin-right: 12px;
+  }
+  .cuerow__body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .cuerow__name {
+    font-size: 13.5px;
+    color: #c6cbd3;
+    font-weight: 550;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cuerow.is-playing .cuerow__name {
+    color: var(--sm-text-strong);
+    font-weight: 650;
+  }
+  .cuerow__progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cuerow__track {
+    flex: 1;
+    max-width: 320px;
+    height: 3px;
+    background: rgb(255 255 255 / 7%);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cuerow__track i {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: var(--sm-playing);
+    border-radius: 2px;
+    transition: width 0.15s linear;
+  }
+  .cuerow__time {
+    font-size: 10px;
+    color: var(--sm-text-muted);
+  }
+  .cuerow__sub {
+    font-size: 10.5px;
+    color: var(--sm-text-faint);
+  }
+
+  .benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px 32px;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .benefits__item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .benefits__item .check {
     font-size: 13px;
   }
-  footer .container {
+  .benefits__item span:last-child {
+    font-size: 13.5px;
+    color: #c6cbd3;
+    line-height: 1.5;
+  }
+
+  /* Signals */
+  .signals {
+    background: var(--sm-bg-workspace);
+    border-radius: 12px;
+    border: 1px solid rgb(255 255 255 / 5%);
+    padding: 26px;
     display: flex;
-    gap: 24px;
+    flex-direction: column;
+    gap: 16px;
   }
-  footer span {
-    margin-right: auto;
+  .signals__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
+  .signals__label {
+    font-size: 13px;
+    color: #c6cbd3;
+    font-weight: 550;
+  }
+  .signals__status {
+    margin-left: auto;
+    font-size: 11px;
+    color: #4e555f;
+  }
+
+  /* Themes */
+  .themes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px 32px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .themes__item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .diamond {
+    color: var(--sm-warning);
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .themes__item span:last-child {
+    font-size: 14px;
+    color: #c6cbd3;
+    line-height: 1.5;
+  }
+
+  /* Chips */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    max-width: 820px;
+    margin: 0 auto 28px;
+  }
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    background: var(--sm-bg-workspace);
+    border: 1px solid var(--sm-border);
+    border-radius: 20px;
+  }
+  .chip__name {
+    font-size: 13px;
+    color: #c6cbd3;
+  }
+  .chip__status {
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+  /* Access form */
+  .access-form {
+    background: var(--sm-bg-workspace);
+    border: 1px solid var(--sm-border);
+    border-radius: 12px;
+    padding: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+  }
+  .field--span {
+    grid-column: 1 / -1;
+  }
+  .field label {
+    font-size: 12px;
+    color: var(--sm-text-muted);
+    margin-bottom: 6px;
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    background: var(--sm-bg-panel);
+    border: 1px solid rgb(255 255 255 / 8%);
+    border-radius: 7px;
+    color: var(--sm-text-strong);
+    font-size: 13.5px;
+    font-family: inherit;
+    transition: border-color 160ms ease;
+  }
+  .field input {
+    height: 42px;
+    padding: 0 13px;
+  }
+  .field textarea {
+    padding: 11px 13px;
+    resize: vertical;
+  }
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--sm-ready);
+  }
+  .access-form__submit {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .access-done {
+    background: var(--sm-bg-workspace);
+    border: 1px solid rgb(87 200 120 / 25%);
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+  }
+  .access-done__mark {
+    color: var(--sm-ready);
+    font-size: 26px;
+    margin-bottom: 12px;
+  }
+  .access-done p {
+    font-size: 15.5px;
+    color: var(--sm-text-strong);
+    margin: 0;
+  }
+
+  /* FAQ */
+  .faq-title {
+    font-size: clamp(24px, 3.2vw, 32px);
+    margin-bottom: 30px;
+  }
+  .faq__item {
+    border-bottom: 1px solid rgb(255 255 255 / 7%);
+  }
+  .faq__q {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 20px 2px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+  }
+  .faq__q > span:first-child {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--sm-text-strong);
+  }
+  .faq__icon {
+    color: var(--sm-text-faint);
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .faq__a {
+    padding: 0 2px 22px;
+    color: var(--sm-text-muted);
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+
+  /* Final CTA */
+  .final {
+    position: relative;
+    overflow: hidden;
+  }
+  .final__glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse 800px 360px at 50% 110%,
+      rgb(242 96 106 / 7%),
+      transparent 62%
+    );
+  }
+  .final .wrap {
+    position: relative;
+  }
+  .final__title {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 750;
+  }
+  .final__actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+
+  /* Reveal animation — only active once JS arms it (.js-reveal on <html>),
+     so content stays visible if scripts fail or motion is reduced. */
+  :global(.js-reveal) .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.8s ease,
+      transform 0.8s ease;
+  }
+  :global(.js-reveal) .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
   @media (max-width: 767px) {
-    footer .container {
-      flex-wrap: wrap;
+    .band {
+      padding: 72px 0;
     }
-    footer span {
-      width: 100%;
+    .hero {
+      padding: 96px 24px 64px;
+    }
+    .transport {
+      flex-direction: column;
+      gap: 16px;
+      padding: 18px;
+    }
+    .transport__next {
+      padding: 0;
+    }
+    .transport__controls {
+      padding-left: 0;
+    }
+    .go-btn {
+      flex: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .transport {
+      animation: none;
     }
   }
 </style>

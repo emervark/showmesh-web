@@ -1,0 +1,166 @@
+---
+const links = [
+  { href: '#model', label: 'Product' },
+  { href: '#model', label: 'How it works' },
+  { href: '#operator', label: 'Live operation' },
+  { href: '#integrations', label: 'Integrations' },
+  { href: '#access', label: 'Development' }
+];
+---
+
+<div class="site-nav" id="top">
+  <div class="site-nav__inner">
+    <a class="brand" href="#top" aria-label="Showmesh home">
+      <span class="brand__mark" aria-hidden="true">◆</span><span>Showmesh</span>
+    </a>
+    <nav class="site-nav__links" aria-label="Primary navigation">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+    <a class="site-nav__cta" href="#access">Request early access</a>
+    <details class="site-nav__mobile" data-nav-details>
+      <summary aria-label="Open navigation"
+        ><span></span><span></span><span></span></summary
+      >
+      <nav aria-label="Mobile navigation">
+        {links.map((l) => <a href={l.href}>{l.label}</a>)}
+        <a href="#access" class="site-nav__mobile-cta">Request early access</a>
+      </nav>
+    </details>
+  </div>
+</div>
+
+<script>
+  const details = document.querySelector('[data-nav-details]');
+  if (details instanceof HTMLDetailsElement) {
+    const summary = details.querySelector('summary');
+    details.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && details.open) {
+        details.open = false;
+        if (summary instanceof HTMLElement) summary.focus();
+      }
+    });
+    details.querySelectorAll('a').forEach((link) =>
+      link.addEventListener('click', () => {
+        details.open = false;
+      })
+    );
+  }
+</script>
+
+<style>
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(14px);
+    background: rgb(10 12 15 / 72%);
+    border-bottom: 1px solid var(--sm-border);
+  }
+  .site-nav__inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    padding: 15px 24px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--sm-text-strong);
+  }
+  .brand__mark {
+    color: var(--sm-ready);
+  }
+  .site-nav__links {
+    display: flex;
+    gap: 26px;
+  }
+  .site-nav__links a {
+    font-size: 13.5px;
+    color: var(--sm-text-muted);
+    transition: color 160ms ease;
+  }
+  .site-nav__links a:hover {
+    color: var(--sm-text-strong);
+  }
+  .site-nav__cta {
+    margin-left: auto;
+    padding: 8px 17px;
+    background: var(--sm-go);
+    color: #eafbf0;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background-color 160ms ease;
+  }
+  .site-nav__cta:hover {
+    background: #35ae61;
+  }
+  .site-nav__mobile {
+    display: none;
+  }
+  @media (max-width: 860px) {
+    .site-nav__links {
+      display: none;
+    }
+    .site-nav__cta {
+      display: none;
+    }
+    .site-nav__mobile {
+      display: block;
+      margin-left: auto;
+      position: relative;
+    }
+    .site-nav__mobile summary {
+      display: grid;
+      gap: 4px;
+      width: 44px;
+      height: 44px;
+      place-content: center;
+      border-radius: var(--sm-radius-control);
+      cursor: pointer;
+      list-style: none;
+    }
+    .site-nav__mobile summary::-webkit-details-marker {
+      display: none;
+    }
+    .site-nav__mobile summary span {
+      width: 20px;
+      height: 1.5px;
+      background: var(--sm-text-primary);
+    }
+    .site-nav__mobile nav {
+      position: absolute;
+      top: 48px;
+      right: 0;
+      display: grid;
+      min-width: 220px;
+      z-index: 60;
+      border: 1px solid var(--sm-border-strong);
+      border-radius: var(--sm-radius-panel);
+      padding: 8px;
+      background: var(--sm-bg-elevated);
+    }
+    .site-nav__mobile nav a {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      border-radius: var(--sm-radius-control);
+      color: var(--sm-text-secondary);
+      font-size: 14px;
+    }
+    .site-nav__mobile nav a:hover {
+      background: var(--sm-bg-soft);
+      color: var(--sm-text-strong);
+    }
+    .site-nav__mobile-cta {
+      color: var(--sm-ready) !important;
+      font-weight: 600;
+    }
+  }
+</style>
