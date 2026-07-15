@@ -68,3 +68,32 @@ Use these Cloudflare Pages settings:
 - **Node version:** a current Node.js LTS release that satisfies Astro’s engine requirement
 
 The generated static site is written to `dist/`.
+
+## Manual (`manual.showmesh.app`)
+
+The product manual lives in [`manual/`](manual/) as a self-contained
+[VitePress](https://vitepress.dev) project, separate from the Astro marketing
+site. English is the default locale (served at the root) and Estonian is an
+additional locale under `/et/`. The manual is linked from the marketing site's
+navigation and footer at `https://manual.showmesh.app`.
+
+Local development (run from `manual/`):
+
+```bash
+cd manual
+npm install
+npm run dev      # local preview
+npm run build    # writes .vitepress/dist/
+```
+
+The manual is deployed as its **own Cloudflare Pages project** (separate from
+the marketing site) bound to the `manual.showmesh.app` subdomain:
+
+- **Root directory:** `manual`
+- **Build command:** `npm run build`
+- **Output directory:** `.vitepress/dist` (relative to the root directory)
+- **Node version:** a current Node.js LTS release
+- **Custom domain:** `manual.showmesh.app`
+
+The two Cloudflare Pages projects build independently from the same repository:
+the marketing site from the repository root, the manual from `manual/`.
