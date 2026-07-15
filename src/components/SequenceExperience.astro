@@ -1,0 +1,1999 @@
+---
+const sequence = [
+  ['01', 'Connect', 'top'],
+  ['02', 'Automate', 'build'],
+  ['03', 'Run', 'run'],
+  ['04', 'See what is live', 'live'],
+  ['05', 'Control what happens next', 'systems']
+];
+---
+
+<div class="sequence-experience" data-sequence-root data-scene="0">
+  <aside class="sequence-rail" aria-label="Page sequence">
+    <span class="rail-title">SHOW SEQUENCE</span>
+    <ol>
+      {
+        sequence.map(([number, label, id], index) => (
+          <li>
+            <a
+              href={`#${id}`}
+              aria-current={index === 0 ? 'step' : undefined}
+              data-rail-cue={index}
+            >
+              <>
+                <span>{number}</span>
+                <b>{label}</b>
+              </>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+    <span class="rail-status"><i></i> SHOW READY</span>
+  </aside>
+
+  <div class="sequence-content">
+    <section
+      id="top"
+      class="sequence-section hero"
+      data-sequence-section
+      data-stage="0"
+    >
+      <div class="hero-copy">
+        <span class="kicker">Realtime show automation for Windows</span>
+        <h1>Everything that makes the show. One sequence that runs it.</h1>
+        <p>
+          Build and operate media, realtime graphics, control signals, and
+          external systems from one Windows-native workspace.
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#build">Build the next cue</a>
+          <a class="btn" href="/showmesh-ui.html" target="_blank"
+            >Open the full operator UI <span aria-hidden="true">↗</span></a
+          >
+        </div>
+      </div>
+
+      <div
+        class="run-console"
+        tabindex="0"
+        aria-label="Interactive current and next cue demonstration. Press the GO button to advance."
+      >
+        <div class="console-mode">
+          <span><i></i> SHOW MODE</span><span>PROGRAM · 1080p60</span>
+        </div>
+        <div class="now-block">
+          <span class="state-label">NOW · PLAYING</span>
+          <div class="cue-identity">
+            <b data-now-number>07</b>
+            <strong data-now-name>aseri_movie_v1.mov</strong>
+            <time data-now-time>01:24.0 / 02:15.6</time>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <span data-progress></span>
+          </div>
+          <div class="action-chain" aria-label="Actions on the playing cue">
+            <span class="action done"><i></i> Fade in · done</span>
+            <span class="action running"><i></i> Blur 0 → 20</span>
+            <span class="action live"><i></i> OSC /smoke/fog · 0.64</span>
+          </div>
+        </div>
+        <div class="next-block">
+          <span class="state-label">NEXT</span>
+          <div class="cue-identity">
+            <b data-next-number>08</b>
+            <strong data-next-name>Smoke Field</strong>
+            <small data-next-intent>Fog 0 → 0.8 · ON PLAY</small>
+          </div>
+        </div>
+        <div class="go-row">
+          <button type="button" class="go-button" data-hero-go>
+            <span>GO</span><small data-go-target>Run cue 08</small>
+          </button>
+          <span class="go-hint">Click GO to advance the live state</span>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="build"
+      class="sequence-section build-section"
+      data-sequence-section
+      data-stage="1"
+    >
+      <header class="section-intro">
+        <span class="cue-index">02 · AUTOMATE</span>
+        <h2>Build outcomes, not workarounds.</h2>
+        <p>
+          Choose what you control, define what changes, then decide when it
+          happens.
+        </p>
+      </header>
+
+      <div class="build-demo" data-build-demo>
+        <div class="build-preview" aria-label="Fog density preview">
+          <div class="fog-field" data-fog-field>
+            <span></span><span></span><span></span>
+          </div>
+          <div class="preview-readout">
+            <span>PROGRAM · L2</span><b
+              >FOG <output data-fog-output>0.00</output></b
+            >
+          </div>
+        </div>
+
+        <div class="flow-editor">
+          <div class="flow-stage resource-stage">
+            <span class="flow-label">RESOURCE</span>
+            <div
+              class="resource-list"
+              role="group"
+              aria-label="Choose resource"
+            >
+              <button
+                type="button"
+                class="is-selected"
+                aria-pressed="true"
+                data-resource="Smoke_Field.nblock"
+                data-parameter="Fog density"
+                data-target="0.8">◈ Smoke_Field.nblock</button
+              >
+              <button
+                type="button"
+                aria-pressed="false"
+                data-resource="aseri_movie_v1.mov"
+                data-parameter="Opacity"
+                data-target="1.0">▶ aseri_movie_v1.mov</button
+              >
+              <button
+                type="button"
+                aria-pressed="false"
+                data-resource="Program"
+                data-parameter="Master level"
+                data-target="0.7">▣ Program output</button
+              >
+            </div>
+          </div>
+
+          <div class="flow-link" aria-hidden="true"><i></i></div>
+
+          <div class="flow-stage action-stage">
+            <span class="flow-label">ACTION</span>
+            <div class="action-value">
+              <span data-action-name>Fog density</span>
+              <b><i>0.0</i><em>→</em><output data-action-target>0.8</output></b>
+              <small>4.000 s</small>
+            </div>
+          </div>
+
+          <div class="flow-link" aria-hidden="true"><i></i></div>
+
+          <div class="flow-stage trigger-stage">
+            <span class="flow-label">TRIGGER</span>
+            <div
+              class="trigger-options"
+              role="group"
+              aria-label="Choose trigger"
+            >
+              <button
+                type="button"
+                class="is-selected"
+                aria-pressed="true"
+                data-trigger="ON PLAY">ON PLAY</button
+              >
+              <button
+                type="button"
+                aria-pressed="false"
+                data-trigger="OSC /smoke/fog">OSC /smoke/fog</button
+              >
+            </div>
+          </div>
+
+          <button type="button" class="mini-go" data-build-go>
+            <span>GO</span><small>Run this cue</small>
+          </button>
+        </div>
+
+        <div class="flow-summary" aria-live="polite">
+          <i></i><span data-flow-summary
+            >Smoke_Field.nblock → Fog density 0.0 → 0.8 → ON PLAY</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="run"
+      class="sequence-section run-section"
+      data-sequence-section
+      data-stage="2"
+    >
+      <header class="section-intro narrow">
+        <span class="cue-index">03 · RUN</span>
+        <h2>The operator should never have to guess.</h2>
+        <p>
+          Current cue, remaining time, the next action, and system health stay
+          visible throughout the show.
+        </p>
+      </header>
+
+      <div class="operator-strip">
+        <div class="operator-now">
+          <span>PLAYING</span><b>07</b><strong>aseri_movie_v1.mov</strong>
+          <div class="time-pair">
+            <time>01:24.0</time><small>−00:51.6</small>
+          </div>
+          <i aria-hidden="true"></i>
+        </div>
+        <div class="operator-next">
+          <span>NEXT</span><b>08</b><strong>Smoke Field</strong>
+          <small>Starts block · Fog 0 → 0.8 · holds until stopped</small>
+        </div>
+        <div class="operator-go"><span>GO</span><small>CUE 08</small></div>
+      </div>
+
+      <div class="cue-context">
+        <div class="cue-list-fragment">
+          <div class="cue-row playing">
+            <span class="rail"></span><b>07</b>
+            <div>
+              <strong>aseri_movie_v1.mov</strong><small>Program · 02:15.6</small
+              >
+            </div>
+            <em>PLAYING</em>
+          </div>
+          <div class="attached-actions">
+            <div>
+              <i class="done"></i><span>07.1 · Fade in</span><b>done</b>
+            </div>
+            <div>
+              <i class="running"></i><span>07.2 · Blur</span><b>0 → 20</b>
+            </div>
+            <div>
+              <i class="live"></i><span>07.3 · Fog density</span><b
+                >OSC · 0.64</b
+              >
+            </div>
+          </div>
+          <div class="cue-row next">
+            <span class="rail"></span><b>08</b>
+            <div>
+              <strong>Smoke Field</strong><small>Program · L2 · hold</small>
+            </div>
+            <em>NEXT</em>
+          </div>
+          <div class="cue-row warning">
+            <span class="rail"></span><b>10</b>
+            <div>
+              <strong>Dim to blackout</strong><small
+                >Action target cue not found</small
+              >
+            </div>
+            <em>WARNING</em>
+          </div>
+        </div>
+
+        <aside class="inspector-fragment">
+          <div class="inspector-title">
+            <span>CUE INSPECTOR</span><b>08 · Smoke Field</b><small
+              >▶ NEXT</small
+            >
+          </div>
+          <dl>
+            <div><dt>RESOURCE</dt><dd>Smoke_Field.nblock</dd></div>
+            <div><dt>DURATION</dt><dd>hold</dd></div>
+            <div><dt>OUTPUT</dt><dd>Program · L2</dd></div>
+            <div><dt>ACTIONS</dt><dd>3 · triggers</dd></div>
+            <div class="live-field">
+              <dt>FOG DENSITY</dt><dd>0.64 · OSC live</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <section
+      id="live"
+      class="sequence-section live-section"
+      data-sequence-section
+      data-stage="3"
+    >
+      <header class="section-intro">
+        <span class="cue-index">04 · SEE WHAT IS LIVE</span>
+        <h2>Live input belongs inside the cue.</h2>
+        <p>
+          Let timecode, OSC, MIDI, and realtime data shape the sequence while it
+          runs.
+        </p>
+      </header>
+
+      <div class="live-console" data-live-console>
+        <div class="live-inputs">
+          <span class="panel-label">LIVE INPUTS</span>
+          <div class="input-row active">
+            <span><i></i> OSC</span><b>/smoke/fog</b><output data-osc-value
+              >0.64</output
+            >
+          </div>
+          <label class="value-slider">
+            <span>Fog density</span>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value="64"
+              aria-label="OSC fog density"
+              data-osc-slider
+            />
+          </label>
+          <button type="button" class="input-row" data-midi-pulse>
+            <span><i></i> MIDI</span><b>Console · CC 21</b><output
+              data-midi-value>92</output
+            >
+          </button>
+          <div class="input-row">
+            <span><i></i> TIMECODE</span><b>LTC · 25 fps</b><output
+              >01:12:08:14</output
+            >
+          </div>
+        </div>
+
+        <div class="parameter-monitor">
+          <div class="monitor-head">
+            <span>SMOKE FIELD · PARAMETERS</span><b><i></i> LIVE</b>
+          </div>
+          <div class="parameter-visual" data-live-fog>
+            <span class="fog-a"></span><span class="fog-b"></span><span
+              class="fog-c"></span>
+            <strong>FOG</strong><output data-live-output>0.64</output>
+          </div>
+          <div class="meter-list">
+            <div>
+              <span>Fog density</span><i><b data-fog-meter></b></i><output
+                data-live-meter>64%</output
+              >
+            </div>
+            <div>
+              <span>Bloom</span><i><b style="width:48%"></b></i><output
+                >1.20</output
+              >
+            </div>
+            <div>
+              <span>Particle count</span><i><b style="width:66%"></b></i><output
+                >800k</output
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="systems"
+      class="sequence-section systems-section"
+      data-sequence-section
+      data-stage="4"
+    >
+      <header class="section-intro narrow">
+        <span class="cue-index">05 · CONTROL WHAT HAPPENS NEXT</span>
+        <h2>The interface edits the show. The engine runs it.</h2>
+        <p>
+          Playback, rendering, output, and live control remain visible as one
+          operating system without competing for the operator's attention.
+        </p>
+      </header>
+
+      <div class="systems-map" aria-label="Showmesh connected systems">
+        <div class="system-node media">
+          <span>MEDIA</span><b>Video + audio</b><small>Core</small>
+        </div>
+        <div class="system-node control">
+          <span>CONTROL</span><b>OSC + MIDI</b><small>Planned</small>
+        </div>
+        <div class="system-node realtime">
+          <span>REALTIME</span><b>Notch Blocks</b><small>Exploratory</small>
+        </div>
+        <div class="system-node output">
+          <span>OUTPUT</span><b>Program</b><small>Core</small>
+        </div>
+        <div class="system-core">
+          <span>SHOWMESH CUE</span><b>08 · Smoke Field</b><small
+            >3 actions · hold</small
+          >
+          <i></i>
+        </div>
+        <svg
+          viewBox="0 0 1000 420"
+          aria-hidden="true"
+          preserveAspectRatio="none"
+        >
+          <path d="M210 90 C360 90 350 210 500 210"></path>
+          <path d="M790 90 C640 90 650 210 500 210"></path>
+          <path d="M210 330 C360 330 350 210 500 210"></path>
+          <path d="M790 330 C640 330 650 210 500 210"></path>
+        </svg>
+      </div>
+
+      <div class="telemetry-bar" aria-label="System telemetry">
+        <div><span>PROGRAM</span><b>1080p60</b><small>OUTPUT READY</small></div>
+        <div><span>ENGINE</span><b>93 FPS</b><small>FRAME 10.7 MS</small></div>
+        <div><span>AUDIO</span><b>48 kHz</b><small>512 SMP</small></div>
+        <div class="telemetry-live">
+          <span>OSC</span><b>LIVE</b><small>/smoke/fog</small>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="sequence-section final-go">
+      <div class="final-next">
+        <span>NEXT</span><b>12</b>
+        <div>
+          <strong>Build your first show</strong><small
+            >Showmesh early access</small
+          >
+        </div>
+        <a
+          class="final-go-button"
+          href="mailto:hello@showmesh.app?subject=Showmesh%20early%20access"
+        >
+          <span>GO</span><small>Request early access</small>
+        </a>
+      </div>
+      <p>
+        Showmesh is in early development. Tell us about the systems, rooms, and
+        cues you need to run.
+      </p>
+    </section>
+  </div>
+</div>
+
+<script>
+  const cueStates = [
+    {
+      number: '07',
+      name: 'aseri_movie_v1.mov',
+      time: '01:24.0 / 02:15.6',
+      intent: 'Fog 0 → 0.8 · ON PLAY'
+    },
+    {
+      number: '08',
+      name: 'Smoke Field',
+      time: '00:00.0 / hold',
+      intent: 'Crossfade from cue 07 · 2.0 s'
+    },
+    {
+      number: '09',
+      name: 'Leaves_Cold_Snowflakes',
+      time: '00:00.0 / 03:10.0',
+      intent: 'Dim to blackout · 4.0 s'
+    },
+    {
+      number: '10',
+      name: 'Dim to blackout',
+      time: '00:00.0 / 00:04.0',
+      intent: 'Finale · fires together'
+    },
+    {
+      number: '11',
+      name: 'Finale',
+      time: '00:00.0 / auto',
+      intent: 'Build your first show'
+    }
+  ] as const;
+
+  document
+    .querySelectorAll<HTMLElement>('[data-sequence-root]')
+    .forEach((root) => {
+      const railLinks = Array.from(
+        root.querySelectorAll<HTMLElement>('[data-rail-cue]')
+      );
+      const sections = Array.from(
+        root.querySelectorAll<HTMLElement>('[data-sequence-section]')
+      );
+
+      const setActiveStage = (stage: number) => {
+        root.dataset.scene = String(stage);
+        railLinks.forEach((link, index) => {
+          if (index === stage) link.setAttribute('aria-current', 'step');
+          else link.removeAttribute('aria-current');
+        });
+      };
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            const visible = entries
+              .filter((entry) => entry.isIntersecting)
+              .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+            if (!(visible?.target instanceof HTMLElement)) return;
+            setActiveStage(Number(visible.target.dataset.stage || 0));
+          },
+          { rootMargin: '-24% 0px -55% 0px', threshold: [0.08, 0.25, 0.5] }
+        );
+        sections.forEach((section) => observer.observe(section));
+      }
+
+      let nowIndex = 0;
+      const nowNumber = root.querySelector<HTMLElement>('[data-now-number]');
+      const nowName = root.querySelector<HTMLElement>('[data-now-name]');
+      const nowTime = root.querySelector<HTMLElement>('[data-now-time]');
+      const nextNumber = root.querySelector<HTMLElement>('[data-next-number]');
+      const nextName = root.querySelector<HTMLElement>('[data-next-name]');
+      const nextIntent = root.querySelector<HTMLElement>('[data-next-intent]');
+      const goTarget = root.querySelector<HTMLElement>('[data-go-target]');
+      const progress = root.querySelector<HTMLElement>('[data-progress]');
+      const heroGo = root.querySelector<HTMLButtonElement>('[data-hero-go]');
+      const runConsole = root.querySelector<HTMLElement>('.run-console');
+
+      const renderCue = () => {
+        const current = cueStates[nowIndex];
+        const next = cueStates[(nowIndex + 1) % cueStates.length];
+        if (nowNumber) nowNumber.textContent = current.number;
+        if (nowName) nowName.textContent = current.name;
+        if (nowTime) nowTime.textContent = current.time;
+        if (nextNumber) nextNumber.textContent = next.number;
+        if (nextName) nextName.textContent = next.name;
+        if (nextIntent) nextIntent.textContent = current.intent;
+        if (goTarget) goTarget.textContent = `Run cue ${next.number}`;
+        if (progress) {
+          progress.classList.remove('is-running');
+          requestAnimationFrame(() => progress.classList.add('is-running'));
+        }
+      };
+
+      const advanceCue = () => {
+        nowIndex = (nowIndex + 1) % cueStates.length;
+        renderCue();
+      };
+
+      heroGo?.addEventListener('click', advanceCue);
+      runConsole?.addEventListener('keydown', (event) => {
+        if (event.code === 'Space' && event.target === runConsole) {
+          event.preventDefault();
+          advanceCue();
+        }
+      });
+      renderCue();
+
+      const buildDemo = root.querySelector<HTMLElement>('[data-build-demo]');
+      if (buildDemo) {
+        const resourceButtons = Array.from(
+          buildDemo.querySelectorAll<HTMLButtonElement>('[data-resource]')
+        );
+        const triggerButtons = Array.from(
+          buildDemo.querySelectorAll<HTMLButtonElement>('[data-trigger]')
+        );
+        const actionName =
+          buildDemo.querySelector<HTMLElement>('[data-action-name]');
+        const actionTarget = buildDemo.querySelector<HTMLOutputElement>(
+          '[data-action-target]'
+        );
+        const summary = buildDemo.querySelector<HTMLElement>(
+          '[data-flow-summary]'
+        );
+        const fogField =
+          buildDemo.querySelector<HTMLElement>('[data-fog-field]');
+        const fogOutput =
+          buildDemo.querySelector<HTMLOutputElement>('[data-fog-output]');
+        const buildGo =
+          buildDemo.querySelector<HTMLButtonElement>('[data-build-go]');
+        let selectedResource = resourceButtons[0];
+        let selectedTrigger = triggerButtons[0];
+
+        const renderBuild = () => {
+          const resource =
+            selectedResource?.dataset.resource || 'Smoke_Field.nblock';
+          const parameter =
+            selectedResource?.dataset.parameter || 'Fog density';
+          const target = selectedResource?.dataset.target || '0.8';
+          const trigger = selectedTrigger?.dataset.trigger || 'ON PLAY';
+          if (actionName) actionName.textContent = parameter;
+          if (actionTarget) actionTarget.textContent = target;
+          if (summary)
+            summary.textContent = `${resource} → ${parameter} 0.0 → ${target} → ${trigger}`;
+        };
+
+        resourceButtons.forEach((button) => {
+          button.addEventListener('click', () => {
+            selectedResource = button;
+            resourceButtons.forEach((item) => {
+              const selected = item === button;
+              item.classList.toggle('is-selected', selected);
+              item.setAttribute('aria-pressed', String(selected));
+            });
+            renderBuild();
+          });
+        });
+
+        triggerButtons.forEach((button) => {
+          button.addEventListener('click', () => {
+            selectedTrigger = button;
+            triggerButtons.forEach((item) => {
+              const selected = item === button;
+              item.classList.toggle('is-selected', selected);
+              item.setAttribute('aria-pressed', String(selected));
+            });
+            renderBuild();
+          });
+        });
+
+        buildGo?.addEventListener('click', () => {
+          const target = selectedResource?.dataset.target || '0.8';
+          buildDemo.classList.remove('is-running');
+          fogField?.style.setProperty('--fog-level', '0');
+          if (fogOutput) fogOutput.textContent = '0.00';
+          requestAnimationFrame(() => {
+            buildDemo.classList.add('is-running');
+            fogField?.style.setProperty('--fog-level', target);
+            if (fogOutput) fogOutput.textContent = Number(target).toFixed(2);
+          });
+        });
+        renderBuild();
+      }
+
+      const liveConsole = root.querySelector<HTMLElement>(
+        '[data-live-console]'
+      );
+      if (liveConsole) {
+        const slider =
+          liveConsole.querySelector<HTMLInputElement>('[data-osc-slider]');
+        const oscValue =
+          liveConsole.querySelector<HTMLOutputElement>('[data-osc-value]');
+        const liveOutput =
+          liveConsole.querySelector<HTMLOutputElement>('[data-live-output]');
+        const liveMeter =
+          liveConsole.querySelector<HTMLOutputElement>('[data-live-meter]');
+        const meter =
+          liveConsole.querySelector<HTMLElement>('[data-fog-meter]');
+        const fog = liveConsole.querySelector<HTMLElement>('[data-live-fog]');
+        const midiButton =
+          liveConsole.querySelector<HTMLButtonElement>('[data-midi-pulse]');
+        const midiValue =
+          liveConsole.querySelector<HTMLOutputElement>('[data-midi-value]');
+
+        const renderLive = () => {
+          const raw = Number(slider?.value || 64);
+          const value = (raw / 100).toFixed(2);
+          if (oscValue) oscValue.textContent = value;
+          if (liveOutput) liveOutput.textContent = value;
+          if (liveMeter) liveMeter.textContent = `${raw}%`;
+          if (meter) meter.style.width = `${raw}%`;
+          fog?.style.setProperty('--fog-level', String(raw / 100));
+        };
+        slider?.addEventListener('input', renderLive);
+        midiButton?.addEventListener('click', () => {
+          const next = Math.round(32 + Math.random() * 95);
+          if (midiValue) midiValue.textContent = String(next);
+          midiButton.classList.remove('is-pulsing');
+          requestAnimationFrame(() => midiButton.classList.add('is-pulsing'));
+        });
+        renderLive();
+      }
+    });
+</script>
+
+<style>
+  .sequence-experience {
+    position: relative;
+    width: min(var(--sm-content-max), calc(100% - 64px));
+    margin: 0 auto;
+  }
+  .sequence-rail {
+    position: fixed;
+    top: 64px;
+    bottom: 0;
+    z-index: 10;
+    width: 170px;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 20px 24px 0;
+    border-right: 1px solid var(--sm-border);
+    background: var(--sm-bg-shell);
+  }
+  .rail-title,
+  .rail-status {
+    color: var(--sm-text-faint);
+    font: 10px/1.4 var(--mono);
+    letter-spacing: 0.08em;
+  }
+  .sequence-rail ol {
+    position: relative;
+    display: grid;
+    gap: 0;
+    margin: 28px 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+  .sequence-rail ol::before {
+    position: absolute;
+    top: 18px;
+    bottom: 18px;
+    left: 5px;
+    width: 1px;
+    background: var(--sm-border-strong);
+    content: '';
+  }
+  .sequence-rail a {
+    position: relative;
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 8px;
+    min-height: 58px;
+    align-items: center;
+    color: var(--sm-text-faint);
+    font-size: 11px;
+  }
+  .sequence-rail a::before {
+    z-index: 1;
+    width: 11px;
+    height: 11px;
+    border: 1px solid var(--sm-text-faint);
+    background: var(--sm-bg-shell);
+    content: '';
+    transform: rotate(45deg);
+  }
+  .sequence-rail a > span {
+    display: none;
+  }
+  .sequence-rail a b {
+    font-weight: 550;
+    line-height: 1.25;
+  }
+  .sequence-rail a[aria-current='step'] {
+    color: var(--sm-text-strong);
+  }
+  .sequence-rail a[aria-current='step']::before {
+    border-color: var(--sm-ready);
+    background: var(--sm-ready);
+  }
+  .sequence-rail a[aria-current='step'] b::before {
+    display: block;
+    color: var(--sm-ready);
+    content: 'NOW';
+    font: 9px/1.3 var(--mono);
+  }
+  .rail-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .rail-status i,
+  .console-mode i,
+  .monitor-head i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--sm-ready);
+  }
+  .sequence-content {
+    margin-left: 170px;
+  }
+  .sequence-section {
+    min-height: 82vh;
+    padding: 112px 0 120px 64px;
+    border-bottom: 1px solid var(--sm-border);
+    scroll-margin-top: 64px;
+  }
+  .hero {
+    min-height: calc(100vh - 64px);
+    display: grid;
+    grid-template-columns: minmax(280px, 0.72fr) minmax(520px, 1.28fr);
+    grid-template-rows: auto auto auto auto;
+    column-gap: 64px;
+    align-content: center;
+    padding-top: 72px;
+  }
+  .hero-copy {
+    display: contents;
+  }
+  .hero-copy .kicker,
+  .hero-copy h1 {
+    grid-column: 1 / -1;
+  }
+  .hero-copy .kicker {
+    grid-row: 1;
+  }
+  .hero-copy h1 {
+    grid-row: 2;
+    max-width: 1040px;
+    margin: 14px 0 44px;
+    color: var(--sm-text-strong);
+    font-size: clamp(48px, 4.2vw, 60px);
+    line-height: 1;
+    letter-spacing: -0.052em;
+  }
+  .hero-copy > p {
+    grid-column: 1;
+    grid-row: 3;
+    max-width: 590px;
+    margin: 0;
+    color: var(--sm-text-secondary);
+    font-size: clamp(18px, 1.5vw, 20px);
+    line-height: 1.55;
+  }
+  .hero-actions {
+    grid-column: 1;
+    grid-row: 4;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+  }
+  .run-console,
+  .build-demo,
+  .live-console {
+    border: 1px solid var(--sm-border-strong);
+    border-radius: var(--sm-radius-panel);
+    background: var(--sm-bg-panel);
+  }
+  .run-console {
+    grid-column: 2;
+    grid-row: 3 / span 2;
+    overflow: hidden;
+    box-shadow: 0 28px 60px rgb(0 0 0 / 28%);
+  }
+  .console-mode {
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    border-bottom: 1px solid var(--sm-border);
+    color: var(--sm-text-muted);
+    font: 9px/1 var(--mono);
+  }
+  .console-mode span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .now-block,
+  .next-block {
+    position: relative;
+    padding: 18px 20px;
+  }
+  .now-block {
+    border-left: 4px solid var(--sm-playing);
+    background: #1f1518;
+  }
+  .next-block {
+    border-top: 1px solid var(--sm-border);
+    border-left: 4px solid var(--sm-ready);
+    background: #121a16;
+  }
+  .state-label,
+  .flow-label,
+  .panel-label {
+    color: var(--sm-text-muted);
+    font: 10px/1.3 var(--mono);
+    letter-spacing: 0.06em;
+  }
+  .now-block .state-label {
+    color: var(--sm-playing);
+  }
+  .next-block .state-label {
+    color: var(--sm-ready);
+  }
+  .cue-identity {
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: baseline;
+    margin-top: 8px;
+  }
+  .cue-identity > b {
+    color: var(--sm-text-muted);
+    font: 22px/1 var(--mono);
+  }
+  .now-block .cue-identity > b {
+    color: var(--sm-playing);
+  }
+  .next-block .cue-identity > b {
+    color: var(--sm-ready);
+  }
+  .cue-identity strong {
+    overflow: hidden;
+    color: var(--sm-text-strong);
+    font-size: 17px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .cue-identity time,
+  .cue-identity small {
+    color: var(--sm-text-muted);
+    font: 11px/1.4 var(--mono);
+  }
+  .progress-track {
+    height: 5px;
+    margin: 14px 0 12px 58px;
+    overflow: hidden;
+    background: rgb(255 255 255 / 7%);
+  }
+  .progress-track span {
+    display: block;
+    width: 62%;
+    height: 100%;
+    background: var(--sm-playing);
+  }
+  .progress-track span.is-running {
+    animation: cue-progress 8s linear forwards;
+  }
+  @keyframes cue-progress {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+  .action-chain {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    margin-left: 58px;
+  }
+  .action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--sm-text-muted);
+    font: 9px/1.4 var(--mono);
+  }
+  .action i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--sm-text-faint);
+  }
+  .action.running {
+    color: var(--sm-playing);
+  }
+  .action.running i {
+    background: var(--sm-playing);
+  }
+  .action.live {
+    color: var(--sm-live);
+  }
+  .action.live i {
+    background: var(--sm-live);
+  }
+  .go-row {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.46fr) 1fr;
+    gap: 18px;
+    align-items: center;
+    padding: 14px;
+    border-top: 1px solid var(--sm-border);
+    background: var(--sm-bg-elevated);
+  }
+  .go-button,
+  .mini-go,
+  .final-go-button {
+    min-height: 58px;
+    border: 1px solid #43b66b;
+    border-radius: var(--sm-radius-control);
+    background: var(--sm-go);
+    color: #07120b;
+    font-weight: 800;
+  }
+  .go-button {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 0 18px;
+    text-align: left;
+  }
+  .go-button span {
+    font-size: 23px;
+  }
+  .go-button small {
+    justify-self: end;
+    font: 10px/1.3 var(--mono);
+  }
+  .go-button:hover,
+  .mini-go:hover,
+  .final-go-button:hover {
+    background: var(--sm-ready);
+  }
+  .go-hint {
+    color: var(--sm-text-muted);
+    font: 10px/1.4 var(--mono);
+  }
+  .section-intro {
+    max-width: 760px;
+    margin-bottom: 56px;
+  }
+  .section-intro.narrow {
+    max-width: 690px;
+  }
+  .cue-index {
+    color: var(--sm-ready);
+    font: 11px/1.4 var(--mono);
+    letter-spacing: 0.06em;
+  }
+  .section-intro h2 {
+    margin: 12px 0 16px;
+    color: var(--sm-text-strong);
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+  }
+  .section-intro p {
+    max-width: 650px;
+    margin: 0;
+    color: var(--sm-text-secondary);
+    font-size: 18px;
+  }
+  .build-section,
+  .live-section {
+    background: var(--sm-bg-workspace);
+  }
+  .build-demo {
+    overflow: hidden;
+  }
+  .build-preview {
+    position: relative;
+    min-height: 220px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--sm-border);
+    background: #090b0e;
+  }
+  .fog-field,
+  .parameter-visual {
+    --fog-level: 0;
+  }
+  .fog-field {
+    position: absolute;
+    inset: 0;
+    opacity: calc(0.08 + var(--fog-level) * 0.9);
+    transition: opacity 800ms ease;
+  }
+  .fog-field span,
+  .parameter-visual > span {
+    position: absolute;
+    border-radius: 50%;
+    background: rgb(222 226 232 / 12%);
+    filter: blur(30px);
+  }
+  .fog-field span:first-child {
+    inset: 40% 45% -30% -10%;
+  }
+  .fog-field span:nth-child(2) {
+    inset: 15% 8% 30% 50%;
+  }
+  .fog-field span:nth-child(3) {
+    inset: 55% 20% -50% 20%;
+  }
+  .preview-readout {
+    position: absolute;
+    right: 18px;
+    bottom: 16px;
+    left: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    color: var(--sm-text-muted);
+    font: 10px/1.4 var(--mono);
+  }
+  .preview-readout b {
+    color: var(--sm-live);
+    font-size: 13px;
+  }
+  .flow-editor {
+    display: grid;
+    grid-template-columns:
+      minmax(210px, 1fr) 48px minmax(180px, 0.8fr)
+      48px minmax(180px, 0.8fr) 120px;
+    align-items: stretch;
+    padding: 24px;
+  }
+  .flow-stage {
+    min-width: 0;
+  }
+  .resource-list,
+  .trigger-options {
+    display: grid;
+    gap: 4px;
+    margin-top: 10px;
+  }
+  .resource-list button,
+  .trigger-options button {
+    min-height: 38px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 0 10px;
+    background: var(--sm-bg-soft);
+    color: var(--sm-text-muted);
+    font-size: 12px;
+    text-align: left;
+  }
+  .resource-list button.is-selected,
+  .trigger-options button.is-selected {
+    border-color: rgb(69 200 232 / 45%);
+    background: rgb(69 200 232 / 8%);
+    color: var(--sm-live);
+  }
+  .action-value {
+    margin-top: 10px;
+    border-left: 2px solid var(--sm-ready);
+    padding: 10px 12px;
+    background: var(--sm-bg-soft);
+  }
+  .action-value > span {
+    display: block;
+    color: var(--sm-text-primary);
+    font-size: 12px;
+  }
+  .action-value b {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 12px;
+    color: var(--sm-text-strong);
+    font: 18px/1 var(--mono);
+  }
+  .action-value b i,
+  .action-value b em {
+    color: var(--sm-text-muted);
+    font-style: normal;
+  }
+  .action-value small {
+    color: var(--sm-text-faint);
+    font: 9px/1.4 var(--mono);
+  }
+  .flow-link {
+    position: relative;
+  }
+  .flow-link::before {
+    position: absolute;
+    top: 64px;
+    right: 8px;
+    left: 8px;
+    height: 1px;
+    background: var(--sm-border-strong);
+    content: '';
+  }
+  .flow-link i {
+    position: absolute;
+    top: 60px;
+    right: 6px;
+    width: 9px;
+    height: 9px;
+    border: 1px solid var(--sm-live);
+    background: var(--sm-bg-panel);
+    transform: rotate(45deg);
+  }
+  .mini-go {
+    align-self: center;
+    display: grid;
+    place-content: center;
+    margin: 18px 0 0 16px;
+  }
+  .mini-go span {
+    font-size: 20px;
+  }
+  .mini-go small {
+    font: 9px/1.3 var(--mono);
+  }
+  .flow-summary {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 24px;
+    border-top: 1px solid var(--sm-border);
+    color: var(--sm-text-muted);
+    font: 10px/1.4 var(--mono);
+  }
+  .flow-summary i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--sm-ready);
+  }
+  .operator-strip {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr 160px;
+    overflow: hidden;
+    border: 1px solid var(--sm-border-strong);
+    border-radius: var(--sm-radius-panel) var(--sm-radius-panel) 0 0;
+    background: var(--sm-bg-panel);
+  }
+  .operator-now,
+  .operator-next {
+    position: relative;
+    display: grid;
+    grid-template-columns: 56px 44px minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: center;
+    min-height: 94px;
+    padding: 14px 18px;
+  }
+  .operator-now {
+    border-left: 4px solid var(--sm-playing);
+    background: #1f1518;
+  }
+  .operator-next {
+    grid-template-columns: 44px 36px minmax(0, 1fr);
+    border-left: 4px solid var(--sm-ready);
+    background: #121a16;
+  }
+  .operator-now > span,
+  .operator-next > span {
+    color: var(--sm-playing);
+    font: 9px/1.3 var(--mono);
+  }
+  .operator-next > span {
+    color: var(--sm-ready);
+  }
+  .operator-now > b,
+  .operator-next > b {
+    color: var(--sm-text-muted);
+    font: 20px/1 var(--mono);
+  }
+  .operator-now > strong,
+  .operator-next > strong {
+    overflow: hidden;
+    color: var(--sm-text-strong);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .operator-next > small {
+    grid-column: 3;
+    color: var(--sm-text-muted);
+    font: 9px/1.3 var(--mono);
+  }
+  .time-pair {
+    display: grid;
+    text-align: right;
+  }
+  .time-pair time {
+    color: var(--sm-text-primary);
+    font: 14px/1.3 var(--mono);
+  }
+  .time-pair small {
+    color: var(--sm-text-muted);
+    font: 10px/1.3 var(--mono);
+  }
+  .operator-now > i {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(
+      to right,
+      var(--sm-playing) 62%,
+      rgb(255 255 255 / 5%) 62%
+    );
+  }
+  .operator-go {
+    display: grid;
+    place-content: center;
+    background: var(--sm-go);
+    color: #07120b;
+    text-align: center;
+  }
+  .operator-go span {
+    font-size: 23px;
+    font-weight: 850;
+  }
+  .operator-go small {
+    font: 9px/1.2 var(--mono);
+  }
+  .cue-context {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    border: 1px solid var(--sm-border-strong);
+    border-top: 0;
+    background: var(--sm-bg-panel);
+  }
+  .cue-list-fragment {
+    padding: 18px;
+  }
+  .cue-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 4px 46px 1fr auto;
+    gap: 12px;
+    min-height: 58px;
+    align-items: center;
+    border-radius: 5px;
+    padding: 0 14px 0 0;
+    background: var(--sm-bg-soft);
+  }
+  .cue-row + .cue-row {
+    margin-top: 6px;
+  }
+  .cue-row .rail {
+    align-self: stretch;
+    background: transparent;
+  }
+  .cue-row.playing {
+    background: #1f1518;
+  }
+  .cue-row.playing .rail {
+    background: var(--sm-playing);
+  }
+  .cue-row.next .rail {
+    background: var(--sm-ready);
+  }
+  .cue-row > b {
+    color: var(--sm-text-muted);
+    font: 16px/1 var(--mono);
+  }
+  .cue-row > div {
+    display: grid;
+  }
+  .cue-row strong {
+    color: var(--sm-text-primary);
+    font-size: 13px;
+  }
+  .cue-row small {
+    color: var(--sm-text-muted);
+    font: 9px/1.4 var(--mono);
+  }
+  .cue-row em {
+    color: var(--sm-text-faint);
+    font: 9px/1 var(--mono);
+    font-style: normal;
+  }
+  .cue-row.playing em {
+    color: var(--sm-playing);
+  }
+  .cue-row.next em {
+    color: var(--sm-ready);
+  }
+  .cue-row.warning small,
+  .cue-row.warning em {
+    color: var(--sm-warning);
+  }
+  .attached-actions {
+    display: grid;
+    gap: 5px;
+    padding: 10px 26px 12px 62px;
+    background: #1a1215;
+  }
+  .attached-actions div {
+    display: grid;
+    grid-template-columns: 8px 1fr auto;
+    gap: 8px;
+    align-items: center;
+    color: var(--sm-text-muted);
+    font: 10px/1.4 var(--mono);
+  }
+  .attached-actions i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--sm-text-faint);
+  }
+  .attached-actions i.running {
+    background: var(--sm-playing);
+  }
+  .attached-actions i.live {
+    background: var(--sm-live);
+  }
+  .attached-actions div:nth-child(2) b {
+    color: var(--sm-playing);
+  }
+  .attached-actions div:nth-child(3) b {
+    color: var(--sm-live);
+  }
+  .inspector-fragment {
+    border-left: 1px solid var(--sm-border);
+    background: var(--sm-bg-elevated);
+  }
+  .inspector-title {
+    display: grid;
+    gap: 4px;
+    padding: 16px;
+    border-bottom: 1px solid var(--sm-border);
+  }
+  .inspector-title span,
+  .inspector-title small {
+    color: var(--sm-text-muted);
+    font: 9px/1.3 var(--mono);
+  }
+  .inspector-title b {
+    color: var(--sm-text-primary);
+    font-size: 13px;
+  }
+  .inspector-title small {
+    color: var(--sm-ready);
+  }
+  .inspector-fragment dl {
+    margin: 0;
+  }
+  .inspector-fragment dl div {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 10px;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--sm-border);
+  }
+  .inspector-fragment dt,
+  .inspector-fragment dd {
+    margin: 0;
+    font: 9px/1.4 var(--mono);
+  }
+  .inspector-fragment dt {
+    color: var(--sm-text-faint);
+  }
+  .inspector-fragment dd {
+    color: var(--sm-text-secondary);
+  }
+  .inspector-fragment .live-field dd {
+    color: var(--sm-live);
+  }
+  .live-console {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    overflow: hidden;
+  }
+  .live-inputs {
+    padding: 22px;
+    border-right: 1px solid var(--sm-border);
+  }
+  .input-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    min-height: 50px;
+    border: 0;
+    border-bottom: 1px solid var(--sm-border);
+    padding: 0;
+    background: transparent;
+    color: var(--sm-text-muted);
+    font: 10px/1.4 var(--mono);
+    text-align: left;
+  }
+  button.input-row:hover {
+    background: var(--sm-bg-soft);
+  }
+  .input-row span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .input-row span i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--sm-text-faint);
+  }
+  .input-row.active span,
+  .input-row.active output {
+    color: var(--sm-live);
+  }
+  .input-row.active span i {
+    background: var(--sm-live);
+  }
+  .input-row b {
+    color: var(--sm-text-secondary);
+    font-weight: 500;
+  }
+  .input-row output {
+    color: var(--sm-text-primary);
+  }
+  .input-row.is-pulsing span i {
+    background: var(--sm-live);
+  }
+  .value-slider {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 0 16px;
+    color: var(--sm-text-faint);
+    font: 9px/1.4 var(--mono);
+  }
+  .value-slider input {
+    accent-color: var(--sm-live);
+  }
+  .parameter-monitor {
+    min-width: 0;
+  }
+  .monitor-head {
+    min-height: 46px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 18px;
+    border-bottom: 1px solid var(--sm-border);
+    color: var(--sm-text-muted);
+    font: 9px/1.3 var(--mono);
+  }
+  .monitor-head b {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--sm-live);
+  }
+  .monitor-head i {
+    background: var(--sm-live);
+  }
+  .parameter-visual {
+    position: relative;
+    min-height: 260px;
+    overflow: hidden;
+    display: grid;
+    place-content: center;
+    background: #090b0e;
+  }
+  .parameter-visual > span {
+    opacity: calc(0.08 + var(--fog-level) * 0.72);
+    transition: opacity 160ms ease;
+  }
+  .parameter-visual .fog-a {
+    inset: 48% 42% -30% -10%;
+  }
+  .parameter-visual .fog-b {
+    inset: 8% -4% 42% 48%;
+  }
+  .parameter-visual .fog-c {
+    inset: 58% 12% -48% 28%;
+  }
+  .parameter-visual strong,
+  .parameter-visual output {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+  .parameter-visual strong {
+    color: var(--sm-text-faint);
+    font: 10px/1.4 var(--mono);
+  }
+  .parameter-visual output {
+    color: var(--sm-live);
+    font: 44px/1 var(--mono);
+  }
+  .meter-list {
+    padding: 14px 18px 18px;
+  }
+  .meter-list > div {
+    display: grid;
+    grid-template-columns: 100px 1fr 44px;
+    gap: 10px;
+    align-items: center;
+    min-height: 27px;
+    color: var(--sm-text-muted);
+    font: 9px/1.3 var(--mono);
+  }
+  .meter-list div > i {
+    height: 3px;
+    overflow: hidden;
+    background: rgb(255 255 255 / 7%);
+  }
+  .meter-list div > i b {
+    display: block;
+    height: 100%;
+    background: var(--sm-live);
+  }
+  .meter-list output {
+    text-align: right;
+  }
+  .systems-map {
+    position: relative;
+    min-height: 430px;
+    border-block: 1px solid var(--sm-border);
+  }
+  .systems-map svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .systems-map path {
+    fill: none;
+    stroke: rgb(69 200 232 / 32%);
+    stroke-width: 1.2;
+    vector-effect: non-scaling-stroke;
+  }
+  .system-node,
+  .system-core {
+    position: absolute;
+    z-index: 2;
+    display: grid;
+    min-width: 180px;
+    border: 1px solid var(--sm-border-strong);
+    padding: 14px;
+    background: var(--sm-bg-panel);
+  }
+  .system-node span,
+  .system-core span {
+    color: var(--sm-live);
+    font: 9px/1.3 var(--mono);
+  }
+  .system-node b,
+  .system-core b {
+    margin-top: 5px;
+    color: var(--sm-text-primary);
+    font-size: 13px;
+  }
+  .system-node small,
+  .system-core small {
+    color: var(--sm-text-faint);
+    font: 9px/1.4 var(--mono);
+  }
+  .system-node.media {
+    top: 34px;
+    left: 2%;
+  }
+  .system-node.control {
+    top: 34px;
+    right: 2%;
+  }
+  .system-node.realtime {
+    bottom: 34px;
+    left: 2%;
+  }
+  .system-node.output {
+    right: 2%;
+    bottom: 34px;
+  }
+  .system-core {
+    top: 50%;
+    left: 50%;
+    min-width: 240px;
+    border-left: 3px solid var(--sm-ready);
+    transform: translate(-50%, -50%);
+  }
+  .system-core span {
+    color: var(--sm-ready);
+  }
+  .system-core i {
+    position: absolute;
+    top: 50%;
+    right: -5px;
+    width: 9px;
+    height: 9px;
+    background: var(--sm-ready);
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .telemetry-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--sm-border);
+  }
+  .telemetry-bar div {
+    display: grid;
+    gap: 2px;
+    padding: 18px;
+    border-right: 1px solid var(--sm-border);
+  }
+  .telemetry-bar div:last-child {
+    border-right: 0;
+  }
+  .telemetry-bar span,
+  .telemetry-bar small {
+    color: var(--sm-text-faint);
+    font: 9px/1.4 var(--mono);
+  }
+  .telemetry-bar b {
+    color: var(--sm-text-primary);
+    font: 17px/1.2 var(--mono);
+  }
+  .telemetry-bar .telemetry-live b {
+    color: var(--sm-live);
+  }
+  .final-go {
+    min-height: 72vh;
+    display: grid;
+    align-content: center;
+    border-bottom: 0;
+  }
+  .final-next {
+    display: grid;
+    grid-template-columns: 56px 64px 1fr minmax(220px, 300px);
+    gap: 16px;
+    align-items: center;
+    border: 1px solid var(--sm-border-strong);
+    border-left: 4px solid var(--sm-ready);
+    border-radius: var(--sm-radius-panel);
+    padding: 14px;
+    background: #121a16;
+  }
+  .final-next > span {
+    color: var(--sm-ready);
+    font: 10px/1.3 var(--mono);
+  }
+  .final-next > b {
+    color: var(--sm-ready);
+    font: 30px/1 var(--mono);
+  }
+  .final-next > div {
+    display: grid;
+  }
+  .final-next strong {
+    color: var(--sm-text-strong);
+    font-size: clamp(20px, 2.4vw, 32px);
+  }
+  .final-next small {
+    color: var(--sm-text-muted);
+    font: 10px/1.4 var(--mono);
+  }
+  .final-go-button {
+    display: grid;
+    place-content: center;
+    text-align: center;
+  }
+  .final-go-button span {
+    font-size: 22px;
+  }
+  .final-go > p {
+    max-width: 620px;
+    margin: 20px 0 0;
+    color: var(--sm-text-muted);
+  }
+
+  @media (max-width: 1199px) {
+    .sequence-experience {
+      width: min(var(--sm-content-max), calc(100% - 48px));
+    }
+    .sequence-rail {
+      width: 140px;
+    }
+    .sequence-content {
+      margin-left: 140px;
+    }
+    .sequence-section {
+      padding-left: 48px;
+    }
+    .hero {
+      display: block;
+    }
+    .hero-copy {
+      display: block;
+      max-width: 760px;
+    }
+    .hero-copy h1 {
+      margin-bottom: 22px;
+    }
+    .run-console {
+      margin-top: 48px;
+    }
+    .flow-editor {
+      grid-template-columns: 1fr 36px 0.8fr 36px 0.8fr;
+    }
+    .mini-go {
+      grid-column: 5;
+      margin: 16px 0 0;
+    }
+  }
+  @media (max-width: 899px) {
+    .sequence-experience {
+      width: 100%;
+    }
+    .sequence-rail {
+      top: 64px;
+      right: 0;
+      bottom: auto;
+      left: 0;
+      width: auto;
+      height: 42px;
+      display: block;
+      padding: 0 24px;
+      border-right: 0;
+      border-bottom: 1px solid var(--sm-border);
+    }
+    .rail-title,
+    .rail-status {
+      display: none;
+    }
+    .sequence-rail ol {
+      grid-template-columns: repeat(5, 1fr);
+      margin: 0;
+    }
+    .sequence-rail ol::before {
+      top: 20px;
+      right: 10%;
+      bottom: auto;
+      left: 10%;
+      width: auto;
+      height: 1px;
+    }
+    .sequence-rail a {
+      min-height: 41px;
+      display: grid;
+      place-content: center;
+    }
+    .sequence-rail a::before {
+      grid-area: 1 / 1;
+    }
+    .sequence-rail a b {
+      display: none;
+    }
+    .sequence-content {
+      margin-left: 0;
+    }
+    .sequence-section {
+      padding: 104px 32px 96px;
+      scroll-margin-top: 106px;
+    }
+    .hero {
+      padding-top: 126px;
+    }
+    .cue-context {
+      grid-template-columns: 1fr;
+    }
+    .inspector-fragment {
+      border-top: 1px solid var(--sm-border);
+      border-left: 0;
+    }
+    .operator-strip {
+      grid-template-columns: 1fr 1fr;
+    }
+    .operator-go {
+      grid-column: span 2;
+      min-height: 64px;
+    }
+    .live-console {
+      grid-template-columns: 1fr;
+    }
+    .live-inputs {
+      border-right: 0;
+      border-bottom: 1px solid var(--sm-border);
+    }
+  }
+  @media (max-width: 767px) {
+    .sequence-rail {
+      padding: 0 20px;
+    }
+    .sequence-section {
+      min-height: 0;
+      padding: 96px 20px 80px;
+    }
+    .hero {
+      display: block;
+    }
+    .hero-copy h1 {
+      font-size: clamp(40px, 10.5vw, 48px);
+    }
+    .hero-actions {
+      display: grid;
+    }
+    .cue-identity {
+      grid-template-columns: 36px 1fr;
+    }
+    .cue-identity time,
+    .cue-identity small {
+      grid-column: 2;
+    }
+    .progress-track,
+    .action-chain {
+      margin-left: 48px;
+    }
+    .go-row {
+      grid-template-columns: 1fr;
+    }
+    .flow-editor {
+      grid-template-columns: 1fr;
+      gap: 18px;
+      padding: 18px;
+    }
+    .flow-link {
+      height: 24px;
+    }
+    .flow-link::before {
+      top: 4px;
+      bottom: 4px;
+      left: 16px;
+      width: 1px;
+      height: auto;
+    }
+    .flow-link i {
+      top: auto;
+      right: auto;
+      bottom: 2px;
+      left: 12px;
+    }
+    .mini-go {
+      grid-column: 1;
+      min-height: 52px;
+      margin: 0;
+    }
+    .operator-strip {
+      grid-template-columns: 1fr;
+    }
+    .operator-now,
+    .operator-next {
+      grid-template-columns: 48px 38px 1fr;
+    }
+    .operator-now .time-pair {
+      grid-column: 3;
+      text-align: left;
+    }
+    .operator-go {
+      grid-column: 1;
+    }
+    .cue-context {
+      border: 0;
+    }
+    .cue-list-fragment {
+      padding: 14px 0;
+    }
+    .inspector-fragment {
+      border: 1px solid var(--sm-border-strong);
+    }
+    .cue-row {
+      grid-template-columns: 4px 36px 1fr;
+    }
+    .cue-row em {
+      grid-column: 3;
+    }
+    .attached-actions {
+      padding-left: 42px;
+    }
+    .live-inputs {
+      padding: 16px;
+    }
+    .input-row {
+      grid-template-columns: 70px 1fr;
+    }
+    .input-row output {
+      grid-column: 2;
+    }
+    .systems-map {
+      min-height: 560px;
+    }
+    .systems-map svg {
+      display: none;
+    }
+    .system-node,
+    .system-core {
+      right: 0 !important;
+      left: 0 !important;
+      min-width: 0;
+      transform: none;
+    }
+    .system-node.media {
+      top: 0;
+    }
+    .system-node.control {
+      top: 98px;
+    }
+    .system-core {
+      top: 196px;
+    }
+    .system-node.realtime {
+      top: 294px;
+      bottom: auto;
+    }
+    .system-node.output {
+      top: 392px;
+      bottom: auto;
+    }
+    .telemetry-bar {
+      grid-template-columns: 1fr 1fr;
+    }
+    .telemetry-bar div:nth-child(2) {
+      border-right: 0;
+    }
+    .telemetry-bar div:nth-child(-n + 2) {
+      border-bottom: 1px solid var(--sm-border);
+    }
+    .final-next {
+      grid-template-columns: 44px 1fr;
+    }
+    .final-next > div {
+      grid-column: 2;
+    }
+    .final-go-button {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .progress-track span.is-running {
+      animation: none;
+      width: 62%;
+    }
+    .fog-field,
+    .parameter-visual > span {
+      transition: none;
+    }
+  }
+</style>
