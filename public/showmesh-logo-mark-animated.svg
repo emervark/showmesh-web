@@ -1,0 +1,98 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="610"
+  height="505"
+  viewBox="200 20 610 505"
+  role="img"
+  aria-label="Showmesh"
+>
+  <style>
+    .static-dots {
+      display: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .animated-dots {
+        display: none;
+      }
+      .static-dots {
+        display: inline;
+      }
+    }
+  </style>
+
+  <defs>
+    <path
+      id="showmesh-mark-path"
+      d="M 760 70
+         H 300
+         Q 236 70 236 134
+         V 206
+         Q 236 270 300 270
+         H 700
+         Q 764 270 764 334
+         V 406
+         Q 764 470 700 470
+         H 240"
+    />
+  </defs>
+
+  <use
+    href="#showmesh-mark-path"
+    fill="none"
+    stroke="#32C96B"
+    stroke-width="48"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <g class="animated-dots">
+    <circle r="38" fill="#FF625D">
+      <animateMotion dur="8s" begin="-1.2s" repeatCount="indefinite" calcMode="linear">
+        <mpath href="#showmesh-mark-path" />
+      </animateMotion>
+      <animate
+        attributeName="opacity"
+        dur="8s"
+        begin="-1.2s"
+        repeatCount="indefinite"
+        values="0;1;1;0;0"
+        keyTimes="0;0.04;0.92;0.98;1"
+        calcMode="linear"
+      />
+    </circle>
+    <circle r="38" fill="#35C8E0">
+      <animateMotion dur="8s" begin="-5.4s" repeatCount="indefinite" calcMode="linear">
+        <mpath href="#showmesh-mark-path" />
+      </animateMotion>
+      <animate
+        attributeName="opacity"
+        dur="8s"
+        begin="-5.4s"
+        repeatCount="indefinite"
+        values="0;1;1;0;0"
+        keyTimes="0;0.04;0.92;0.98;1"
+        calcMode="linear"
+      />
+    </circle>
+    <circle r="38" fill="#FFB52E">
+      <animateMotion dur="8s" begin="-7s" repeatCount="indefinite" calcMode="linear">
+        <mpath href="#showmesh-mark-path" />
+      </animateMotion>
+      <animate
+        attributeName="opacity"
+        dur="8s"
+        begin="-7s"
+        repeatCount="indefinite"
+        values="0;1;1;0;0"
+        keyTimes="0;0.04;0.92;0.98;1"
+        calcMode="linear"
+      />
+    </circle>
+  </g>
+
+  <g class="static-dots">
+    <circle cx="480" cy="70" r="38" fill="#FF625D" />
+    <circle cx="764" cy="370" r="38" fill="#35C8E0" />
+    <circle cx="520" cy="470" r="38" fill="#FFB52E" />
+  </g>
+</svg>

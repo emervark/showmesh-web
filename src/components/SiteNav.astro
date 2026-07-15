@@ -12,7 +12,13 @@ const links = [
 <div class="site-nav" id="top">
   <div class="site-nav__inner">
     <a class="brand" href="#top" aria-label="Showmesh home">
-      <span class="brand__mark" aria-hidden="true">◆</span><span>Showmesh</span>
+      <img
+        class="brand__logo"
+        src="/showmesh-logo-horizontal.svg"
+        alt="Showmesh"
+        width="150"
+        height="45"
+      />
     </a>
     <nav class="site-nav__links" aria-label="Primary navigation">
       {links.map((l) => <a href={l.href}>{l.label}</a>)}
@@ -68,13 +74,11 @@ const links = [
   .brand {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--sm-text-strong);
   }
-  .brand__mark {
-    color: var(--sm-ready);
+  .brand__logo {
+    height: 26px;
+    width: auto;
+    display: block;
   }
   .site-nav__links {
     display: flex;
