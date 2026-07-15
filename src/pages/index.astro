@@ -306,6 +306,14 @@ const cueData = JSON.stringify(
     <section class="hero">
       <div class="hero__glow" aria-hidden="true"></div>
       <div class="hero__copy">
+        <img
+          class="hero__logo"
+          src="/showmesh-logo-mark-animated.svg"
+          alt=""
+          aria-hidden="true"
+          width="120"
+          height="99"
+        />
         <div class="eyebrow eyebrow--ready">
           Realtime show automation for Windows
         </div>
@@ -563,6 +571,67 @@ const cueData = JSON.stringify(
             ))
           }
         </div>
+      </div>
+    </section>
+
+    <!-- LIVE OPERATOR CONCEPT -->
+    <section id="workspace" class="band reveal">
+      <div class="wrap">
+        <div class="center intro">
+          <div class="eyebrow eyebrow--live">The live operator concept</div>
+          <h2 class="h2-center">Step into the actual Showmesh workspace.</h2>
+          <p class="lead lead--center">
+            An interactive concept of the operator interface—cue list,
+            transport, live state and the GO button in one workspace. Click
+            around below, or open it full screen.
+          </p>
+        </div>
+
+        <figure class="appwindow" data-ui-window>
+          <figcaption class="appwindow__bar">
+            <span class="appwindow__dots" aria-hidden="true"
+              ><i></i><i></i><i></i></span
+            >
+            <span class="appwindow__title">Showmesh — Operator</span>
+            <a
+              class="appwindow__open"
+              href="/showmesh-ui.html"
+              target="_blank"
+              rel="noopener">Open full screen ↗</a
+            >
+          </figcaption>
+          <div class="appwindow__viewport" data-ui-viewport>
+            <a
+              class="appwindow__shotlink"
+              href="/showmesh-ui.html"
+              target="_blank"
+              rel="noopener"
+              data-ui-shot
+            >
+              <img
+                class="appwindow__shot"
+                src="/showmesh-application.png"
+                alt="Showmesh operator interface: cue list, transport strip with NOW / NEXT and GO, and live system state"
+                loading="lazy"
+                width="1280"
+                height="800"
+              />
+              <span class="appwindow__launch"
+                >Open the interactive concept ↗</span
+              >
+            </a>
+            <iframe
+              class="appwindow__frame"
+              title="Showmesh operator interface — interactive concept"
+              data-ui-frame
+              loading="lazy"
+              width="1280"
+              height="800"></iframe>
+          </div>
+        </figure>
+        <p class="fine uifeature__note">
+          Interactive concept for illustration. Not the final product build.
+        </p>
       </div>
     </section>
 
@@ -1070,6 +1139,59 @@ const cueData = JSON.stringify(
     form.hidden = true;
     if (done) done.hidden = false;
   });
+
+  // ---- Live operator concept: scale + lazy-load the embedded workspace ----
+  // On wide screens, once the window scrolls into view, load the interactive
+  // UI and scale the fixed 1280x800 iframe to fit its container. Narrow screens
+  // keep the static screenshot (which links to the full-screen concept) and
+  // never fetch the heavy embed.
+  const BASE_W = 1280;
+  const uiWindow = document.querySelector<HTMLElement>('[data-ui-window]');
+  const uiFrame = document.querySelector<HTMLIFrameElement>('[data-ui-frame]');
+  const uiViewport = document.querySelector<HTMLElement>('[data-ui-viewport]');
+  const MIN_LIVE_WIDTH = 900;
+
+  if (uiWindow && uiFrame && uiViewport) {
+    let loaded = false;
+
+    const fitFrame = () => {
+      const scale = uiViewport.clientWidth / BASE_W;
+      uiFrame.style.transform = `scale(${scale})`;
+    };
+
+    const goLive = () => {
+      if (loaded || window.innerWidth < MIN_LIVE_WIDTH) return;
+      loaded = true;
+      fitFrame();
+      uiFrame.src = '/showmesh-ui.html';
+      uiFrame.addEventListener(
+        'load',
+        () => uiWindow.classList.add('is-live'),
+        {
+          once: true
+        }
+      );
+    };
+
+    if ('IntersectionObserver' in window) {
+      const uiIo = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            goLive();
+            uiIo.disconnect();
+          }
+        },
+        { rootMargin: '200px' }
+      );
+      uiIo.observe(uiWindow);
+    } else {
+      goLive();
+    }
+
+    window.addEventListener('resize', () => {
+      if (loaded) fitFrame();
+    });
+  }
 </script>
 
 <style>
@@ -1231,6 +1353,12 @@ const cueData = JSON.stringify(
     max-width: 720px;
     margin: 0 auto;
     text-align: center;
+  }
+  .hero__logo {
+    display: block;
+    height: 100px;
+    width: auto;
+    margin: 0 auto 24px;
   }
   .hero__copy p {
     font-size: 16.5px;
@@ -1914,6 +2042,120 @@ const cueData = JSON.stringify(
     justify-content: center;
     flex-wrap: wrap;
     margin-top: 30px;
+  }
+
+  /* Live operator concept (app window) */
+  .appwindow {
+    margin: 0 auto;
+    max-width: 1120px;
+    background: var(--sm-bg-workspace);
+    border: 1px solid var(--sm-border-strong);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 40px 90px rgb(0 0 0 / 50%);
+  }
+  .appwindow__bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 44px;
+    padding: 0 16px;
+    background: var(--sm-bg-elevated);
+    border-bottom: 1px solid var(--sm-border);
+  }
+  .appwindow__dots {
+    display: flex;
+    gap: 7px;
+    flex-shrink: 0;
+  }
+  .appwindow__dots i {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 14%);
+  }
+  .appwindow__dots i:first-child {
+    background: var(--sm-playing);
+  }
+  .appwindow__dots i:nth-child(2) {
+    background: var(--sm-warning);
+  }
+  .appwindow__dots i:nth-child(3) {
+    background: var(--sm-ready);
+  }
+  .appwindow__title {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--sm-text-muted);
+  }
+  .appwindow__open {
+    margin-left: auto;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--sm-live);
+    transition: color 160ms ease;
+  }
+  .appwindow__open:hover {
+    color: var(--sm-text-strong);
+  }
+  .appwindow__viewport {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1280 / 800;
+    background: var(--sm-bg-shell);
+    overflow: hidden;
+  }
+  .appwindow__shotlink {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+  .appwindow__shot {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+  .appwindow__launch {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    padding: 11px 20px;
+    border-radius: 8px;
+    background: var(--sm-go);
+    color: #eafbf0;
+    font-size: 13.5px;
+    font-weight: 650;
+    white-space: nowrap;
+    box-shadow: 0 10px 30px rgb(0 0 0 / 45%);
+    transition: background-color 160ms ease;
+  }
+  .appwindow__shotlink:hover .appwindow__launch {
+    background: #35ae61;
+  }
+  .appwindow__frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1280px;
+    height: 800px;
+    border: 0;
+    transform-origin: 0 0;
+    /* revealed by the enhancement script on wide screens */
+    opacity: 0;
+    pointer-events: none;
+  }
+  .appwindow.is-live .appwindow__frame {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .appwindow.is-live .appwindow__shotlink {
+    /* keep image as instant paint under the iframe until it loads */
+    pointer-events: none;
+  }
+  .uifeature__note {
+    margin-top: 18px;
   }
 
   /* Reveal animation — only active once JS arms it (.js-reveal on <html>),

@@ -1,0 +1,45 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1200"
+  height="360"
+  viewBox="0 0 1200 360"
+  role="img"
+  aria-labelledby="title desc"
+>
+  <title id="title">Showmesh horizontal logo v2 for dark surfaces</title>
+  <desc id="desc">Transparent Showmesh logo with the cue-path symbol before the wordmark.</desc>
+
+  <g transform="translate(28 50) scale(0.5)" aria-label="Showmesh symbol">
+    <path
+      d="M 560 60
+         H 160
+         Q 96 60 96 124
+         V 196
+         Q 96 260 160 260
+         H 500
+         Q 564 260 564 324
+         V 396
+         Q 564 460 500 460
+         H 100"
+      fill="none"
+      stroke="#32C96B"
+      stroke-width="48"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <circle cx="300" cy="60" r="38" fill="#FF625D" />
+    <circle cx="564" cy="360" r="38" fill="#35C8E0" />
+    <circle cx="320" cy="460" r="38" fill="#FFB52E" />
+  </g>
+
+  <text
+    x="390"
+    y="230"
+    fill="#F7F6F2"
+    font-family="Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif"
+    font-size="142"
+    font-weight="600"
+    letter-spacing="-4"
+  >Showmesh</text>
+</svg>

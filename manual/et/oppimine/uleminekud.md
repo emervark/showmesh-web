@@ -64,8 +64,7 @@ sisaldab heli, fade'i ka selle volume.
 
 Vanad projektid võivad sisaldada `tracks[]`, `fadeInSec`, `fadeOutSec` või
 ühe parameetriga transition-välju. Mootor migreerib enamiku neist action'iteks.
-Suhtelise sihtväärtusega vanad track'id võivad jääda pärandteele ja editor näitab
-nende jaoks eraldi legacy transition editori.
+Suhtelise sihtväärtusega vanad track'id võivad jääda pärandteele.
 
 ::: warning Ära muuda migreeritud JSON-i käsitsi
 Salvesta vana projekt uue nimega ja kontrolli cue-listi visuaalselt. Action'id

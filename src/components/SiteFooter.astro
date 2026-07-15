@@ -17,11 +17,13 @@ const company = [
 <footer class="site-footer">
   <div class="site-footer__cols">
     <div class="site-footer__about">
-      <span class="brand">
-        <span class="brand__mark" aria-hidden="true">◆</span><span
-          >Showmesh</span
-        >
-      </span>
+      <img
+        class="site-footer__logo"
+        src="/showmesh-logo-stacked.svg"
+        alt="Showmesh"
+        width="150"
+        height="105"
+      />
       <p>
         Showmesh is a Windows-first realtime show automation system for media,
         realtime graphics and control.
@@ -57,17 +59,11 @@ const company = [
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 40px;
   }
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--sm-text-strong);
-    margin-bottom: 12px;
-  }
-  .brand__mark {
-    color: var(--sm-ready);
+  .site-footer__logo {
+    height: 84px;
+    width: auto;
+    display: block;
+    margin-bottom: 16px;
   }
   .site-footer__about p {
     font-size: 13px;
