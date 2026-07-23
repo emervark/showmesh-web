@@ -880,24 +880,37 @@ const cueData = JSON.stringify(
           </p>
         </div>
 
-        <form class="access-form" data-access-form novalidate>
+        <form class="access-form" data-access-form>
+          <input
+            type="checkbox"
+            name="botcheck"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+            style="display:none"
+          />
           {
             accessFields.map((f) => (
               <div class:list={['field', { 'field--span': f.span }]}>
                 <label for={`f-${f.id}`}>{f.label}</label>
                 {f.type === 'textarea' ? (
-                  <textarea id={`f-${f.id}`} name={f.id} rows="3" />
+                  <textarea id={`f-${f.id}`} name={f.label} rows="3" />
                 ) : (
                   <input
                     id={`f-${f.id}`}
-                    name={f.id}
+                    name={f.id === 'email' ? 'email' : f.label}
                     type={f.id === 'email' ? 'email' : 'text'}
+                    required={f.id === 'email'}
                   />
                 )}
               </div>
             ))
           }
           <div class="field field--span access-form__submit">
+            <p class="access-form__error" data-access-error hidden>
+              Sending failed. Please try again, or email info@showmesh.app
+              directly.
+            </p>
             <button type="submit" class="btn-solid">Request access</button>
           </div>
         </form>
@@ -1135,13 +1148,41 @@ const cueData = JSON.stringify(
       });
     });
 
-  // ---- Early access form ----
+  // ---- Early access form (Web3Forms) ----
+  // The access key is public by design: it only routes submissions to the
+  // email address it was registered with.
+  const WEB3FORMS_ACCESS_KEY = '2f8eb683-3253-4574-9fc4-a5b506e4a130';
   const form = document.querySelector<HTMLFormElement>('[data-access-form]');
   const done = document.querySelector<HTMLElement>('[data-access-done]');
-  form?.addEventListener('submit', (e) => {
+  const formError = document.querySelector<HTMLElement>('[data-access-error]');
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    form.hidden = true;
-    if (done) done.hidden = false;
+    const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const data = new FormData(form);
+    data.append('access_key', WEB3FORMS_ACCESS_KEY);
+    data.append('subject', 'Showmesh early access request');
+    data.append('from_name', 'showmesh.app');
+    if (formError) formError.hidden = true;
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+    }
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: data
+      });
+      const json = await res.json();
+      if (!json.success) throw new Error(json.message);
+      form.hidden = true;
+      if (done) done.hidden = false;
+    } catch {
+      if (formError) formError.hidden = false;
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Request access';
+      }
+    }
   });
 
   // ---- Live operator concept: scale + lazy-load the embedded workspace ----
@@ -1962,6 +2003,13 @@ const cueData = JSON.stringify(
   .access-form__submit {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+  }
+  .access-form__error {
+    margin: 0;
+    font-size: 13px;
+    color: var(--sm-playing);
   }
   .access-done {
     background: var(--sm-bg-workspace);
