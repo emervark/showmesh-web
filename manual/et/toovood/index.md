@@ -9,7 +9,7 @@ Töövood ühendavad mitu funktsiooni üheks praktiliseks tulemuseks.
 
 - [Show ettevalmistamine](/et/toovood/show-ettevalmistamine) — projekt, meedia, väljund ja pre-flight.
 - [Live-show juhtimine](/et/toovood/live-show) — Show mode, GO, STOP ja taastumine.
-- [Väljundid ja NDI](/et/toovood/valjundid) — programmi pildi marsruutimine.
+- [Väljundid, NDI ja Spout](/et/toovood/valjundid) — programmi pildi marsruutimine.
 - [OSC ja MIDI](/et/toovood/osc-midi) — välised kontrollerid ja action-triggerid.
 - [Tõrkeotsing](/et/toovood/torkeotsing) — tüüpilised vead ja turvalised kontrollid.
 

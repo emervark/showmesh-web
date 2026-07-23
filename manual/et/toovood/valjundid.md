@@ -1,9 +1,9 @@
 ---
-title: Väljundid ja NDI
-description: Ekraani-, akna- ja NDI-väljundi seadistamine Showmeshis.
+title: Väljundid, NDI ja Spout
+description: Ekraani-, akna-, NDI- ja Spout-väljundi seadistamine Showmeshis.
 ---
 
-# Väljundid ja NDI
+# Väljundid, NDI ja Spout
 
 Väljundeid muudetakse Edit-režiimis menüüst **Output**. Mootor rakendab
 valiku töötamise ajal: akna saab avada, sulgeda või teisele monitorile viia
@@ -11,8 +11,9 @@ ilma mootori restartimata.
 
 ## Disabled
 
-Programmi display-väljund on välja lülitatud. NDI mirror võib samal ajal edasi
-töötada. Kasuta seda headless või ainult võrgupõhise väljundi puhul.
+Programmi display-väljund on välja lülitatud. NDI ja Spout mirror'id võivad
+samal ajal edasi töötada. Kasuta seda headless või ainult võrgupõhise väljundi
+puhul.
 
 ## Fullscreen
 
@@ -49,8 +50,14 @@ GPU-kaadrid loetakse NDI jaoks vajadusel tagasi ja saadetakse NV12-na. Rasked
 
 ## Spout
 
-Menüüvalik **Texture sharing (Spout) — soon** on ettevalmistus tulevaseks
-funktsiooniks. Selle haru mootoris SpoutDX-integratsiooni pole.
+Lülita **Composition Output Sharing → Texture sharing (Spout)** sisse. Spout
+peegeldab programmi kompositsiooni sama masina teistesse rakendustesse, näiteks
+Resolume'i, TouchDesignerisse või OBS-i, ja võib töötada iga display-väljundi
+kõrval.
+
+CPU-kaadrid saadetakse RGBA-na; GPU-dekodeeritud kaadrid loetakse enne saatmist
+tagasi. Veendu läbimängul, et vastuvõttev rakendus näeb Showmeshi saatjat ja
+pilt on ootuspärane.
 
 ## Ressursi output
 

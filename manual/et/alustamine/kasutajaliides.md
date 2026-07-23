@@ -19,7 +19,7 @@ Menüüd on nähtavad Edit-režiimis:
 - **Edit** — undo ja redo;
 - **Add** — cue või ressursi lisamine;
 - **Cue** — GO, Panic ja cue kustutamine;
-- **Output** — ekraan, aken, NDI ning Spouti tulevikuvalik;
+- **Output** — ekraan, aken, NDI ja Spout;
 - **View** — Show mode'i lülitamine.
 
 ## 2. Ressursipaneel

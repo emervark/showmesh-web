@@ -55,7 +55,7 @@ const etTheme = {
         { text: "Ülevaade", link: "/et/toovood/" },
         { text: "Show ettevalmistamine", link: "/et/toovood/show-ettevalmistamine" },
         { text: "Live-show juhtimine", link: "/et/toovood/live-show" },
-        { text: "Väljundid ja NDI", link: "/et/toovood/valjundid" },
+        { text: "Väljundid, NDI ja Spout", link: "/et/toovood/valjundid" },
         { text: "OSC ja MIDI", link: "/et/toovood/osc-midi" },
         { text: "Tõrkeotsing", link: "/et/toovood/torkeotsing" }
       ]
@@ -90,7 +90,7 @@ const etTheme = {
   returnToTopLabel: "Tagasi üles",
   langMenuLabel: "Muuda keelt",
   footer: {
-    message: "Showmeshi manuaal · arendusharu transitions-v2 põhjal",
+    message: "Showmeshi manuaal · põhineb emervark/Showmesh main harul",
     copyright: "Dokumentatsiooni versioon 0.2"
   }
 };
