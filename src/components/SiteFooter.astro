@@ -8,7 +8,8 @@ const product = [
   { href: '#access', label: 'Development' }
 ];
 const company = [
-  { href: '#access', label: 'Contact' },
+  { href: 'mailto:info@showmesh.app', label: 'info@showmesh.app' },
+  { href: 'mailto:support@showmesh.app', label: 'support@showmesh.app' },
   { href: '#access', label: 'Request early access' },
   { href: '/showmesh-ui.html', label: 'Operator UI concept' }
 ];
@@ -28,6 +29,9 @@ const company = [
         Showmesh is a Windows-first realtime show automation system for media,
         realtime graphics and control.
       </p>
+      <p class="site-footer__maker">
+        Developed by <strong>VFX OÜ</strong>.
+      </p>
     </div>
     <div class="site-footer__group">
       <div class="site-footer__label">Product</div>
@@ -43,7 +47,7 @@ const company = [
     </div>
   </div>
   <div class="site-footer__base">
-    © 2026 Showmesh. Connect, automate and run the show.
+    © 2026 Showmesh — a VFX OÜ product. Connect, automate and run the show.
   </div>
 </footer>
 
@@ -71,6 +75,13 @@ const company = [
     color: var(--sm-text-faint);
     max-width: 280px;
     margin: 0;
+  }
+  .site-footer__maker {
+    margin-top: 12px !important;
+  }
+  .site-footer__maker strong {
+    color: var(--sm-text-secondary);
+    font-weight: 650;
   }
   .site-footer__label {
     font-size: 11.5px;
