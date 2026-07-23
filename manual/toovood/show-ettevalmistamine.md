@@ -46,7 +46,7 @@ relinker UI. Repair the path or add the resource again.
 - Test fullscreen resolution and refresh rate.
 - For NDI, check the real receiver—not only the editor preview.
 - Verify the actual Windows audio device.
-- Do not include Spout in the show plan for this version.
+- For Spout, confirm the receiving application sees the Showmesh sender.
 
 ## 5. Rehearsal
 

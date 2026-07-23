@@ -12,7 +12,7 @@ prepared sequence with **GO**.
 Showmesh has two separate parts:
 
 ```text
-Editor (Electron)  ← WebSocket →  Engine (C++)  →  display / NDI / audio
+Editor (Electron)  ← WebSocket →  Engine (C++)  →  display / NDI / Spout / audio
                                          ↑
                                   OSC / MIDI
 ```
@@ -33,7 +33,7 @@ Showmesh fits live environments where events must fire in a repeatable order:
 - installations and exhibitions;
 - presentation and conference graphics;
 - combined audio, image, and video cue lists;
-- feeding another video system through NDI;
+- feeding another video system through NDI or Spout;
 - OSC- or MIDI-triggered events.
 
 ## Core concepts

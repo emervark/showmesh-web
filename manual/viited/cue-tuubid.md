@@ -67,9 +67,16 @@ group members adjacent to the group in the cue list.
 
 ## OSC
 
-The protocol and engine recognise an OSC cue using `connection`, `oscAddress`,
-and arguments. The Add menu does not expose OSC cue creation in this branch, so
-treat it as an existing-project or developer feature.
+Sends an OSC message to a destination when the cue fires. Create it from the
+Add menu; the OSC MESSAGE inspector edits the destination (`host:port`), the
+address, and the arguments. Numeric arguments stay numeric; everything else is
+sent as a string.
+
+## MIDI
+
+Sends a MIDI Note, CC, Program Change, or MIDI Show Control message to a MIDI
+output port when the cue fires. The inspector edits the device, message type,
+channel, data bytes, and an optional note hold time.
 
 ## Image is not a separate project cue type
 

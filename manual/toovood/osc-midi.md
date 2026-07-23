@@ -49,8 +49,11 @@ The project's `triggers` list maps a MIDI Note or CC event to a cue command:
 go, stop, pause, resume, or load. A CC becomes a button press at value `64` or
 higher. MIDI Show Control GO, STOP, RESUME, and LOAD are also handled.
 
-This editor version has no MIDI Learn UI, so the trigger matrix must be created
-in the project file or through another protocol tool.
+The editor includes MIDI Learn. **Control I/O → MIDI → TRANSPORT** binds a
+controller button to the global GO and PANIC commands, and every OSC- or
+MIDI-triggered action has a **◎ Learn** button: move a control on the
+controller and the incoming channel and controller number (or OSC address) is
+bound to the action.
 
 ## MIDI-triggered action
 

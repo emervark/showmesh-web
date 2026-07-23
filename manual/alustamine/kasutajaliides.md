@@ -19,7 +19,7 @@ Menus are available in Edit mode:
 - **Edit** — undo and redo;
 - **Add** — add a cue or resource;
 - **Cue** — GO, Panic, and delete cue;
-- **Output** — display, window, NDI, and the future Spout option;
+- **Output** — display, window, NDI, and Spout;
 - **View** — toggle Show mode.
 
 ## 2. Resources panel

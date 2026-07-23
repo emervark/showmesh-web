@@ -55,7 +55,7 @@ const etTheme = {
         { text: "Ülevaade", link: "/et/toovood/" },
         { text: "Show ettevalmistamine", link: "/et/toovood/show-ettevalmistamine" },
         { text: "Live-show juhtimine", link: "/et/toovood/live-show" },
-        { text: "Väljundid ja NDI", link: "/et/toovood/valjundid" },
+        { text: "Väljundid, NDI ja Spout", link: "/et/toovood/valjundid" },
         { text: "OSC ja MIDI", link: "/et/toovood/osc-midi" },
         { text: "Tõrkeotsing", link: "/et/toovood/torkeotsing" }
       ]
@@ -140,7 +140,7 @@ const enTheme = {
         { text: "Overview", link: "/toovood/" },
         { text: "Preparing a show", link: "/toovood/show-ettevalmistamine" },
         { text: "Running a live show", link: "/toovood/live-show" },
-        { text: "Outputs and NDI", link: "/toovood/valjundid" },
+        { text: "Outputs, NDI, and Spout", link: "/toovood/valjundid" },
         { text: "OSC and MIDI", link: "/toovood/osc-midi" },
         { text: "Troubleshooting", link: "/toovood/torkeotsing" }
       ]

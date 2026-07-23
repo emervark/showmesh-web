@@ -12,12 +12,12 @@ uue release'i ettevalmistamisega.
 
 | Väli | Väärtus |
 |---|---|
-| Repo | `emervark/Intermission` |
-| Haru | `claude/transitions-v2-o0jbi1` |
-| Commit | `9cc234700f054ae696843b63573c40cc48aeef5a` |
-| Commit'i kuupäev | 15.07.2026 |
-| Protocol revision | 3 |
-| UI revision | r25 |
+| Repo | `emervark/Showmesh` |
+| Haru | `main` |
+| Commit | `5b8b9034f014de76ffef1fc2ae391ec29f98a6ce` |
+| Commit'i kuupäev | 23.07.2026 |
+| Protocol revision | 23 |
+| UI revision | r51 |
 | Manuaali keeled | eesti ja inglise |
 
 ## Katvus
@@ -25,13 +25,13 @@ uue release'i ettevalmistamisega.
 | Teema | Olek | Järgmine täiendus |
 |---|---|---|
 | Esmakäivitus ja esimene show | Esmane juhend valmis | Lisada päris UI kuvatõmmised |
-| Cue elutsükkel ja tüübid | Kaetud | Kinnitada OSC cue operaatori töövoog |
+| Cue elutsükkel ja tüübid | Kaetud | Lisada OSC ja MIDI cue inspektori kuvatõmmised |
 | Actions v2 ja reaktiivsed triggerid | Kaetud | Lisada video-näide / demo projekt |
 | Transition ja ristfade | Kaetud | Lisada heliga ristfade'i mõõdetud näide |
-| Kihid ja GPU komposiit | Kaetud | Uuendada pärast transformide lisandumist |
+| Kihid ja GPU komposiit | Kaetud | Dokumenteerida kihi-transformide töövoog (positsioon, skaala, pööre) |
 | Ekraan, aken ja NDI | Kaetud | Lisada NDI saatja nime seadistus, kui UI valmib |
-| Spout | Piirang dokumenteeritud | Asendada päris juhendiga pärast integratsiooni |
-| OSC ja MIDI | Esmane viide valmis | Lisada MIDI trigger-maatriksi UI järel kuvatõmmised |
+| Spout | Kaetud | Lisada vastuvõtja kuvatõmmised (Resolume, OBS) |
+| OSC ja MIDI | Kaetud | Lisada MIDI Learn'i kuvatõmmised |
 | Heli | Osaliselt kaetud | Vajab eraldi miksri ja gain staging'u peatükki |
 | Tekst ja pildiseeriad | Osaliselt kaetud | Vajab editori väljade valmimist |
 | Headless töö | Osaliselt kaetud | Vajab deployment'i ja watchdog'i töövoogu |
@@ -41,6 +41,9 @@ uue release'i ettevalmistamisega.
 ## Teadlikud dokumentatsioonivõlad
 
 - Manuaalil puuduvad veel rakenduse päris kuvatõmmised.
+- Lähtekood liikus protocol rev 3-lt rev 23-le; uuemad funktsioonid nagu
+  composition canvas, LTC Generator ja Live Audio Input pole veel
+  dokumenteeritud.
 - Eraldi audio-miksri, master-limiteri ja meetrite peatükk on vajalik.
 - Ressursside korraldamine ning missing-media taastamine vajab UI valmimist.
 - NDI ja GPU peatükid vajavad toetatud riistvara maatriksit.

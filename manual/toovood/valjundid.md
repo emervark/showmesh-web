@@ -1,9 +1,9 @@
 ---
-title: Outputs and NDI
-description: Configure display, windowed, and NDI output in Showmesh.
+title: Outputs, NDI, and Spout
+description: Configure display, windowed, NDI, and Spout output in Showmesh.
 ---
 
-# Outputs and NDI
+# Outputs, NDI, and Spout
 
 Outputs are configured from **Output** while in Edit mode. The engine applies
 changes live: a window can open, close, or move to another monitor without an
@@ -11,8 +11,8 @@ engine restart.
 
 ## Disabled
 
-Program display output is disabled. An NDI mirror may continue to run. This is
-useful for headless or network-only output.
+Program display output is disabled. NDI and Spout mirrors may continue to run.
+This is useful for headless or network-only output.
 
 ## Fullscreen
 
@@ -40,8 +40,13 @@ compositions with preview therefore require a hardware load test.
 
 ## Spout
 
-**Texture sharing (Spout) — soon** is a placeholder for a future feature. This
-branch does not include the SpoutDX engine integration.
+Enable **Composition Output Sharing → Texture sharing (Spout)**. Spout mirrors
+the program composition to other applications on the same machine, such as
+Resolume, TouchDesigner, or OBS, and may run alongside any display output.
+
+CPU frames are sent as RGBA; GPU-decoded frames are read back before sending.
+Confirm during rehearsal that the receiving application sees the Showmesh
+sender and shows the expected picture.
 
 ## Resource output
 

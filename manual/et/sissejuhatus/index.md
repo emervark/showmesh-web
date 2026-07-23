@@ -12,7 +12,7 @@ käivitab need ettevalmistatud järjekorras nupuga **GO**.
 Showmesh koosneb kahest eraldi osast:
 
 ```text
-Editor (Electron)  ← WebSocket →  Engine (C++)  →  ekraan / NDI / heli
+Editor (Electron)  ← WebSocket →  Engine (C++)  →  ekraan / NDI / Spout / heli
                                          ↑
                                   OSC / MIDI
 ```
@@ -34,7 +34,7 @@ järjekorras ja korratavalt:
 - installatsioonid ja näitused;
 - esitlus- ning konverentsigraafika;
 - heli, pildi ja video ühine cue-list;
-- NDI kaudu teise videosüsteemi pildi saatmine;
+- NDI või Spouti kaudu teise videosüsteemi pildi saatmine;
 - OSC või MIDI abil käivitatavad sündmused.
 
 ## Olulised mõisted

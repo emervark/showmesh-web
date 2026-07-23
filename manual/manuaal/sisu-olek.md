@@ -12,12 +12,12 @@ preparation.
 
 | Field | Value |
 |---|---|
-| Repository | `emervark/Intermission` |
-| Branch | `claude/transitions-v2-o0jbi1` |
-| Commit | `9cc234700f054ae696843b63573c40cc48aeef5a` |
-| Commit date | 15 July 2026 |
-| Protocol revision | 3 |
-| UI revision | r25 |
+| Repository | `emervark/Showmesh` |
+| Branch | `main` |
+| Commit | `5b8b9034f014de76ffef1fc2ae391ec29f98a6ce` |
+| Commit date | 23 July 2026 |
+| Protocol revision | 23 |
+| UI revision | r51 |
 | Manual languages | Estonian and English |
 
 ## Coverage
@@ -25,13 +25,13 @@ preparation.
 | Topic | Status | Next improvement |
 |---|---|---|
 | First launch and first show | Initial guide complete | Add real UI screenshots |
-| Cue lifecycle and types | Covered | Confirm operator workflow for OSC cues |
+| Cue lifecycle and types | Covered | Add OSC and MIDI cue inspector screenshots |
 | Actions v2 and reactive triggers | Covered | Add a video example and demo project |
 | Transitions and crossfades | Covered | Add a measured audio crossfade example |
-| Layers and GPU compositing | Covered | Update when transforms are implemented |
+| Layers and GPU compositing | Covered | Document the layer transform workflow (position, scale, rotation) |
 | Display, window, and NDI | Covered | Add NDI sender-name setup when exposed |
-| Spout | Limitation documented | Replace after integration |
-| OSC and MIDI | Initial reference complete | Add screenshots after MIDI trigger UI |
+| Spout | Covered | Add receiver screenshots (Resolume, OBS) |
+| OSC and MIDI | Covered | Add MIDI Learn screenshots |
 | Audio | Partial | Add mixer and gain-staging chapter |
 | Text and image sequences | Partial | Expand after editor fields are complete |
 | Headless operation | Partial | Add deployment and watchdog workflow |
@@ -41,6 +41,9 @@ preparation.
 ## Known documentation debt
 
 - The manual does not yet include real application screenshots.
+- The source moved from protocol rev 3 to rev 23; newer features such as the
+  composition canvas, LTC Generator, and Live Audio Input resources are not
+  documented yet.
 - Audio mixing, limiting, and meters need a dedicated chapter.
 - Resource organisation and missing-media recovery need finished UI.
 - NDI and GPU sections need a supported-hardware matrix.
