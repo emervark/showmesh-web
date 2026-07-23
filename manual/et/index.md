@@ -5,47 +5,43 @@ title: Showmesh Manual
 hero:
   name: Showmesh
   text: Operaatori manuaal
-  tagline: Õpi ehitama, juhtima ja tõrke korral taastama reaalajas cue-põhist meediashow'd.
+  tagline: Cue-põhise meediashow ehitamine, juhtimine ja taastamine.
   actions:
     - theme: brand
       text: Alusta esimesest show'st
       link: /et/alustamine/esimene-show
     - theme: alt
-      text: Ava viiteosa
-      link: /et/viited/
+      text: Ava ingliskeelne põhiversioon
+      link: /
 
 features:
   - icon: ▶
     title: Õppimine
-    details: Cue-list, meedia, action'id, triggerid, üleminekud ja kihid arusaadavas järjekorras.
+    details: Cue-list, meedia, action'id, triggerid, üleminekud ja kihid.
     link: /et/oppimine/
   - icon: ◆
     title: Töövood
-    details: Praktilised juhendid show ettevalmistamiseks, käitamiseks, väljunditeks ja väliseks juhtimiseks.
+    details: Show ettevalmistamine, juhtimine, väljundid ja väline kontroll.
     link: /et/toovood/
   - icon: ◫
     title: Viited
-    details: Cue-tüüpide, parameetrite, triggerite, otseteede ja projektifaili täpne kirjeldus.
+    details: Cue-tüübid, parameetrid, triggerid, otseteed ja projektifail.
     link: /et/viited/
 ---
 
-## Selle versiooni alus
+## Keeleversiooni olek
 
-Manuaali esimene versioon kirjeldab Showmeshi rakendust GitHubi haru
-`claude/transitions-v2-o0jbi1` seisuga **15.07.2026** (commit
-`9cc234700f054ae696843b63573c40cc48aeef5a`). Rakenduse lähtekoodis kannab
-toode veel nime **Intermission**; manuaalis kasutatakse kasutajanime
-**Showmesh**.
+Ingliskeelne manual on Showmeshi peamine ja kõige värskem versioon. See
+eestikeelne tõlge põhineb varasemal 15.07.2026 rakenduse seisul ning võib uute
+funktsioonide, UI nimetuste ja projektivormingu osas maha jääda.
 
-::: warning Arendusversioon
-Showmesh on arenduses. Lehed eristavad töötavaid funktsioone, osalisi
-funktsioone ja tulevikuplaane. Kui liides ning manuaal lähevad lahku, kontrolli
-[sisu olekut](/et/manuaal/sisu-olek).
+::: warning Kontrolli värskeid juhiseid inglise keeles
+Praegust `main` haru (`0.1.0-beta.1`, protokoll rev 23, UI r51) kirjeldab
+[ingliskeelne manual](/). Live-show ettevalmistamisel kasuta seda
+autoriteetse allikana.
 :::
 
-## Kuidas manuaali kasutada?
-
-- Kui avad Showmeshi esimest korda, alusta peatükist [Alustamine](/et/alustamine/).
-- Kui tead juba cue-põhise show loogikat, liigu otse [Töövoogudesse](/et/toovood/).
-- Kui otsid ühe välja või cue-tüübi tähendust, kasuta otsingut või [Viiteosa](/et/viited/).
-- Kui arendad rakendust või dokumentatsiooni, vaata [manuaali täiendamise juhendit](/et/manuaal/kaastoo).
+- Esmakasutaja: [Alustamine](/et/alustamine/)
+- Praktilised protsessid: [Töövood](/et/toovood/)
+- Väljade tähendused: [Viiteosa](/et/viited/)
+- Tõlke täpne olek: [Sisu olek](/et/manuaal/sisu-olek)

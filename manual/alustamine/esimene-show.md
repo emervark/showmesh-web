@@ -1,72 +1,63 @@
 ---
 title: Your first show
-description: Build a first Showmesh cue list using video, image, and audio.
+description: Build and rehearse a first Showmesh video cue.
 ---
 
 # Your first show
 
-This example creates a simple project: a video fades in, holds its last frame,
-and fades out when stopped.
+This example creates a video that fades in, holds its last frame, and fades out
+when stopped.
 
-## 1. Create a project
+## 1. Create and save a project
 
-Choose **File → New Project**, then immediately use **File → Save As…** and
-save it as `first-show.imsn`.
+Choose **File → New Project**, then **File → Save As…** and save
+`first-show.show`.
 
 ## 2. Add media
 
-Choose **Add → Resource…** and select a video. Showmesh adds the resource and
-creates a cue. You can also drag an existing resource from the left panel into
-the cue list.
-
-Select the cue and set:
+Choose **Add → Resource…** and select a video. Showmesh adds the resource and a
+matching cue. Select the cue and set:
 
 - **Number:** `1`;
 - **Name:** `Opening video`;
-- **Play mode:** `Play once & hold`;
+- **Play mode:** **Play once & hold**;
 - **Layer:** `0`.
 
-## 3. Add a fade-in
+Selecting the row also arms it: the row receives the green **NEXT** marker.
 
-Open **Actions** and choose **+ Add Action → Fade In (1s)**. Verify:
+## 3. Add fades
+
+In **Actions**, add **Fade In (1s)**:
 
 - Property: **Opacity**;
 - From: `0`;
 - To: `1`;
-- Duration: `1000 ms`;
+- Duration: `1 s`;
 - Trigger: **On Play**;
 - Curve: **S Curve**.
 
-## 4. Add a fade-out
+Add **Fade Out on stop (1s)** with trigger **On Cue Stop** and destination `0`.
+The first STOP lets that finishing action run; a second STOP ends immediately.
 
-Choose **+ Add Action → Fade Out on stop (1s)**. Its trigger should be
-**On Cue Stop** and its final value `0`.
+## 4. Choose a test output
 
-The first STOP lets the finishing action complete. A second STOP ends the cue
-immediately. PANIC is always a hard stop.
+Choose **Output → Windowed → Display 1 — resizable window**, or press
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>0</kbd>.
 
-## 5. Choose a test output
+## 5. Rehearse
 
-Select **Output → Windowed → Display 1 — resizable window**. The program window
-opens immediately.
-
-## 6. Rehearse
-
-1. Check that **NEXT** shows `1 Opening video`.
-2. Press <kbd>Space</kbd> or **GO**.
-3. Check picture and audio.
+1. Confirm **NEXT** shows `1 · Opening video`.
+2. Press <kbd>Space</kbd>.
+3. Check picture and audio on the real output path.
 4. Press **STOP** and watch the fade-out.
 5. Save with <kbd>Ctrl</kbd>+<kbd>S</kbd>.
 
-## 7. Add a second cue
+Add an image on a higher layer and overlap the two cues to try a crossfade.
 
-Add an image, set it to **Play once & hold**, add a fade-in, and use a higher
-layer such as `1`. It can now appear over the video.
-
-::: warning Before using real outputs
-A window test does not validate monitor colour, frame rate, NDI reception, or
-audio routing. Always rehearse the complete signal path.
+::: warning Validate real outputs
+A window test does not validate monitor colour, refresh rate, NDI/Spout
+reception, or audio routing. Rehearse the complete signal path.
 :::
 
-Next, learn the [cue lifecycle](/oppimine/cued) and
+Next, learn [cues and the cue list](/oppimine/cued) and
 [actions and triggers](/oppimine/actionid-ja-triggerid).

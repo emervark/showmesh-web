@@ -1,12 +1,12 @@
 ---
 title: Project file
-description: Showmesh .imsn JSON structure and safe editing rules.
+description: Showmesh .show JSON structure and safe editing rules.
 ---
 
 # Project file
 
-A Showmesh project is a JSON-formatted `.imsn` file. The engine loads,
-normalises, migrates, and saves it using atomic writes and a journal.
+A Showmesh project is a JSON-formatted `.show` file. The engine normalises,
+migrates, journals, and atomically saves it.
 
 ## Top-level structure
 
@@ -24,14 +24,10 @@ normalises, migrates, and saves it using atomic writes and a journal.
 }
 ```
 
-| Field | Contents |
-|---|---|
-| `schemaVersion` | Document schema version; not the protocol revision |
-| `resources` | Media and text sources |
-| `outputs` | Display, NDI, Spout, or null outputs |
-| `connections` | Currently OSC output connections |
-| `triggers` | MIDI Note/CC transport mappings |
-| `cueLists` | Cue lists; the editor currently uses the first list |
+Resources may be media, text, LTC generators, or live inputs. Outputs may be
+display, NDI, Spout, null, or audio buses. Connections currently describe OSC
+destinations. Triggers map MIDI Note/CC to transport actions including GO and
+PANIC.
 
 ## Minimal video cue with an action
 
@@ -54,7 +50,7 @@ normalises, migrates, and saves it using atomic writes and a journal.
       "property": "video.opacity",
       "from": 0,
       "to": 1,
-      "durationMs": 1000,
+      "durationSec": 1,
       "curve": "sCurve",
       "trigger": { "type": "onPlay" }
     }
@@ -62,21 +58,13 @@ normalises, migrates, and saves it using atomic writes and a journal.
 }
 ```
 
-An empty action target means the owning cue.
-
 ## Safe editing
 
 1. Prefer the editor; the engine is the only document writer.
 2. Stop the engine before unavoidable hand editing.
-3. Make a copy.
-4. Keep IDs unique and do not rename parameter IDs.
-5. Validate JSON syntax.
-6. Open in Showmesh, inspect migration warnings, and save under a new name.
-7. Rehearse the entire show.
+3. Copy the project and keep IDs unique.
+4. Do not rename registry IDs.
+5. Validate JSON, open the copy, inspect warnings, save, and rehearse.
 
-## Migration
-
-On load, the engine converts legacy `fadeInSec`, `fadeOutSec`, `tracks[]`, and
-`completionAction` data into visible actions where possible. Migration is
-idempotent. A legacy track with a relative destination may remain on the old
-execution path.
+Legacy fade and transition fields are migrated where possible. Save migrated
+projects under a new name.

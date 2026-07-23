@@ -1,26 +1,40 @@
 ---
 title: Install and run
-description: Build and start the Showmesh engine and editor on Windows.
+description: Install the Showmesh Windows beta or start a development build.
 ---
 
 # Install and run
 
-The current Showmesh version runs from source. This is a concise operator-facing
-guide for starting a test build. Full development setup details are in
-`docs/SETUP.md`.
+## Install the Windows beta
 
-## Requirements
+If you received `Showmesh-Setup-0.1.0-beta.1.exe`:
 
-- Windows 11;
-- Visual Studio 2022 with **Desktop development with C++**;
-- CMake 3.24 or newer;
-- vcpkg and the `VCPKG_ROOT` environment variable;
-- Node.js 22 LTS;
-- Git.
+1. Run the installer and choose the installation folder.
+2. Windows SmartScreen may warn because the beta installer is not yet signed.
+   Verify that the file came from the Showmesh project owner, then use
+   **More info → Run anyway** only when you trust the file.
+3. Complete the per-user installation. Administrator rights are not required.
+4. Start **Showmesh** from the Start menu.
 
-## Build the engine
+The packaged editor includes the engine and starts it automatically. If an
+engine is already listening on the local port, the editor attaches to that
+engine instead of starting a duplicate.
 
-Open **x64 Native Tools Command Prompt for VS 2022** in the repository root:
+::: warning Closing the editor does not stop the show
+The production engine lifecycle is persistent. Closing the editor window leaves
+the engine, playback, audio, and outputs running. Reopen the editor to reconnect;
+use an explicit stop or PANIC before ending the engine.
+:::
+
+NDI output needs the NDI runtime. A machine without an audio device can use the
+null-audio backend: picture works, but no physical sound is produced.
+
+## Run from source
+
+Developers need Windows 11, Visual Studio 2022 with **Desktop development with
+C++**, CMake 3.24+, vcpkg, Node.js 22 LTS, and Git.
+
+Build and test the engine from an **x64 Native Tools Command Prompt**:
 
 ```bat
 cmake -B engine\build -S engine -G "Visual Studio 17 2022" -A x64 ^
@@ -29,17 +43,13 @@ cmake --build engine\build --config RelWithDebInfo
 ctest --test-dir engine\build -C RelWithDebInfo --output-on-failure
 ```
 
-The first build can take time while vcpkg fetches and builds media libraries.
-
-## Start the application
-
-Start the engine in one terminal:
+Start the engine:
 
 ```bat
 engine\build\RelWithDebInfo\engined.exe --gpu
 ```
 
-Start the editor web process in a second terminal:
+Then start the editor in two terminals:
 
 ```bat
 cd editor
@@ -47,33 +57,31 @@ npm install
 npm run dev
 ```
 
-Start Electron in a third terminal:
-
 ```bat
 cd editor
 npm run electron
 ```
 
-The editor connects to `ws://127.0.0.1:7788` by default. The connection status
-in the title bar should show the engine as connected.
-
 ## Common engine flags
 
 ```text
-engined.exe [--port 7788] [--project show.imsn]
+engined.exe [--port 7788] [--project show.show]
             [--display N] [--windowed WxH] [--gpu] [--run]
 ```
 
 | Flag | Meaning |
 |---|---|
-| `--project show.imsn` | Opens a project at launch |
+| `--project show.show` | Opens a project at launch |
 | `--windowed 960x540` | Opens program output in a window |
 | `--display N` | Selects a monitor |
-| `--gpu` | Enables D3D11VA decode with CPU fallback |
-| `--run` | Runs headless in show mode |
+| `--gpu` | Enables GPU decode with automatic CPU fallback |
+| `--run` | Runs headless |
 
-::: warning Match the editor and engine
-If the editor reports that the engine is older, rebuild and restart the engine.
-The UI revision and engine build stamp in the title bar help identify the binary
-that is actually running.
+The editor connects to `ws://127.0.0.1:7788` by default. MIDI input and output
+are always built into the Windows engine.
+
+::: warning Match editor and engine
+If the editor reports an incompatible engine, rebuild and restart the engine.
+Check protocol revision `23` and UI revision `r51` for the version documented
+here.
 :::
