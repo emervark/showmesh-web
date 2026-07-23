@@ -67,10 +67,15 @@ koos. Editor hoiab grupiliikmed cue-listis grupi juures.
 
 ## OSC
 
-Protokoll ja mootor tunnevad OSC cue tüüpi, mis kasutab connection'i,
-`oscAddress` välja ning argumente. Selle haru Add-menüü ei paku OSC cue loomist,
-mistõttu käsitle seda olemasolevate projektide / arendajafunktsioonina, mitte
-valmis operaatori töövoona.
+Saadab cue käivitumisel OSC-sõnumi sihtkohta. Loo see Add-menüüst; OSC MESSAGE
+inspektoris saab muuta sihtkohta (`host:port`), aadressi ja argumente.
+Numbrilised argumendid jäävad numbriteks, ülejäänud saadetakse stringidena.
+
+## MIDI
+
+Saadab cue käivitumisel MIDI Note, CC, Program Change'i või MIDI Show Controli
+sõnumi MIDI-väljundporti. Inspektoris saab muuta seadet, sõnumi tüüpi, kanalit,
+andmebaite ja soovi korral noodi hoidmise aega.
 
 ## Pilt ei ole eraldi failitüüp
 

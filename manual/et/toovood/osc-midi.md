@@ -51,8 +51,11 @@ transpordikäsuga: go, stop, pause, resume või load. CC käsitletakse nupuna, k
 väärtus on vähemalt `64`. MIDI Show Controli GO, STOP, RESUME ja LOAD käske
 töödeldakse samuti.
 
-Selle versiooni editoris MIDI Learn puudub, seega trigger-maatriks tuleb luua
-projektifailis või muu protokollitööriistaga.
+Editoris on MIDI Learn olemas. **Control I/O → MIDI → TRANSPORT** seob
+kontrolleri nupu globaalse GO ja PANIC käsuga ning igal OSC- või
+MIDI-triggeriga action'il on **◎ Learn** nupp: liiguta kontrolleril nuppu või
+faderit ja sissetulev kanal ja controller'i number (või OSC aadress) seotakse
+action'iga.
 
 ## MIDI-triggeriga action
 

@@ -46,7 +46,7 @@ relinker-UI. Paranda tee projektis või lisa ressurss uuesti.
 - Testi täisekraani resolutsiooni ning kaadrisagedust.
 - NDI puhul vaata signaali päris vastuvõtjas, mitte ainult editori preview's.
 - Kontrolli heli Windowsi tegelikus väljundseadmes.
-- Ära kasuta Spouti selle versiooni show-plaanis.
+- Spouti puhul kontrolli, et vastuvõttev rakendus näeb Showmeshi saatjat.
 
 ## 5. Läbimäng
 

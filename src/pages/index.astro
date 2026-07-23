@@ -97,7 +97,7 @@ const model = [
     label: 'When it happens',
     color: 'var(--sm-ready)',
     title: 'Trigger',
-    copy: 'Cue start, cue stop, timeline position, timecode, OSC, MIDI or deliberate manual execution.'
+    copy: 'Cue start, cue stop, timeline position, OSC, MIDI or deliberate manual execution.'
   }
 ];
 
@@ -114,7 +114,7 @@ const benefits = [
 const liveSignals = [
   { label: 'OSC · /scene/2', status: '3 active', pulse: '1.6s' },
   { label: 'MIDI · Note On Ch1', status: 'idle', pulse: '2.1s' },
-  { label: 'Timecode · LTC', status: 'locked', pulse: '1.3s' }
+  { label: 'NDI · Program out', status: 'sending', pulse: '1.3s' }
 ];
 
 const capabilityGroups = [
@@ -140,7 +140,7 @@ const supportingPoints = [
   'Windows-native product direction',
   'Dedicated separation between operator workflow and playback work',
   'Hardware-accelerated media and graphics paths',
-  'Support for Windows production technologies such as Spout',
+  'Support for Windows production technologies such as NDI and Spout',
   'Visible timing, output and engine health'
 ];
 
@@ -184,8 +184,12 @@ const integrations = [
     color: 'var(--sm-ready)'
   },
   { name: 'Images and text', status: 'Core', color: 'var(--sm-ready)' },
-  { name: 'NDI and Spout', status: 'In development', color: 'var(--sm-live)' },
-  { name: 'OSC and MIDI', status: 'In development', color: 'var(--sm-live)' },
+  { name: 'OSC and MIDI', status: 'Available', color: 'var(--sm-ready)' },
+  {
+    name: 'NDI and Spout',
+    status: 'Available on Windows',
+    color: 'var(--sm-ready)'
+  },
   { name: 'DMX and timecode', status: 'Planned', color: 'var(--sm-warning)' },
   { name: 'Notch Blocks', status: 'Planned', color: 'var(--sm-warning)' },
   {
@@ -258,19 +262,19 @@ const faqs = [
   },
   {
     q: 'What can Showmesh control?',
-    a: 'The product model is designed for media, outputs, control connections, realtime engines and other show systems. Individual capabilities and integrations will be labelled clearly according to their development state.'
+    a: 'Current builds run video, audio, image and text cues with fades and actions, drive fullscreen, windowed, NDI and Spout outputs, and respond to OSC and MIDI. Further capabilities and integrations are labelled clearly according to their development state.'
   },
   {
     q: 'How does the cue model work?',
     a: 'Showmesh separates resources, actions and triggers. A resource defines what can be controlled, an action defines what changes and a trigger defines when it happens. Native media playback remains part of the cue lifecycle.'
   },
   {
-    q: 'Will Showmesh support OSC and MIDI?',
-    a: 'OSC and MIDI are part of the planned control model. Specific availability and scope will be communicated as development progresses.'
+    q: 'Does Showmesh support OSC and MIDI?',
+    a: 'Yes. OSC input and output and MIDI Note and CC triggers already work in the current builds. The default OSC input port is 8000, and a MIDI Learn UI is still in development.'
   },
   {
-    q: 'Will Showmesh support NDI and Spout?',
-    a: 'NDI and Spout are part of the product direction for Windows-based media and output workflows. Their availability will be labelled according to development state.'
+    q: 'Does Showmesh support NDI and Spout?',
+    a: 'Yes. NDI and Spout output both work on Windows in the current builds, alongside fullscreen and windowed output.'
   },
   {
     q: 'Can I suggest an integration or workflow?',
@@ -648,8 +652,8 @@ const cueData = JSON.stringify(
             sensor changes, timecode advances or another system sends a command.
           </p>
           <p class="lead">
-            Showmesh is designed to let OSC, MIDI, timecode and realtime
-            parameters participate in the same cue workflow as media playback.
+            Showmesh lets OSC, MIDI and realtime parameters participate in the
+            same cue workflow as media playback, with timecode support planned.
             Operators can see where data comes from, what it controls and
             whether it is live.
           </p>
@@ -824,7 +828,7 @@ const cueData = JSON.stringify(
           }
         </div>
         <p class="fine">
-          Integration availability will be labelled clearly as core, in
+          Integration availability is labelled clearly as core, available, in
           development, planned or exploratory. Early-access conversations help
           determine which production workflows should be prioritised first.
         </p>
