@@ -140,7 +140,7 @@ const supportingPoints = [
   'Windows-native product direction',
   'Dedicated separation between operator workflow and playback work',
   'Hardware-accelerated media and graphics paths',
-  'Support for Windows production technologies such as Spout',
+  'Native NDI and Spout output on Windows',
   'Visible timing, output and engine health'
 ];
 
@@ -184,10 +184,16 @@ const integrations = [
     color: 'var(--sm-ready)'
   },
   { name: 'Images and text', status: 'Core', color: 'var(--sm-ready)' },
-  { name: 'NDI and Spout', status: 'In development', color: 'var(--sm-live)' },
-  { name: 'OSC and MIDI', status: 'In development', color: 'var(--sm-live)' },
-  { name: 'DMX and timecode', status: 'Planned', color: 'var(--sm-warning)' },
+  { name: 'NDI and Spout output', status: 'Core', color: 'var(--sm-ready)' },
+  { name: 'OSC and MIDI', status: 'Core', color: 'var(--sm-ready)' },
+  { name: 'LTC / MTC timecode', status: 'Core', color: 'var(--sm-ready)' },
   { name: 'Notch Blocks', status: 'Planned', color: 'var(--sm-warning)' },
+  {
+    name: 'Art-Net / sACN (DMX)',
+    status: 'Exploratory',
+    color: 'var(--sm-text-faint)'
+  },
+  { name: 'HTTP / REST', status: 'Exploratory', color: 'var(--sm-text-faint)' },
   {
     name: 'Unreal Engine',
     status: 'Exploratory',
@@ -197,11 +203,6 @@ const integrations = [
     name: 'TouchDesigner',
     status: 'Exploratory',
     color: 'var(--sm-text-faint)'
-  },
-  {
-    name: 'HTTP, scripts & plugins',
-    status: 'Planned',
-    color: 'var(--sm-warning)'
   }
 ];
 
@@ -242,7 +243,7 @@ const accessFields = [
 const faqs = [
   {
     q: 'What is Showmesh?',
-    a: 'Showmesh is a Windows-native realtime show automation workspace in development. It is designed to bring media playback, realtime graphics, control signals and external systems into one cue-based operating model.'
+    a: 'Showmesh is a Windows-native realtime show automation workspace, currently in beta. It brings media playback, realtime graphics control, control signals and external systems into one cue-based operating model.'
   },
   {
     q: 'Who is Showmesh for?',
@@ -250,7 +251,7 @@ const faqs = [
   },
   {
     q: 'Is Showmesh available now?',
-    a: 'Showmesh is currently in active development. You can request early access and tell us about the workflows you would like the product to support.'
+    a: 'Showmesh is in beta, with a Windows installer available to early-access operators and teams. Because the beta is still changing, rehearse the exact build, media and control path you will use in a show.'
   },
   {
     q: 'Is Showmesh only for Windows?',
@@ -258,19 +259,19 @@ const faqs = [
   },
   {
     q: 'What can Showmesh control?',
-    a: 'The product model is designed for media, outputs, control connections, realtime engines and other show systems. Individual capabilities and integrations will be labelled clearly according to their development state.'
+    a: 'Showmesh controls media, outputs, control connections, realtime engines and other show systems. Capabilities and integrations are labelled by state—core in the beta, planned or exploratory—so nothing is presented as more finished than it is.'
   },
   {
     q: 'How does the cue model work?',
     a: 'Showmesh separates resources, actions and triggers. A resource defines what can be controlled, an action defines what changes and a trigger defines when it happens. Native media playback remains part of the cue lifecycle.'
   },
   {
-    q: 'Will Showmesh support OSC and MIDI?',
-    a: 'OSC and MIDI are part of the planned control model. Specific availability and scope will be communicated as development progresses.'
+    q: 'Does Showmesh support OSC and MIDI?',
+    a: 'Yes. In the current beta you can send OSC messages and fades, send MIDI note, CC, program and MSC, take OSC and MIDI input, and map GO and PANIC with MIDI Learn.'
   },
   {
-    q: 'Will Showmesh support NDI and Spout?',
-    a: 'NDI and Spout are part of the product direction for Windows-based media and output workflows. Their availability will be labelled according to development state.'
+    q: 'Does Showmesh support NDI and Spout?',
+    a: 'Yes—NDI and Spout output work on Windows in the current beta. NDI requires the NDI runtime; Spout shares GPU textures between applications.'
   },
   {
     q: 'Can I suggest an integration or workflow?',
@@ -329,8 +330,8 @@ const cueData = JSON.stringify(
           <a class="btn-outline" href="#model">Explore how it works</a>
         </div>
         <div class="hero__note">
-          Showmesh is in active development. Early access is for operators,
-          designers and technical teams who want to help shape the product.
+          Showmesh is now in beta. Early access is open to operators, designers
+          and technical teams who want to help shape the product.
         </div>
       </div>
 
@@ -396,8 +397,8 @@ const cueData = JSON.stringify(
           </p>
           <p class="lead">
             When those tasks are spread across separate applications, the
-            operator becomes the integration layer. Showmesh is being built to
-            bring that work into one readable sequence.
+            operator becomes the integration layer. Showmesh brings that work
+            into one readable sequence.
           </p>
         </div>
         <ul class="checklist">
@@ -648,10 +649,10 @@ const cueData = JSON.stringify(
             sensor changes, timecode advances or another system sends a command.
           </p>
           <p class="lead">
-            Showmesh is designed to let OSC, MIDI, timecode and realtime
-            parameters participate in the same cue workflow as media playback.
-            Operators can see where data comes from, what it controls and
-            whether it is live.
+            Showmesh lets OSC, MIDI, timecode and realtime parameters
+            participate in the same cue workflow as media playback. Operators
+            can see where data comes from, what it controls and whether it is
+            live.
           </p>
           <p class="lead lead--accent">
             From a simple GO command to a parameter continuously driven by live
@@ -715,8 +716,8 @@ const cueData = JSON.stringify(
           <h2>Built around the machines already running the room.</h2>
           <p class="lead">
             Windows is central to many media-server, realtime graphics and
-            live-production workflows. Showmesh is being built for that
-            environment from the beginning—not treated as a secondary platform.
+            live-production workflows. Showmesh is built for that environment
+            from the beginning—not treated as a secondary platform.
           </p>
           <p class="lead">
             The product direction combines a focused operator interface with
@@ -824,9 +825,10 @@ const cueData = JSON.stringify(
           }
         </div>
         <p class="fine">
-          Integration availability will be labelled clearly as core, in
-          development, planned or exploratory. Early-access conversations help
-          determine which production workflows should be prioritised first.
+          Availability is labelled clearly as core, planned or exploratory, so
+          beta features are never presented as more finished than they are.
+          Early-access feedback helps decide which production workflows come
+          next.
         </p>
       </div>
     </section>
@@ -954,7 +956,9 @@ const cueData = JSON.stringify(
         </p>
         <div class="final__actions">
           <a class="btn-solid" href="#access">Request early access</a>
-          <a class="btn-outline" href="#access">Contact Showmesh</a>
+          <a class="btn-outline" href="mailto:info@showmesh.app"
+            >Contact Showmesh</a
+          >
         </div>
       </div>
     </section>
