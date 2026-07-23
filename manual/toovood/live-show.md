@@ -1,60 +1,57 @@
 ---
 title: Running a live show
-description: Safe Show mode operation and transport during a performance.
+description: Safe Show mode operation, concurrent playback, and recovery.
 ---
 
 # Running a live show
 
 ## Before doors open
 
-1. Start the engine, then the editor.
-2. Open the correct `.imsn` file.
-3. Verify connection, engine version, and build stamp.
-4. Open program output and confirm the safe idle state.
-5. Read the transport's **NEXT** line.
-6. Perform a short audio and first-visual test.
-7. Enable **Show mode**.
+1. Start Showmesh and open the correct `.show` file.
+2. Verify engine connection, build/version, outputs, inputs, and a safe idle
+   picture.
+3. Select the first intended cue and read **NEXT**.
+4. Perform a short audio, visual, and controller test.
+5. Enable **Show mode**.
 
 ## Show mode
 
-Show mode locks document editing: adding, deleting, field changes, and output
-reconfiguration are blocked. Transport and live parameter control continue.
+Show mode hides editing panels and locks document changes and output
+reconfiguration. Cue selection/arming, GO, STOP, PANIC, and Manual FIRE remain
+available. Leave Show mode only for a deliberate edit, then save, test, and
+lock again.
 
-Leave Show mode only when you deliberately choose to edit the project. Save,
-test the change, and lock the project again.
+## GO and concurrent cues
 
-## GO
-
-GO and <kbd>Space</kbd> fire the cue shown on **NEXT**. Press once and confirm
-the state change. Auto-continue or Auto-follow may fire more cues without
-another operator action.
+GO or <kbd>Space</kbd> fires **NEXT**. The NOW block shows the most recently
+fired cue and lists other live cues underneath. Auto-continue, Auto-follow,
+timecode, or external triggers may start more cues without another GO.
 
 ## STOP
 
-STOP halts the running cue. An `On Cue Stop` transition may run through its
-finishing grace period. A second STOP is immediate.
+STOP applies to every live cue and shows its blast radius, for example
+`STOP · 3`. It requests a polite stop so each cue can run its On Cue Stop fade.
+Stopping a cue again ends it immediately.
 
 ## PANIC
 
-PANIC or <kbd>Esc</kbd> immediately ends all active cues. Use it when incorrect
-content is on air or the show state can no longer be trusted.
+Bare <kbd>Esc</kbd> or PANIC begins the global panic fade, approximately two
+seconds to black/silence. Press again during the fade for an immediate hard
+stop. Open menus and popovers consume Esc first and cannot accidentally pass it
+through to PANIC.
 
-::: danger PANIC is not a soft fade
-PANIC does not wait for finishing actions. Prepare a dedicated blackout or
-recovery cue when the design requires a controlled transition.
-:::
+## Engine-link loss
 
-## Recovery
+The editor shows **ENGINE LINK LOST**, freezes telemetry as **LAST KNOWN**, and
+retries every second. Playback may still be running in the engine. Do not launch
+a second engine merely because the editor disconnected.
 
-If the editor disconnects, the engine remains the owner of show state. The
-editor retries `ws://127.0.0.1:7788` every second. Do not start a second engine
-until you know whether the first is still running and feeding program output.
+If the editor closed, reopen it and let it attach to the persistent engine. If
+the engine itself must restart:
 
-If the engine must restart:
-
-1. put the downstream system into a safe picture;
-2. stop the old process;
-3. start the engine with the correct project;
+1. put the downstream system into a safe state;
+2. confirm and stop the old process;
+3. start the correct engine and project;
 4. wait for the editor to reconnect;
-5. verify playhead and output;
+5. verify cue state, NEXT, and outputs;
 6. fire the prepared recovery cue.

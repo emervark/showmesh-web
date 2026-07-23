@@ -1,63 +1,57 @@
 ---
-title: Live-show juhtimine
-description: Ohutu Show mode'i töökorraldus ning transport etenduse ajal.
+title: Running a live show
+description: Safe Show mode operation, concurrent playback, and recovery.
 ---
 
-# Live-show juhtimine
+# Running a live show
 
-## Enne maja avamist
+## Before doors open
 
-1. Käivita mootor ja alles seejärel editor.
-2. Ava õige `.imsn` fail.
-3. Kontrolli ülaribal ühendust, engine'i versiooni ja build stamp'i.
-4. Ava programmi väljund ning kontrolli musta / ooteolekut.
-5. Vaata transpordi **NEXT** rida.
-6. Tee helitaseme ja esimese visuaali lühitest.
-7. Lülita sisse **Show mode**.
+1. Start Showmesh and open the correct `.show` file.
+2. Verify engine connection, build/version, outputs, inputs, and a safe idle
+   picture.
+3. Select the first intended cue and read **NEXT**.
+4. Perform a short audio, visual, and controller test.
+5. Enable **Show mode**.
 
 ## Show mode
 
-Show mode lukustab dokumendi muutmise: cue lisamine, kustutamine, väljade
-muutmine ja väljundi ümberseadistamine pole lubatud. Transport ja parameetrite
-live-juhtimine jäävad tööle.
+Show mode hides editing panels and locks document changes and output
+reconfiguration. Cue selection/arming, GO, STOP, PANIC, and Manual FIRE remain
+available. Leave Show mode only for a deliberate edit, then save, test, and
+lock again.
 
-Lülita Show mode välja ainult siis, kui otsustad teadlikult projekti muuta.
-Pärast parandust salvesta, tee vajadusel kontroll-GO ja lukusta uuesti.
+## GO and concurrent cues
 
-## GO
-
-GO nupp ja <kbd>Space</kbd> käivitavad transpordi **NEXT** real näidatud cue.
-Vajuta üks kord ning kinnita oleku muutus. Auto-continue või Auto-follow võib
-käivitada järgmisi cue'sid ilma uue vajutuseta.
+GO or <kbd>Space</kbd> fires **NEXT**. The NOW block shows the most recently
+fired cue and lists other live cues underneath. Auto-continue, Auto-follow,
+timecode, or external triggers may start more cues without another GO.
 
 ## STOP
 
-Transpordi STOP peatab parajasti töötava cue. Kui cue'l on `On Cue Stop`
-transition, lastakse sellel lõpetamisgraatsia jooksul töötada. Teine STOP on
-kohene.
+STOP applies to every live cue and shows its blast radius, for example
+`STOP · 3`. It requests a polite stop so each cue can run its On Cue Stop fade.
+Stopping a cue again ends it immediately.
 
 ## PANIC
 
-PANIC või <kbd>Esc</kbd> lõpetab kõik aktiivsed cue'd kohe. Kasuta seda, kui
-vale sisu on programmis või show seisund pole enam usaldusväärne.
+Bare <kbd>Esc</kbd> or PANIC begins the global panic fade, approximately two
+seconds to black/silence. Press again during the fade for an immediate hard
+stop. Open menus and popovers consume Esc first and cannot accidentally pass it
+through to PANIC.
 
-::: danger PANIC ei ole pehme fade
-PANIC ei oota lõpetamis-action'eid. Hoia eraldi ettevalmistatud blackout- või
-taastamiscue, kui show disain vajab kontrollitud üleminekut.
-:::
+## Engine-link loss
 
-## Taastumine
+The editor shows **ENGINE LINK LOST**, freezes telemetry as **LAST KNOWN**, and
+retries every second. Playback may still be running in the engine. Do not launch
+a second engine merely because the editor disconnected.
 
-Kui editor kaotab ühenduse, mootor on endiselt show tõest oleku omanik. Editor
-proovib vaikimisi iga sekundi järel aadressile `ws://127.0.0.1:7788` uuesti
-ühenduda. Ära käivita uut mootori protsessi enne, kui oled kontrollinud, kas
-vana veel töötab ja saadab programmi väljundit.
+If the editor closed, reopen it and let it attach to the persistent engine. If
+the engine itself must restart:
 
-Kui mootor tuleb taaskäivitada:
-
-1. vii välissüsteem turvalisse pilti;
-2. peata vana protsess;
-3. käivita mootor õige projektiga;
-4. oota editori ühendust;
-5. kontrolli playhead'i ja väljundit;
-6. käivita ettenähtud taastamiscue.
+1. put the downstream system into a safe state;
+2. confirm and stop the old process;
+3. start the correct engine and project;
+4. wait for the editor to reconnect;
+5. verify cue state, NEXT, and outputs;
+6. fire the prepared recovery cue.
