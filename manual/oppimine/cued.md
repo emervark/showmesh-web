@@ -1,16 +1,14 @@
 ---
 title: Cues and the cue list
-description: Cue lifecycle, playhead, timing, continue mode, and play mode.
+description: Cue lifecycle, arming, timing, continue mode, and transport behaviour.
 ---
 
 # Cues and the cue list
 
 A cue is the smallest fireable unit in a show. It can play media, wait, control
-another cue, send OSC, or carry a set of actions.
+another cue, send OSC/MIDI, or run actions.
 
 ## Cue lifecycle
-
-A typical cue moves through these states:
 
 ```text
 idle → standby → prewait → playing → postwait → complete
@@ -20,62 +18,56 @@ idle → standby → prewait → playing → postwait → complete
 
 | State | Meaning |
 |---|---|
-| `idle` | The cue is inactive |
+| `idle` | Inactive |
 | `standby` | Loaded and ready |
-| `prewait` | Counting down before the main activity |
-| `playing` | Main cue activity is running |
-| `postwait` | Main activity is done; post-wait is counting |
-| `paused` | Cue clock and media are frozen |
-| `complete` | The cue lifecycle has finished |
+| `prewait` | Counting down before activity |
+| `playing` | Main activity is running |
+| `postwait` | Activity ended; post-wait is counting |
+| `paused` | Clock and media are frozen |
+| `complete` | Lifecycle finished |
 
-## GO and the playhead
+## Arming and GO
 
-GO fires the next cue indicated by the playhead. Clicking a cue selects it for
-the inspector but does not automatically move the playhead. The transport's
-**NEXT** line always summarises what GO will actually do.
+Selection is standby: plain-clicking a cue or moving with
+<kbd>↑</kbd>/<kbd>↓</kbd> selects it, arms it, and re-aims GO. **NEXT** always
+shows the armed cue and the intent of firing it.
+
+Range selection does not change the armed cue. Use Shift to extend a range and
+Ctrl-click to toggle individual rows. The command palette
+(<kbd>Ctrl</kbd>+<kbd>K</kbd>) can search a number or name and arm that cue; it
+never fires a cue merely because it was found.
 
 ## Timing
 
-### Pre-wait
-
-The delay between GO and the cue's main activity. **On Cue Start** fires at the
-beginning of the lifecycle; **On Play** waits for the media player to start.
-
-### Duration
-
-The duration of Wait and control cues. For an action cue, effective duration is
-the latest end time of an `On Cue Start`, `On Play`, or `At Time` action.
-
-### Post-wait
-
-The delay after the main activity and before the cue becomes complete.
+- **Pre-wait** delays the cue's main activity after GO. **On Cue Start** fires
+  before this delay; **On Play** waits for the actual player start.
+- **Duration** controls Wait and control cues. Action timing is derived from
+  the latest scheduled action end.
+- **Post-wait** delays completion after the main activity.
+- **Timecode GO** arms a cue to fire when chased LTC/MTC crosses its
+  `hh:mm:ss:ff` value.
 
 ## Continue mode
 
 | Setting | Behaviour |
 |---|---|
-| **None** | The next cue waits for another GO |
-| **Auto-continue** | The next cue fires immediately after this cue starts |
-| **Auto-follow** | The next cue fires after this cue is fully complete |
-
-Use Auto-continue for parallel events and Auto-follow for playlists or timed
-chains.
+| **None** | Wait for another GO |
+| **Auto-continue** | Fire the next cue after this cue starts |
+| **Auto-follow** | Fire the next cue after this cue completes |
 
 ## Media play mode
 
 | Setting | Behaviour at media end |
 |---|---|
-| **Play once & eject** | Plays once and clears the output |
-| **Play once & hold** | Plays once and holds the final frame |
-| **Loop** | Repeats until stopped |
+| **Play once & eject** | Clear the output |
+| **Play once & hold** | Hold the final frame |
+| **Loop** | Repeat until stopped |
 
-An image is a resource used by a video cue and behaves like held media.
+## STOP and PANIC
 
-## STOP, PAUSE, and PANIC
+STOP politely stops **all currently live cues**. Each cue may complete its own
+On Cue Stop fade; stopping it again is immediate. PANIC is the global brake:
+the first press starts the panic fade, and a second press during that fade hard
+stops everything.
 
-- **Pause** freezes the cue clock, media, and any finishing grace period.
-- The first **Stop** may run `On Cue Stop` fades and wait for them.
-- A second **Stop** on the same cue ends it immediately.
-- **Panic** stops everything immediately and does not wait for actions.
-
-See the complete [cue type reference](/viited/cue-tuubid).
+See the [cue type reference](/viited/cue-tuubid).
