@@ -1,71 +1,76 @@
 ---
 title: User interface
-description: The main Showmesh editor panels, menus, transport, and status information.
+description: The Showmesh editor panels, transport, selection model, and status information.
 ---
 
 # User interface
 
-The editor is divided into five work areas so the operator can see the next cue,
-program state, and selected cue settings at the same time.
+The editor keeps the armed cue, live cues, selected settings, outputs, and
+system health visible in one operator workspace.
 
-## 1. Title bar
+## 1. Title bar and menus
 
-The title bar contains the project name, **Edit / Show mode** switch, menus,
-command palette, and engine connection state.
+The title bar contains the project name, **Edit / Show mode** pill, command
+palette, menus, and engine connection state.
 
-Menus are available in Edit mode:
+- **File** — New, Open, Save, and Save As;
+- **Edit** — Undo and Redo;
+- **Add** — all cue types, media resources, LTC Generator, and Live Audio Input;
+- **Cue** — GO, PANIC, Copy, Paste, Duplicate, and Delete;
+- **Output** — Disabled, fullscreen/windowed displays, NDI, and Spout;
+- **View** — Show mode.
 
-- **File** — create, open, and save projects;
-- **Edit** — undo and redo;
-- **Add** — add a cue or resource;
-- **Cue** — GO, Panic, and delete cue;
-- **Output** — display, window, NDI, and Spout;
-- **View** — toggle Show mode.
+Menus and editing affordances disappear in Show mode.
 
-## 2. Resources panel
+## 2. Resources and systems
 
-The left panel groups video, image, audio, and text resources, outputs, and
-connections. Drag a media resource into the cue list to create a suitable cue.
+The left panel groups media, text, timecode, live inputs, outputs, connections,
+and **Control I/O**. Drag media into the cue list to create a cue at the drop
+position. Select a resource, output, OSC node, MIDI node, or audio node to open
+its inspector.
 
-## 3. Cue list
+## 3. Cue list: selection is standby
 
-The centre panel is the show sequence. Each row shows the cue number, name,
-type, duration, and—depending on type—the target or nested actions.
+The centre panel is the show sequence. Each row shows cue number, name, kind,
+duration, state, relationships, and nested actions.
 
-- Click to select a cue.
-- Drag rows to reorder cues.
-- <kbd>Delete</kbd> removes the selected cue in Edit mode.
-- GO fires the playhead's next cue, not necessarily the selected cue.
+- A plain click selects **and arms** a cue. The green rail and **NEXT** badge
+  move with it.
+- <kbd>↑</kbd>/<kbd>↓</kbd> select and arm the previous/next cue.
+- <kbd>Shift</kbd>+click or <kbd>Shift</kbd>+arrow extends a contiguous range.
+- <kbd>Ctrl</kbd>+click toggles rows without changing the armed cue.
+- Delete removes the complete selection as one undoable operation.
+- Drag rows to reorder them in Edit mode.
 
 ## 4. Inspector
 
-The right panel edits the selected cue. Sections depend on cue type:
+The right inspector adapts to the selected cue, resource, output, or system
+node. Cue sections include identity, playback, transform, timing, timecode GO,
+kind-specific settings, actions, groups, and notes. Numeric and text fields
+commit on <kbd>Enter</kbd> or blur.
 
-- **Identity** — number, name, type, and resource;
-- **Playback** — play mode, video layer, and output;
-- **Timing** — pre-wait, post-wait, duration, and continue mode;
-- **Actions** — commands, parameter changes, and triggers;
-- **Group** — group members;
-- **Notes** — operator notes.
+The resource inspector provides preview/scrub, media facts, **Show in
+Explorer**, **Replace file**, transform controls, and guarded deletion.
 
-Changes are sent to the engine. Commit text and numeric fields by leaving the
-field or pressing <kbd>Enter</kbd>.
+## 5. Transport
 
-## 5. Transport and status bar
+- **NOW** shows the most recently fired live cue. Up to three other live cues
+  remain visible underneath, so concurrent playback is never hidden.
+- **NEXT** shows exactly what GO will fire.
+- **STOP** softly stops every live cue and shows the number affected.
+- **GO** or <kbd>Space</kbd> fires the armed cue.
+- **PANIC** or bare <kbd>Esc</kbd> starts the global panic fade. Press again
+  during the fade for an immediate hard stop.
 
-The transport shows:
+If a menu, popover, or command palette is open, <kbd>Esc</kbd> closes that layer
+instead of reaching PANIC.
 
-- **NOW** — running cue, clock, and progress;
-- **NEXT** — what the next GO will do;
-- **STOP** — stops the running cue;
-- **GO** — fires the next cue;
-- **PANIC** — stops everything immediately.
+## 6. Connection and status
 
-The bottom status drawer contains program preview, audio meters, engine metrics,
-and warnings. The JPEG preview is approximately 12 fps and does not replace
-checking the real program monitor.
+On engine-link loss, the transport becomes **LAST KNOWN**, progress freezes,
+and a full-width warning appears while the editor retries every second. Playback
+may still be running in the engine.
 
-::: tip Selection and playhead are different
-Selecting a cue opens it in the inspector. GO follows a separate playhead.
-Always verify the transport's **NEXT** line before firing.
-:::
+The status drawer shows the program preview, meters, performance information,
+real OSC/MIDI state, and a warning queue. The low-rate preview is a confidence
+monitor, not a replacement for checking the real program output.

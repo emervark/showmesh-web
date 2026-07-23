@@ -1,85 +1,51 @@
 ---
 title: Actions and triggers
-description: Exact Actions v2 field, trigger, command, and curve reference.
+description: Exact current action and trigger field reference.
 ---
 
 # Actions and triggers
 
-## Common action fields
-
-| Field | Required | Meaning |
-|---|---:|---|
-| `id` | yes | Stable action ID inside the cue |
-| `type` | yes | `command`, `set`, or `transition` |
-| `enabled` | no | `false` skips the action; enabled by default |
-| `target` | no | Target cue ID; empty means the owning cue |
-| `trigger` | yes | Rule that fires the action |
-
-## Command
+## Common fields
 
 | Field | Meaning |
 |---|---|
-| `command` | `play`, `pause`, or `stop` |
-| `target` | Cue receiving the command |
+| `id` | Stable action ID inside the cue |
+| `type` | `command`, `set`, or `transition` |
+| `enabled` | Disabled actions are skipped |
+| `target` | Target cue ID; empty means owner |
+| `trigger` | Trigger object |
 
-Video, audio, and image capabilities allow all three commands.
+## Action fields
 
-## Set
-
-| Field | Meaning |
+| Type | Fields |
 |---|---|
-| `property` | Stable parameter registry ID |
-| `to` | New value |
+| `command` | `command`: `play`, `pause`, or `stop` |
+| `set` | `property`, `to` |
+| `transition` | `property`, optional `from`, `to`, `durationSec`, `curve`, `preWait` |
 
-OSC and MIDI triggers may provide a live value instead of `to`. The engine
-clamps it to the registry range.
+The engine clamps values to the parameter registry. A new transition on the
+same target/property replaces the previous transition.
 
-## Transition
+## Triggers
 
-| Field | Unit | Meaning |
+| Type | Extra fields | Behaviour |
 |---|---|---|
-| `property` | — | Parameter registry ID |
-| `from` | parameter | Optional start; current value if omitted |
-| `to` | parameter | Destination value |
-| `durationMs` | ms | Duration |
-| `delayMs` | ms | Delay after trigger |
-| `curve` | — | Interpolation curve |
+| `onCueStart` | — | Cue lifecycle begins |
+| `onPlay` | — | Media player starts |
+| `onCueStop` | — | Soft stop begins |
+| `onFinished` | — | Main cue activity finishes |
+| `atTime` | `atMs` | Cue clock reaches milliseconds |
+| `osc` | `address` | Matching OSC while cue plays |
+| `midi` | `channel`, `controller` | Matching MIDI CC while cue plays |
+| `manual` | — | FIRE button or `action.fire` |
+| `timecode` | `atTc` | Chased timecode crosses `hh:mm:ss:ff` |
 
-## Trigger fields
-
-| `type` | Extra field | Behaviour |
-|---|---|---|
-| `onCueStart` | — | Start of cue lifecycle |
-| `onPlay` | — | Actual media-player start |
-| `onCueStop` | — | Soft stop |
-| `onFinished` | — | End of main cue activity |
-| `atTime` | `atMs` | Specified cue-clock time |
-| `osc` | `address` | OSC while owning cue plays |
-| `midi` | `channel`, `controller` | MIDI CC while owning cue plays |
-| `manual` | — | FIRE button or `action.fire` command |
-
-## Curves
-
-Allowed `curve` values:
+Allowed curves:
 
 ```text
 linear · easeIn · easeOut · sCurve · stepStart · stepEnd
 holdThenStep · easeInOut
 ```
 
-## Timing calculation
-
-Effective action-cue duration is the maximum of:
-
-```text
-trigger atMs + delayMs + durationMs
-```
-
-Only `onCueStart`, `onPlay`, and `atTime` actions contribute. On Cue Stop, On
-Finished, OSC, MIDI, and Manual are outside this duration.
-
-## Stop grace
-
-An enabled `onCueStop` transition may keep output alive until it finishes after
-the first STOP. A second STOP ends immediately. Direct external stops and PANIC
-may be hard stops; rehearse the exact controller path used by your show.
+An enabled On Cue Stop transition can keep output alive until it finishes.
+A second stop ends the cue immediately.

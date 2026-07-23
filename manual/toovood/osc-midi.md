@@ -1,32 +1,30 @@
 ---
 title: OSC and MIDI
-description: External Showmesh transport, parameter, and action control.
+description: Receive and send Showmesh transport, parameter, and device control.
 ---
 
 # OSC and MIDI
 
-The engine listens for OSC on UDP port `8000` by default. At startup, MIDI opens
-all detected input ports when the engine is built with RtMidi.
+Showmesh receives external control and sends control to other systems. OSC
+listens on UDP port `8000` by default. MIDI input and output are built into the
+Windows engine and open all detected ports.
 
-## OSC transport
+## OSC input
 
 | Address | Effect |
 |---|---|
-| `/go` | Fires the playhead's next cue |
-| `/panic` | Stops everything immediately |
-| `/stop` | Stops all cues |
-| `/pause` | Pauses all cues |
-| `/resume` | Resumes all paused cues |
-| `/cue/12/go` | Fires cue number or ID `12` |
-| `/cue/12/stop` | Stops cue `12` |
-| `/cue/12/pause` | Pauses cue `12` |
-| `/cue/12/resume` | Resumes cue `12` |
-| `/cue/12/load` | Loads cue `12` into standby |
+| `/go` | Fire the armed cue |
+| `/panic` | Global PANIC |
+| `/stop` | Stop all cues |
+| `/pause` | Pause all cues |
+| `/resume` | Resume paused cues |
+| `/cue/12/go` | Fire cue number/ID `12` |
+| `/cue/12/stop` | Stop cue `12` |
+| `/cue/12/pause` | Pause cue `12` |
+| `/cue/12/resume` | Resume cue `12` |
+| `/cue/12/load` | Load cue `12` |
 
-## OSC parameters
-
-The OSC address for a resource parameter is the parameter address itself. The
-first argument must be numeric:
+Numeric resource parameters use addresses such as:
 
 ```text
 /resource/res-video/opacity  0.5
@@ -34,37 +32,41 @@ first argument must be numeric:
 /resource/res-video/pan     -0.25
 ```
 
-## OSC-triggered action
+## MIDI Learn for GO and PANIC
 
-Set the action trigger to **OSC** and enter an address such as `/fx/dim`. It
-listens only while its owning cue is playing.
+Open **Control I/O → MIDI**. A green health dot and device list confirm input;
+the monitor shows incoming events.
 
-- A **Set** action uses a numeric OSC argument as a live value when present.
-- A **Transition** action starts its configured fade.
-- The same address can fire repeatedly during one cue run.
+1. In the **Transport** card, click **Learn** beside GO or PANIC.
+2. Press the desired controller button.
+3. Test it with the exact controller and USB/MIDI route used in the show.
 
-## MIDI trigger matrix
+The learned mapping is global: it does not target a particular cue. MIDI Show
+Control GO, STOP, RESUME, and LOAD are also understood.
 
-The project's `triggers` list maps a MIDI Note or CC event to a cue command:
-go, stop, pause, resume, or load. A CC becomes a button press at value `64` or
-higher. MIDI Show Control GO, STOP, RESUME, and LOAD are also handled.
+## Reactive action triggers
 
-The editor includes MIDI Learn. **Control I/O → MIDI → TRANSPORT** binds a
-controller button to the global GO and PANIC commands, and every OSC- or
-MIDI-triggered action has a **◎ Learn** button: move a control on the
-controller and the incoming channel and controller number (or OSC address) is
-bound to the action.
+OSC and MIDI CC action triggers listen while their owning cue is playing.
 
-## MIDI-triggered action
+- A Set action can follow an OSC numeric argument.
+- MIDI Set maps CC `0…127` to the parameter range.
+- MIDI Transition fires at value `64` or higher.
+- Reactive actions can re-fire during the same cue run.
 
-The **MIDI** action trigger uses channel and controller number:
+## OSC cue
 
-- Set follows the CC value live, mapping `0…127` to the parameter range;
-- Transition fires when the CC value reaches at least `64`;
-- the action listens only while its cue is playing.
+An OSC cue sends a message or value fade to a saved OSC connection. Configure
+host, port, address, arguments, duration, start/end values, curve, and pre-wait
+in the cue inspector.
 
-::: warning Test channel numbering
-MIDI protocol, controller UIs, and project files may use zero- or one-based
-channel numbers. The action editor presents channels as one-based; verify the
-first mapping in the engine log.
-:::
+## MIDI cue
+
+A MIDI cue sends to a chosen output device:
+
+- note on/off, with an optional hold time;
+- control change;
+- program change;
+- MIDI Show Control command and cue number.
+
+OSC and MIDI cues are ordinary list cues and can fire from GO,
+Auto-continue/follow, timecode, or another trigger.

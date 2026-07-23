@@ -1,55 +1,52 @@
 ---
 title: Outputs, NDI, and Spout
-description: Configure display, windowed, NDI, and Spout output in Showmesh.
+description: Configure display, windowed, NDI, Spout, and audio outputs.
 ---
 
 # Outputs, NDI, and Spout
 
-Outputs are configured from **Output** while in Edit mode. The engine applies
-changes live: a window can open, close, or move to another monitor without an
+Configure outputs from **Output** in Edit mode. Changes apply live without an
 engine restart.
 
-## Disabled
+## Program display
 
-Program display output is disabled. NDI and Spout mirrors may continue to run.
-This is useful for headless or network-only output.
+- **Disabled** closes the program display while NDI or Spout sharing may remain
+  active.
+- **Fullscreen → Display N** opens a borderless fullscreen output.
+- **Windowed → Display N** opens a resizable program window.
 
-## Fullscreen
+Shortcuts:
 
-Choose **Output → Fullscreen → Display N**. Showmesh opens a borderless
-fullscreen window on that monitor.
+```text
+Ctrl+Shift+D       Disabled
+Ctrl+Shift+1…9     Fullscreen on display 1…9
+Ctrl+Shift+0       Windowed on display 1
+```
 
-Before a show, verify Windows display order, resolution, refresh rate, HDR,
-scaling, and whether the show display should be the primary desktop.
-
-## Windowed
-
-Choose **Output → Windowed → Display N — resizable window**. This is useful for
-development, checks, and workflows where another application captures a window.
+Verify Windows display order, resolution, refresh rate, scaling, HDR/colour
+settings, and the physical signal path before a show.
 
 ## NDI
 
 Enable **Composition Output Sharing → Network streaming (NDI)**. NDI mirrors
-the program composition and may run even when display output is Disabled.
-
-Check the real receiver for sender identity, resolution, frame rate, colour,
-alpha, expected audio, and network stability throughout a rehearsal.
-
-GPU frames may require readback before being sent as NV12. Heavy 4K
-compositions with preview therefore require a hardware load test.
+the program canvas and requires the NDI runtime. Check sender discovery,
+resolution, frame rate, colour, audio, and network stability on the real
+receiver.
 
 ## Spout
 
-Enable **Composition Output Sharing → Texture sharing (Spout)**. Spout mirrors
-the program composition to other applications on the same machine, such as
-Resolume, TouchDesigner, or OBS, and may run alongside any display output.
+Enable **Composition Output Sharing → Texture sharing (Spout)**. Spout shares
+the program texture with another Windows application on the same GPU/system.
+Confirm the sender name and texture in the actual receiver; do not infer Spout
+health from the editor preview.
 
-CPU frames are sent as RGBA; GPU-decoded frames are read back before sending.
-Confirm during rehearsal that the receiving application sees the Showmesh
-sender and shows the expected picture.
+## Audio outputs
 
-## Resource output
+Audio buses are separate from video outputs. Confirm the device, starting
+channel, channel count, cue/resource levels, and Windows device state.
 
-A media cue's **Playback → Output** can bind its resource to a specific output
-or leave it at **Default**. Keep simple shows on the default program route and
-use explicit routing only when the output plan is documented and rehearsed.
+## Performance
+
+Display, preview, NDI readback, Spout, composition, and decode share GPU and CPU
+resources in different ways. Rehearse the maximum simultaneous load at the real
+show resolution.

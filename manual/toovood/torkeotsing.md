@@ -1,68 +1,62 @@
 ---
 title: Troubleshooting
-description: Resolve common Showmesh connection, media, output, and build problems.
+description: Resolve common Showmesh connection, media, output, MIDI, and installation problems.
 ---
 
 # Troubleshooting
 
-First determine whether the fault is in the editor, engine, project, media, or
-the signal path after Showmesh.
+First isolate the editor, engine, project, media, Showmesh output, and
+downstream signal path.
 
-## The editor shows Disconnected
+## Engine link lost
 
-1. Confirm that `engined.exe` is running.
-2. Check the WebSocket port in the log; default is `7788`.
-3. Make sure another process is not using the same port.
-4. Wait at least one second for automatic reconnection.
-5. After reconnecting, verify playhead and program output before GO.
+1. Read the **ENGINE LINK LOST** banner and retry count.
+2. Remember that playback may still be running.
+3. Confirm whether `engined.exe` is listening on port `7788`.
+4. Reopen the editor and allow it to attach to the persistent engine.
+5. After reconnecting, verify NOW, NEXT, outputs, and control state before GO.
 
-## The engine is older than the editor
+## Video is black
 
-Rebuild the engine:
-
-```bat
-cmake --build engine\build --config RelWithDebInfo
-```
-
-Stop the old process, launch the new binary, and verify the build stamp.
-
-## Video is black or GPU fallback starts
-
-- Try the file without `--gpu`.
-- Update the GPU driver and check which adapter owns the output.
+- Verify the selected program display; use <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>0</kbd>
+  for a windowed check.
+- Test without `--gpu` and preserve the engine log.
 - On a hybrid-GPU system, inspect Windows Graphics Settings.
-- Do not disable the automatic GPU probe before saving the log.
-- Test a standard H.264 or ProRes re-export.
+- Test a known H.264 or ProRes file.
+- Check opacity, scale, position, layer order, and both resource/cue trims.
+- Confirm the downstream display, NDI receiver, or Spout receiver separately.
 
-## Program works but preview is missing
+## Preview is missing
 
-Preview is a separate JPEG-over-WebSocket channel. `INTERMISSION_PREVIEW_HZ=0`
-disables it. GPU preview may drop frames under load; real program output is the
-more important source of truth.
+Preview is a separate low-rate channel. `SHOWMESH_PREVIEW_HZ=0` disables it.
+The real program output is authoritative.
 
 ## No audio
 
-- Check audio peaks in the status drawer.
-- Check both cue and resource Volume; they multiply.
-- Verify the Windows output device and mute state.
-- `audioDeviceNull` means no physical audio device was opened.
-- Test a known stereo file without transitions.
+- Check resource and cue Volume; they multiply.
+- Verify the audio bus device and channel range.
+- Check Windows mute/device state and embedded audio channels.
+- A null-audio device produces no physical sound.
 
-## NDI does not appear
+## MIDI is absent
 
-- Confirm that NDI is enabled in Output.
-- Check firewall rules and the Windows network profile.
-- Ensure sender and receiver share the same discovery environment.
-- Start with a simple 1080p file and Disabled display output.
-- Check the engine log for sender or frame errors.
+Windows builds include RtMidi. The engine log should report both input and
+output port counts. Reconnect the device, restart the engine if port
+enumeration changed, inspect **Control I/O → MIDI**, and test the monitor before
+using Learn.
+
+## Installer is blocked
+
+The beta installer is unsigned, so SmartScreen may warn. Use only an installer
+received from a trusted Showmesh source. A missing NDI sender usually means the
+NDI runtime is not installed.
 
 ## Build fails with `__std_*` or `_Thrd_*`
 
-The usual cause is a mismatch between the CMake cache and vcpkg toolsets. Run a
-clean configure from the same Visual Studio 2022 terminal. Detailed steps are
-in `docs/SETUP.md`, under **Toolset mismatch**.
+Delete the stale engine build directory and reconfigure from the matching
+Visual Studio 2022 tools terminal. See `docs/SETUP.md` in the app repository.
 
 ## Show state is unclear
 
-Use PANIC only when an immediate cut is safer than an unknown state, then use a
-prepared recovery cue. Do not hand-edit the project file during a live show.
+Use PANIC only when a fast global fade/cut is safer than the unknown state, then
+use the prepared recovery cue. Never hand-edit the project during a live show.

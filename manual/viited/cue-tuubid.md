@@ -1,85 +1,55 @@
 ---
 title: Cue types
-description: Complete reference for Showmesh cue types.
+description: Complete reference for current Showmesh cue types.
 ---
 
 # Cue types
 
 ## Common fields
 
-| Field | Type | Meaning |
-|---|---|---|
-| Number | text | Operator-facing address; does not need to be an integer |
-| Name | text | Descriptive cue name |
-| Notes | text | Operator note |
-| Pre-wait | seconds | Delay before the main activity |
-| Post-wait | seconds | Delay after the main activity |
-| Continue | choice | None, Auto-continue, or Auto-follow |
-| Actions | list | Extra activity tied to the cue lifecycle |
+| Field | Meaning |
+|---|---|
+| Number, Name, Notes, Color | Operator identity and notes |
+| Pre-wait / Post-wait | Delay before activity / before completion |
+| Continue | None, Auto-continue, or Auto-follow |
+| Duration | Control-cue duration |
+| Actions | Command, Set, and Transition actions |
+| Timecode GO | `tcArmEnabled` and `tcArm` (`hh:mm:ss:ff`) |
 
-## Video
+## Media and content
 
-Plays a video or image resource. Supports play mode, layer, output, opacity,
-volume, and pan. An image resource is labelled Image in the editor but remains
-type `video` in the project file.
+| Type | Behaviour |
+|---|---|
+| **Video** | Video or still-image resource; play mode, layer, output, transforms, opacity, audio |
+| **Audio** | Audio resource; play mode, output, volume, and pan |
+| **Text** | Text resource; font, size, colours, alignment, canvas, layer, transforms |
+| **Note** | Non-playing operator note |
+| **Wait** | No media; completes after its duration |
 
-## Audio
+Still images use a `video` cue in the project and receive an Image badge in the
+editor.
 
-Plays an audio resource. Supports play mode, volume, and pan, but not video
-layer or opacity.
+## Control and structure
 
-## Text
+| Type | Behaviour |
+|---|---|
+| **Transition** | Action-based parameter/control cue; legacy fields may be migrated |
+| **Stop** | Soft-stops one or several targets; empty target means all |
+| **Pause** | Pauses one or several targets; empty target means all |
+| **Go To** | Repositions the armed cue for the next GO |
+| **Group** | Fires cue IDs stored in `children` together |
 
-Renders a text resource. The engine supports content, font, size, colours,
-alignment, and canvas dimensions. This branch does not expose every resource
-field in the inspector.
+## External I/O
 
-## Wait
+### OSC
 
-Plays no media. It lasts for `durationSec` and is useful for timed actions and
-Auto-follow chains.
+Sends to a saved connection using `oscAddress`, `oscArgs`,
+`oscDurationSec`, optional fade values/curve, and `oscPreWait`.
 
-## Transition
+### MIDI
 
-An action-based control cue that changes parameters or sends transport commands
-to itself or other cues. A new Transition cue starts with an empty `actions[]`.
-Old projects may contain legacy `tracks[]`.
+Sends to `midiDevice`. `midiMessage` selects note, CC, program change, or MSC.
+Channel/data fields define the message; notes may use `midiNoteHoldMs`; MSC uses
+`mscCommand` and `mscCue`.
 
-## Stop
-
-Stops the target cue. An empty target means all cues. The target's On Cue Stop
-actions may provide a soft finish.
-
-## Pause
-
-Pauses the target cue's clock and media. An empty target means all cues. Resume
-through OSC, MIDI, or another suitable control path.
-
-## Go To
-
-Moves the cue-list playhead to the target cue. It prepares the next GO target;
-the target is required.
-
-## Group
-
-Stores member cue IDs in `children` and fires them together. The editor keeps
-group members adjacent to the group in the cue list.
-
-## OSC
-
-Sends an OSC message to a destination when the cue fires. Create it from the
-Add menu; the OSC MESSAGE inspector edits the destination (`host:port`), the
-address, and the arguments. Numeric arguments stay numeric; everything else is
-sent as a string.
-
-## MIDI
-
-Sends a MIDI Note, CC, Program Change, or MIDI Show Control message to a MIDI
-output port when the cue fires. The inspector edits the device, message type,
-channel, data bytes, and an optional note hold time.
-
-## Image is not a separate project cue type
-
-The editor recognises PNG, JPEG, BMP, WebP, TIFF, and GIF by extension and shows
-an Image badge. The project still stores a video cue. This matters when reading
-JSON and determining action capabilities.
+Both OSC and MIDI appear in the Add menu.

@@ -1,48 +1,43 @@
 ---
 title: Layers and compositing
-description: Display several visual cues at once and control their order.
+description: Order, transform, and composite several visuals at once.
 ---
 
 # Layers and compositing
 
-Showmesh can display several video, image, or text layers simultaneously. The
-program is composited bottom to top using premultiplied-alpha **over** blending.
+Showmesh composites video, image, and text layers bottom to top using
+premultiplied-alpha **over** blending.
 
 ## Ordering
 
-Visuals are ordered by:
+1. Lower **Layer** values are underneath.
+2. On the same layer, the earlier-fired cue is underneath.
+3. Stable cue ID order is the final tie-breaker.
 
-1. lower **Layer** value underneath;
-2. on the same layer, the earlier-fired cue underneath;
-3. stable cue ID order as a final tie-breaker.
+Leave gaps such as `0`, `10`, `20`, and `30` so levels can be inserted later.
 
-A useful convention is:
+## Transform
 
-| Layer | Use |
-|---:|---|
-| 0 | Background video |
-| 10 | Main image or second video |
-| 20 | Graphics or lower third |
-| 30 | Emergency or blackout layer |
+The selected visual resource exposes:
 
-Leave gaps between layer numbers so new levels can be inserted later.
+| Parameter | Range |
+|---|---:|
+| Opacity | `0…1` |
+| Scale | `0…4×` |
+| Position X / Y | `-1…1` of the canvas |
+| Rotation | `-180…180°` |
 
-## Opacity
+These values can also be controlled by Set and Transition actions. Image alpha
+is preserved and multiplied by opacity.
 
-Each visual layer's `video.opacity` multiplies its alpha. `0` is transparent and
-`1` fully visible. An image file's own alpha is preserved and multiplied by cue
-opacity.
+## Current limits
 
-## Current limitations
-
-- Layer position, scale, and rotation are not editable.
-- Per-output crop and corner pin are not implemented.
-- Full alpha in the final external program output is not complete.
-- The GPU compositor exists in source, but every Windows/GPU combination needs
-  a hardware rehearsal.
+- Crop, corner pin, edge blending, and per-output geometry are not implemented.
+- External alpha behaviour depends on the selected output path.
+- Always load-test the exact resolution, number of layers, preview, NDI/Spout,
+  and GPU used for the show.
 
 ::: tip A crossfade needs overlap
-If Video A is stopped before Video B becomes visible, there is nothing to
-crossfade. Keep both cues running for the transition and stop the lower cue only
-after the fade.
+Keep both visual cues alive during the fade. Stop the lower cue only after the
+transition completes.
 :::

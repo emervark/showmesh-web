@@ -1,11 +1,11 @@
-import { defineConfig } from "vitepress";
+﻿import { defineConfig } from "vitepress";
 
 const sharedTheme = {
   logo: { src: "/logo.svg", alt: "Showmesh" },
   siteTitle: "Showmesh Manual",
   externalLinkIcon: true,
   socialLinks: [
-    { icon: "github", link: "https://github.com/emervark/Intermission" }
+    { icon: "github", link: "https://github.com/emervark/Showmesh" }
   ],
   i18nRouting: true
 };
@@ -90,7 +90,7 @@ const etTheme = {
   returnToTopLabel: "Tagasi üles",
   langMenuLabel: "Muuda keelt",
   footer: {
-    message: "Showmeshi manuaal · arendusharu transitions-v2 põhjal",
+    message: "Showmeshi manuaal · põhineb emervark/Showmesh main harul",
     copyright: "Dokumentatsiooni versioon 0.2"
   }
 };
@@ -175,7 +175,7 @@ const enTheme = {
   returnToTopLabel: "Return to top",
   langMenuLabel: "Change language",
   footer: {
-    message: "Showmesh manual · based on the transitions-v2 development branch",
+    message: "Showmesh manual · based on emervark/Showmesh main",
     copyright: "Documentation version 0.2"
   }
 };
@@ -247,3 +247,4 @@ export default defineConfig({
     image: { lazyLoading: true }
   }
 });
+

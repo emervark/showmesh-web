@@ -1,53 +1,54 @@
 ---
 title: Capabilities and limitations
-description: Which Showmesh features are usable and which are still in development.
+description: Which Showmesh beta features are usable and which remain in development.
 ---
 
 # Capabilities and limitations
 
-This page describes the actual state of the source branch used for this manual.
+This page describes the `main` build documented on the manual home page.
 
-## Media and cues
-
-| Feature | Status | Notes |
-|---|---|---|
-| Video and audio playback | Working | FFmpeg, A/V sync, looping, and one-shot playback |
-| Images and image sequences | Working | Images are resources used by video cues |
-| Text | Working in the engine | The editor does not expose every text setting yet |
-| Wait, Stop, Pause, Go To, Group | Working | Available in the cue list |
-| OSC and MIDI cues | Working | Send OSC messages or MIDI Note/CC/Program/MSC from the cue list |
-| Fades and actions | Working | Command, Set, Transition, and eight trigger types |
-| Audio waveform | Not available | No waveform view in the editor |
-| Subtitles | Not available | Outside the current version |
-
-## Outputs
+## Media, cues, and timing
 
 | Feature | Status | Notes |
 |---|---|---|
-| Fullscreen and windowed output | Working | Can be changed while the engine runs |
-| Multiple simultaneous outputs | Working | Output Manager and mirror outputs |
-| NDI send | Working on Windows | CPU and GPU frame paths are implemented |
-| Spout send | Working on Windows | SpoutDX; CPU and GPU frame paths are implemented |
-| Alpha layer compositing | Working; GPU needs hardware validation | Premultiplied-alpha compositing from bottom to top |
-| Layer transforms | Working | Per-cue position, scale, and rotation, controllable through OSC, MIDI, and fades |
-| Crop and corner pin | Not available | Planned for later |
+| Video, audio, images, and text | Working | FFmpeg playback, A/V sync, loops, one-shot modes, text rendering |
+| Wait, Note, Transition, Stop, Pause, Go To, Group | Working | Available in the Add menu |
+| OSC and MIDI cues | Working | Send OSC messages/fades or MIDI note, CC, program, and MSC |
+| Actions and reactive triggers | Working | Command, Set, Transition, and nine trigger types |
+| LTC/MTC chase and timecode-armed cues | Working | Rehearse the selected input, frame rate, and rollover |
+| LTC generator and live audio input | Working | Added as resources |
+| Audio waveform | Not available | No waveform timeline in the editor |
+| Subtitle tracks | Not available | Outside the current beta |
 
-## Control and reliability
+## Outputs and compositing
 
 | Feature | Status | Notes |
 |---|---|---|
-| OSC input and output | Working | Default OSC input port is 8000 |
-| MIDI Note and CC | Working | Per-action MIDI Learn and GO/PANIC Learn in the editor |
+| Fullscreen and windowed display | Working | Reconfigurable while the engine runs |
+| Multiple outputs and audio buses | Working | Outputs reconcile live |
+| NDI send | Working on Windows | Requires the NDI runtime |
+| Spout send | Working on Windows | GPU texture sharing |
+| Layer opacity and alpha compositing | Working | Premultiplied-alpha composition |
+| Scale, position, and rotation | Working | Available in the resource Transform inspector |
+| Crop, corner pin, and edge blend | Not available | Not part of the current beta |
+
+## Operation and reliability
+
+| Feature | Status | Notes |
+|---|---|---|
+| OSC and MIDI input/output | Working | MIDI is built in on Windows |
+| GO/PANIC MIDI Learn | Working | Available in **Control I/O → MIDI** |
 | Show mode | Working | Locks editing while transport remains active |
-| Undo, redo, project load/save | Working | The engine is the only document writer |
-| Journal and recovery | Working | Project operations are journalled |
-| Missing-media pre-flight | Partial | Detection exists; relinker UI does not |
-| HTTP/REST and Art-Net/sACN | Not available | Not implemented in this version |
+| Undo/redo and project load/save | Working | The engine is the only document writer |
+| Journal and recovery | Working | Document operations are journalled |
+| Missing-media relinker | Partial | Detection exists; the complete collection/relink workflow is not finished |
+| Windows installer | Beta | Per-user NSIS installer; currently unsigned |
+| HTTP/REST and Art-Net/sACN | Not available | Candidates only if beta feedback requires them |
 
-::: tip Verify sharing outputs in the real receiver
-NDI and Spout mirror the program composition. Confirm during rehearsal that the
-receiving application sees the Showmesh sender and shows the expected picture.
+::: info 1.0 scope
+ISF shaders, the Timeline panel, and Lua cues were moved to the 1.1 candidate
+list. Do not design a 1.0 show around them.
 :::
 
-The technical implementation status is maintained in `docs/STATUS.md`. This
-manual focuses on behaviour visible and testable by an operator.
+The application repository maintains the detailed engineering matrix in
+`docs/STATUS.md`. This manual documents operator-visible behaviour.

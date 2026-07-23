@@ -1,61 +1,39 @@
 ---
 title: Sisu olek
-description: Millised Showmeshi teemad on manuaalis kaetud ja mida tuleb täiendada.
+description: Showmeshi eestikeelse tõlke alus ja uuendamise vajadus.
 ---
 
 # Sisu olek
 
-See on manuaali hooldusindeks. Uuenda tabelit koos suure funktsioonimuudatuse või
-uue release'i ettevalmistamisega.
-
-## Lähteversioon
+## Keeleversioonid
 
 | Väli | Väärtus |
 |---|---|
-| Repo | `emervark/Showmesh` |
-| Haru | `main` |
-| Commit | `5b8b9034f014de76ffef1fc2ae391ec29f98a6ce` |
-| Commit'i kuupäev | 23.07.2026 |
-| Protocol revision | 23 |
-| UI revision | r51 |
-| Manuaali keeled | eesti ja inglise |
+| Peamine keel | inglise |
+| Ingliskeelse manuali lähterepo | `emervark/Showmesh` |
+| Ingliskeelse manuali commit | `3e0e156e92359f6a5336e59a498c5ce140d3c3d6` |
+| Rakenduse versioon | `0.1.0-beta.1` |
+| Protokoll / UI | rev `23` / `r51` |
+| Eestikeelse tõlke alus | 15.07.2026 eelmine manual |
+| Tõlke olek | vajab täielikku sünkroniseerimist |
 
-## Katvus
+Ingliskeelne manual on autoriteetne. Eestikeelsed lehed säilitavad varasema
+õppematerjali, kuid võivad veel väita, et installer, Spout, MIDI Learn,
+geomeetriatransformid või MIDI cue puuduvad, ning võivad kasutada vana `.imsn`
+faililaiendit. Need väited ei kirjelda praegust rakenduse `main` haru.
 
-| Teema | Olek | Järgmine täiendus |
-|---|---|---|
-| Esmakäivitus ja esimene show | Esmane juhend valmis | Lisada päris UI kuvatõmmised |
-| Cue elutsükkel ja tüübid | Kaetud | Lisada OSC ja MIDI cue inspektori kuvatõmmised |
-| Actions v2 ja reaktiivsed triggerid | Kaetud | Lisada video-näide / demo projekt |
-| Transition ja ristfade | Kaetud | Lisada heliga ristfade'i mõõdetud näide |
-| Kihid ja GPU komposiit | Kaetud | Dokumenteerida kihi-transformide töövoog (positsioon, skaala, pööre) |
-| Ekraan, aken ja NDI | Kaetud | Lisada NDI saatja nime seadistus, kui UI valmib |
-| Spout | Kaetud | Lisada vastuvõtja kuvatõmmised (Resolume, OBS) |
-| OSC ja MIDI | Kaetud | Lisada MIDI Learn'i kuvatõmmised |
-| Heli | Osaliselt kaetud | Vajab eraldi miksri ja gain staging'u peatükki |
-| Tekst ja pildiseeriad | Osaliselt kaetud | Vajab editori väljade valmimist |
-| Headless töö | Osaliselt kaetud | Vajab deployment'i ja watchdog'i töövoogu |
-| Recovery ja žurnaal | Osaliselt kaetud | Vajab kasutajale nähtava taastamisvoo testi |
-| Installer ja release upgrade | Puudub | Funktsioon pole veel olemas |
+## Ingliskeelses versioonis juba uuendatud
 
-## Teadlikud dokumentatsioonivõlad
+- Windowsi beeta-installer ja püsiv engine'i elutsükkel;
+- `.show` projektifail;
+- üks v2 operaatoriliides ning selection-as-standby;
+- mitmikvalik, cue kopeerimine/dubleerimine ja väljundi otseteed;
+- töötav Spout ning scale/position/rotation parameetrid;
+- MIDI output cue, GO/PANIC Learn ja timecode-trigger;
+- protokoll rev 23 ja UI r51.
 
-- Manuaalil puuduvad veel rakenduse päris kuvatõmmised.
-- Lähtekood liikus protocol rev 3-lt rev 23-le; uuemad funktsioonid nagu
-  composition canvas, LTC Generator ja Live Audio Input pole veel
-  dokumenteeritud.
-- Eraldi audio-miksri, master-limiteri ja meetrite peatükk on vajalik.
-- Ressursside korraldamine ning missing-media taastamine vajab UI valmimist.
-- NDI ja GPU peatükid vajavad toetatud riistvara maatriksit.
-- Accessibility ja klaviatuuriga täielik navigeerimine pole veel auditeeritud.
+## Tõlke järgmine töö
 
-## Uuenduse kontrollküsimused
-
-- Kas Add-menüü cue-tüüpide loend muutus?
-- Kas inspektori sektsioonide sildid või väljad muutusid?
-- Kas `PROTOCOL_REV`, `UI_REV` või `schemaVersion` muutus?
-- Kas parameetri registry sai uue ID või capability?
-- Kas Output-menüü sai uue töötava väljundi?
-- Kas uus funktsioon vajab õppeteksti, töövoogu ja viitekirjet kõiki kolme?
-- Kas vana piiranguhoiatuse saab eemaldada?
-- Kas mõlemad keeleversioonid said uuendatud?
+Tõlgi ingliskeelsed muutunud lehed sama suhtelise tee alla, säilita UI tegelikud
+ingliskeelsed sildid ning jäta JSON-väljad, OSC aadressid ja masinväärtused
+muutmata. Enne avaldamist ehita mõlemad locale'id ja kontrolli keelevahetust.

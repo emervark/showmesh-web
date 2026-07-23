@@ -5,32 +5,19 @@ description: Animatable Showmesh parameter registry and addresses.
 
 # Parameters
 
-The parameter source of truth is `protocol/params.schema.json`. A stable ID must
-not be renamed without a project migration.
+The source of truth is `protocol/params.schema.json`.
 
-| ID | Label | Range | Mapper | Resources |
+| ID | Label | Range | Mapper / unit | Applies to |
 |---|---|---:|---|---|
-| `video.opacity` | Opacity | `0…1` | linear | video, image |
-| `audio.mainLevel` | Volume | `0…2` | perceptual | video, audio |
-| `audio.pan` | Pan | `-1…1` | equalPower | video, audio |
-
-## Opacity
-
-`0` is transparent and `1` fully visible. It multiplies the file's own alpha.
-
-## Volume
-
-`0` is silence, `1` nominal gain, and `2` up to double linear gain. Transitions
-use perceptual/dB-domain mapping. The master limiter protects the sum but does
-not replace correct gain staging.
-
-## Pan
-
-`-1` is left, `0` centre, and `1` right. Interpolation uses an equal-power curve.
+| `video.opacity` | Opacity | `0…1` | linear / `%` | video, image, text |
+| `video.scale` | Scale | `0…4` | linear / `×` | video, image, text |
+| `video.posX` | Position X | `-1…1` | canvas fraction | video, image, text |
+| `video.posY` | Position Y | `-1…1` | canvas fraction | video, image, text |
+| `video.rotation` | Rotation | `-180…180` | degrees | video, image, text |
+| `audio.mainLevel` | Volume | `0…2` | perceptual / dB | video, audio |
+| `audio.pan` | Pan | `-1…1` | equal power | video, audio |
 
 ## Resource and cue levels
-
-Showmesh keeps a resource fader and cue playback trim separately:
 
 ```text
 final opacity = resource opacity × cue opacity
@@ -38,7 +25,7 @@ final volume  = resource volume  × cue volume
 final pan     = clamp(resource pan + cue pan, -1, 1)
 ```
 
-Addresses:
+Common OSC addresses:
 
 ```text
 /resource/{resource-id}/opacity
@@ -50,10 +37,5 @@ Addresses:
 /cue/{cue-id}/pan
 ```
 
-OSC directly controls numeric `/resource/...` addresses in this branch. Cue
-actions normally write the `/cue/...` trim.
-
-::: tip Troubleshooting
-If a cue is unexpectedly silent or transparent, inspect both levels. A zero at
-either multiplied level produces zero output.
-:::
+If a cue is silent, invisible, off-canvas, or unexpectedly small, inspect both
+resource and cue trims plus transform actions.
