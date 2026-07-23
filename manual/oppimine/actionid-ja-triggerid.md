@@ -1,38 +1,21 @@
 ---
 title: Actions and triggers
-description: Build cue behaviour with the Actions v2 model.
+description: Build cue behaviour with commands, values, fades, and nine trigger types.
 ---
 
 # Actions and triggers
 
-An action is additional activity inside a cue. One cue can play video, fade its
-audio, change another cue's opacity, and finally send a stop command.
+An action adds activity to a cue. A cue can play media, fade its own audio,
+change another cue's opacity, and issue a stop command.
 
-## Three action types
+## Action types
 
-### Command
+- **Command** sends **Play**, **Pause**, or **Stop** to a compatible cue.
+- **Set** immediately writes a parameter value.
+- **Transition** changes a parameter over time using an optional starting
+  value, destination, duration, pre-wait, and curve.
 
-Sends a transport command: **Play**, **Pause**, or **Stop**. Target selects the
-cue that receives the command.
-
-### Set
-
-Immediately sets a parameter, such as opacity `0.5` or volume `1.0`.
-
-### Transition
-
-Changes a parameter over time. It can define a starting value, destination,
-duration, delay, and curve.
-
-## Target
-
-An action target can be:
-
-- **This cue** — an empty target means the cue that owns the action;
-- another compatible cue in the same cue list.
-
-Media cues often control their own opacity and audio. Transition cues are
-commonly used to control other cues.
+An empty target means the cue that owns the action.
 
 ## Triggers
 
@@ -40,39 +23,27 @@ commonly used to control other cues.
 |---|---|
 | **On Cue Start** | The cue lifecycle begins |
 | **On Play** | The media player actually starts |
-| **On Cue Stop** | The cue receives a soft STOP |
-| **On Finished** | Cue activity and scheduled actions finish |
-| **At Time** | The cue clock reaches a specified millisecond |
-| **OSC** | A matching OSC address arrives |
-| **MIDI** | A matching MIDI CC arrives |
-| **Manual** | The operator presses **FIRE** on the action card |
+| **On Cue Stop** | The cue receives a soft stop |
+| **On Finished** | Main cue activity finishes |
+| **At Time** | The cue clock reaches `atMs` |
+| **OSC** | A matching address arrives while the cue plays |
+| **MIDI CC** | A matching channel/controller arrives while the cue plays |
+| **Manual** | The operator presses **FIRE** |
+| **Timecode** | Chased timecode crosses `atTc` |
 
-OSC, MIDI, and Manual triggers are armed only while their owning cue is playing.
-They may fire repeatedly during the same run.
+OSC, MIDI, and Manual triggers may fire repeatedly during one cue run. A Set
+action can follow a numeric OSC argument or map MIDI CC `0…127` to the target
+parameter range.
 
-## Example: fade a video in and out
-
-```text
-1. Transition · Opacity 0 → 1 · 1000 ms · On Play
-2. Transition · Opacity current → 0 · 1000 ms · On Cue Stop
-```
-
-The first action reveals the video after playback starts. The second gives STOP
-a one-second finish. If `From` is omitted, the transition starts from the real
-current value.
-
-## Example: stop after a fade
+## Example: fade in and out
 
 ```text
-1. Transition · target Video A · Opacity → 0 · 2000 ms · On Cue Start
-2. Transition · target Video A · Volume → 0 · 2000 ms · On Cue Start
-3. Command · target Video A · Stop · On Finished
+1. Transition · Opacity 0 → 1 · 1 s · On Play
+2. Transition · Opacity current → 0 · 1 s · On Cue Stop
 ```
 
-## Conflicts
+If **From** is omitted, the engine starts from the real current value. A new
+transition on the same target parameter replaces the previous one and continues
+from the current state.
 
-A new transition on the same parameter replaces the previous transition. This
-**replace** policy makes retriggering predictable: the new fade starts from the
-current value and moves towards its new destination.
-
-See the exact fields in the [action reference](/viited/actionid).
+See the exact fields in [Actions and triggers reference](/viited/actionid).
