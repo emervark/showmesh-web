@@ -1,4 +1,113 @@
-﻿import { defineConfig } from "vitepress";
+﻿import fs from "node:fs";
+import path from "node:path";
+import { defineConfig } from "vitepress";
+
+const SITE = "https://manual.showmesh.app";
+
+/** Every manual page as { url, title, summary, body }, English first. */
+function collectPages(srcDir: string) {
+  const files: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        if (entry.name !== "node_modules" && !entry.name.startsWith(".")) walk(full);
+      } else if (entry.name.endsWith(".md") && entry.name !== "readme.md") {
+        files.push(full);
+      }
+    }
+  };
+  walk(srcDir);
+
+  return files
+    .map((file) => {
+      const rel = path.relative(srcDir, file).split(path.sep).join("/");
+      const url = SITE + "/" + rel.replace(/(^|\/)index\.md$/, "$1").replace(/\.md$/, "");
+      // Strip frontmatter, then take the first heading as title and the first
+      // ordinary paragraph as the one-line summary.
+      const source = fs.readFileSync(file, "utf8");
+      const frontmatter = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/)?.[1] ?? "";
+      const raw = source.slice(source.indexOf("---") === 0 ? frontmatter.length + 8 : 0);
+      // Home pages use the `hero:` layout and carry no `#` heading, so fall
+      // back to the frontmatter title or hero name before the file path.
+      const title =
+        raw.match(/^#\s+(.+)$/m)?.[1].trim() ??
+        frontmatter.match(/^\s*(?:name|title|text):\s*["']?(.+?)["']?\s*$/m)?.[1] ??
+        rel;
+      const summary = raw
+        .split(/\r?\n\r?\n/)
+        .map((block) => block.trim())
+        .find((block) => block && !/^[#>:|\-*<]|^\d+\.|^```/.test(block))
+        ?.replace(/\s+/g, " ")
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+        .replace(/:$/, ".");
+      return { rel, url, title, summary, body: raw.trim() };
+    })
+    .sort((a, b) => {
+      // English before Estonian, then the manual's own reading order, then
+      // section overviews (index.md) before the pages inside them.
+      const ORDER = ["", "sissejuhatus", "alustamine", "oppimine", "toovood", "viited", "manuaal"];
+      const locale = (p: string) => (p.startsWith("et/") ? 1 : 0);
+      const parts = (p: string) => p.replace(/^et\//, "").split("/");
+      const chapter = (p: string) => {
+        const segments = parts(p);
+        const rank = ORDER.indexOf(segments.length > 1 ? segments[0] : "");
+        return rank === -1 ? ORDER.length : rank;
+      };
+      const isOverview = (p: string) => (parts(p).at(-1) === "index.md" ? 0 : 1);
+      return (
+        locale(a.rel) - locale(b.rel) ||
+        chapter(a.rel) - chapter(b.rel) ||
+        isOverview(a.rel) - isOverview(b.rel) ||
+        a.rel.localeCompare(b.rel)
+      );
+    });
+}
+
+/**
+ * Write /llms.txt (a link index following the llmstxt.org convention) and
+ * /llms-full.txt (every page's markdown in one file) so language models can
+ * read the manual without crawling and parsing the rendered HTML.
+ */
+function writeLlmsFiles(srcDir: string, outDir: string) {
+  const pages = collectPages(srcDir);
+  const section = (pages: ReturnType<typeof collectPages>) =>
+    pages
+      .map((p) => `- [${p.title}](${p.url})${p.summary ? `: ${p.summary}` : ""}`)
+      .join("\n");
+  const en = pages.filter((p) => !p.rel.startsWith("et/"));
+  const et = pages.filter((p) => p.rel.startsWith("et/"));
+
+  const index = `# Showmesh Manual
+
+> Operator and system-setup manual for Showmesh, a Windows-first realtime show
+> automation application for theatres, concerts, immersive installations and
+> live events. Showmesh is in beta and is developed by VFX OÜ. English is served
+> at the root and Estonian under /et/.
+
+The product site is at https://showmesh.app and its own index at
+https://showmesh.app/llms.txt. The complete manual as a single markdown file is
+at ${SITE}/llms-full.txt.
+
+## Manual (English)
+
+${section(en)}
+
+## Manuaal (eesti keeles)
+
+${section(et)}
+`;
+
+  const full = `# Showmesh Manual — complete text
+
+Source: ${SITE}
+This file contains every manual page as markdown, English first, then Estonian.
+
+${pages.map((p) => `\n---\n\n<!-- ${p.url} -->\n\n${p.body}\n`).join("\n")}`;
+
+  fs.writeFileSync(path.join(outDir, "llms.txt"), index, "utf8");
+  fs.writeFileSync(path.join(outDir, "llms-full.txt"), full, "utf8");
+}
 
 const sharedTheme = {
   logo: { src: "/logo.svg", alt: "Showmesh" },
@@ -184,6 +293,13 @@ export default defineConfig({
   base: process.env.DOCS_BASE ?? "/",
   cleanUrls: true,
   lastUpdated: true,
+  // readme.md documents how to work on the manual; it is not manual content
+  // and was being published at /readme and listed in the sitemap.
+  srcExclude: ["readme.md"],
+  sitemap: { hostname: SITE },
+  buildEnd(siteConfig) {
+    writeLlmsFiles(siteConfig.srcDir, siteConfig.outDir);
+  },
   head: [
     ["meta", { name: "theme-color", content: "#101316" }],
     ["meta", { name: "color-scheme", content: "dark light" }],

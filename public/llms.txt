@@ -1,0 +1,50 @@
+# Showmesh
+
+> Showmesh is a Windows-first realtime show automation application for theatres, concerts, immersive installations and live events. It brings media playback, realtime graphics control, outputs and external control signals into one cue-based operating model. Showmesh is currently in beta and is developed by VFX OÜ.
+
+Showmesh organises a show around three concepts: a **resource** is anything the show can control (video, audio, image, output, connection, realtime engine), an **action** is what changes (fade a parameter, change volume, route an output, send a command), and a **trigger** is when it happens (cue start, cue stop, timeline position, timecode, OSC, MIDI or manual execution). Cues combine actions, so cue behaviour is described once instead of being coordinated by hand at every performance.
+
+Capabilities are labelled by state so nothing is presented as more finished than it is:
+
+- **Core in the beta:** video and audio playback, images and text, NDI and Spout output, OSC and MIDI (send and receive, including MIDI Learn for GO and PANIC), LTC/MTC timecode.
+- **Planned:** Notch Blocks.
+- **Exploratory:** Art-Net / sACN (DMX), HTTP / REST, Unreal Engine, TouchDesigner.
+
+## Site
+
+- [Showmesh home](https://showmesh.app/): Product overview, the resource/action/trigger model, live operator workflow, integrations by state, use cases, FAQ and the early-access request form.
+- [Operator UI concept](https://showmesh.app/showmesh-ui.html): Standalone interactive mockup of the operator workspace, embedded in the home page.
+
+## Manual
+
+- [Showmesh manual](https://manual.showmesh.app/): Operator and system-setup manual. English at the root, Estonian under `/et/`.
+- [What is Showmesh?](https://manual.showmesh.app/sissejuhatus/): Introduction and the problem the application addresses.
+- [Capabilities and limitations](https://manual.showmesh.app/sissejuhatus/voimalused): What the beta does and does not do.
+- [Install and run](https://manual.showmesh.app/alustamine/paigaldamine): Windows installation and first launch.
+- [User interface](https://manual.showmesh.app/alustamine/kasutajaliides): Layout of the operator workspace.
+- [Your first show](https://manual.showmesh.app/alustamine/esimene-show): Guided walkthrough from empty project to a running cue list.
+- [Cues and the cue list](https://manual.showmesh.app/oppimine/cued): How cues are structured and sequenced.
+- [Actions and triggers](https://manual.showmesh.app/oppimine/actionid-ja-triggerid): How behaviour is described and fired.
+- [Transitions](https://manual.showmesh.app/oppimine/uleminekud): Fades and parameter changes over time.
+- [Layers and compositing](https://manual.showmesh.app/oppimine/kihid): How visual layers combine.
+- [Preparing a show](https://manual.showmesh.app/toovood/show-ettevalmistamine): Programming and rehearsal workflow.
+- [Running a live show](https://manual.showmesh.app/toovood/live-show): Operating during performance.
+- [Outputs, NDI and Spout](https://manual.showmesh.app/toovood/valjundid): Output routing and network/GPU video sharing.
+- [OSC and MIDI](https://manual.showmesh.app/toovood/osc-midi): External control in both directions.
+- [Troubleshooting](https://manual.showmesh.app/toovood/torkeotsing): Diagnosing problems before and during a show.
+
+## Reference
+
+- [Reference index](https://manual.showmesh.app/viited/): Entry point for the reference section.
+- [Cue types](https://manual.showmesh.app/viited/cue-tuubid): Every cue type and its parameters.
+- [Actions and triggers reference](https://manual.showmesh.app/viited/actionid): Complete action and trigger list.
+- [Parameters](https://manual.showmesh.app/viited/parameetrid): Parameter names, ranges and units.
+- [Keyboard shortcuts](https://manual.showmesh.app/viited/otseteed): Operator key bindings.
+- [Project file](https://manual.showmesh.app/viited/projektifail): Project file structure and recovery.
+- [Glossary](https://manual.showmesh.app/viited/moisted): Terms used across the product and manual.
+
+## Contact
+
+- Email: info@showmesh.app
+- Support: support@showmesh.app
+- Early access: request form at https://showmesh.app/#access

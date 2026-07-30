@@ -1,0 +1,12 @@
+# Showmesh — https://showmesh.app
+# Everything here is public product information and is open to crawlers,
+# including AI crawlers. See /llms.txt for a machine-readable content index.
+
+User-agent: *
+Allow: /
+
+# The interactive UI concept is a standalone fixture embedded in the page
+# rather than a document meant to be indexed on its own.
+Disallow: /showmesh-ui.html
+
+Sitemap: https://showmesh.app/sitemap-index.xml

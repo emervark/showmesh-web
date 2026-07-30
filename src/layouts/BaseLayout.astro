@@ -4,6 +4,8 @@ const {
   title = 'Showmesh — Realtime show automation for Windows',
   description = 'Showmesh is a Windows-first realtime show automation application for theatres, concerts, immersive installations and live events.'
 } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <!doctype html>
@@ -13,10 +15,13 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/showmesh-application.png" />
+    <meta property="og:image" content={new URL('/showmesh-application.png', Astro.site).href} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Showmesh" />
     <meta name="twitter:card" content="summary_large_image" />
     <title>{title}</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
