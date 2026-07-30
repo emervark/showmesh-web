@@ -303,18 +303,18 @@ export default defineConfig({
   head: [
     ["meta", { name: "theme-color", content: "#101316" }],
     ["meta", { name: "color-scheme", content: "dark light" }],
-    // Google tag (gtag.js) — GA4 property G-LKFYD8SLRB. The marketing site runs
-    // the same tag, so both domains report into one stream. VitePress navigates
-    // client-side; GA4 enhanced measurement counts those as page views through
-    // its browser-history signal.
-    ["script", { async: "", src: "https://www.googletagmanager.com/gtag/js?id=G-LKFYD8SLRB" }],
+    // Google tag (gtag.js). GT-KDQF8PWT is the loadable tag ID; it forwards to
+    // its destination G-LKFYD8SLRB, the GA4 stream shared with showmesh.app.
+    // VitePress navigates client-side; GA4 enhanced measurement counts those as
+    // page views through its browser-history signal.
+    ["script", { async: "", src: "https://www.googletagmanager.com/gtag/js?id=GT-KDQF8PWT" }],
     [
       "script",
       {},
       `window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', 'G-LKFYD8SLRB');`
+gtag('config', 'GT-KDQF8PWT');`
     ]
   ],
   themeConfig: {
