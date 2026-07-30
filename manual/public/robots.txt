@@ -1,0 +1,9 @@
+# Showmesh manual — https://manual.showmesh.app
+# Public product documentation, open to crawlers including AI crawlers.
+# /llms.txt is a machine-readable index and /llms-full.txt is the whole
+# manual as a single markdown file.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://manual.showmesh.app/sitemap.xml
