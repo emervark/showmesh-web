@@ -303,29 +303,20 @@ export default defineConfig({
   head: [
     ["meta", { name: "theme-color", content: "#101316" }],
     ["meta", { name: "color-scheme", content: "dark light" }],
-    // Google Tag Manager
+    // Google tag (gtag.js) — GA4 property G-LKFYD8SLRB. The marketing site runs
+    // the same tag, so both domains report into one stream. VitePress navigates
+    // client-side; GA4 enhanced measurement counts those as page views through
+    // its browser-history signal.
+    ["script", { async: "", src: "https://www.googletagmanager.com/gtag/js?id=G-LKFYD8SLRB" }],
     [
       "script",
       {},
-      `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5DDTFFQX');`
+      `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LKFYD8SLRB');`
     ]
   ],
-  // The GTM <noscript> fallback has to live in <body>, which the head array
-  // cannot reach, so inject it into every rendered page here.
-  transformHtml(code) {
-    return code.replace(
-      "<body>",
-      `<body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5DDTFFQX"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->`
-    );
-  },
   themeConfig: {
     search: {
       provider: "local",
