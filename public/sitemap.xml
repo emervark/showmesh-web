@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Written by hand rather than generated. The marketing site is a single page,
+  and adding @astrojs/sitemap for it produced a package-lock.json that npm ci
+  could not install on Cloudflare's Linux builders. Add a <url> entry here when
+  a page is added; the manual keeps its own generated sitemap.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://showmesh.app/</loc>
+  </url>
+</urlset>

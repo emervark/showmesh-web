@@ -9,4 +9,4 @@ Allow: /
 # rather than a document meant to be indexed on its own.
 Disallow: /showmesh-ui.html
 
-Sitemap: https://showmesh.app/sitemap-index.xml
+Sitemap: https://showmesh.app/sitemap.xml
