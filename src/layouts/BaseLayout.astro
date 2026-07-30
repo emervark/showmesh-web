@@ -25,20 +25,22 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <meta name="twitter:card" content="summary_large_image" />
     <title>{title}</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <!-- Google tag (gtag.js) — GA4 property G-LKFYD8SLRB, stream showmesh.app.
-         The same tag runs on manual.showmesh.app so both domains report into
-         one stream; cross-domain linking is configured in the GA4 tag settings. -->
+    <!-- Google tag (gtag.js). GT-KDQF8PWT is the loadable tag ID; it forwards to
+         its destination G-LKFYD8SLRB, the GA4 stream for showmesh.app. The
+         destination ID is not loadable on its own — googletagmanager.com answers
+         404 for it. The manual runs the same tag, so both domains report into
+         that one stream, with cross-domain linking set in its tag settings. -->
     <script
       is:inline
       async
-      src="https://www.googletagmanager.com/gtag/js?id=G-LKFYD8SLRB"></script>
+      src="https://www.googletagmanager.com/gtag/js?id=GT-KDQF8PWT"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
       gtag('js', new Date());
-      gtag('config', 'G-LKFYD8SLRB');
+      gtag('config', 'GT-KDQF8PWT');
     </script>
   </head>
   <body>
