@@ -23,14 +23,14 @@ const links = [
     <nav class="site-nav__links" aria-label="Primary navigation">
       {links.map((l) => <a href={l.href}>{l.label}</a>)}
     </nav>
-    <a class="site-nav__cta" href="#access">Request early access</a>
+    <a class="site-nav__cta" href="#access">Apply for the beta</a>
     <details class="site-nav__mobile" data-nav-details>
       <summary aria-label="Open navigation"
         ><span></span><span></span><span></span></summary
       >
       <nav aria-label="Mobile navigation">
         {links.map((l) => <a href={l.href}>{l.label}</a>)}
-        <a href="#access" class="site-nav__mobile-cta">Request early access</a>
+        <a href="#access" class="site-nav__mobile-cta">Apply for the beta</a>
       </nav>
     </details>
   </div>
