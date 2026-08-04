@@ -5,6 +5,37 @@ description: Complete reference for current Showmesh cue types.
 
 # Cue types
 
+## Fields by type
+
+Generated from the cue-kind registry in the Showmesh repo
+(`protocol/protocol.schema.json`), so it lists exactly the fields the engine
+reads. What each type *does* is described in prose below — behaviour is not
+something a schema can state.
+
+<!-- generated:cue-fields start — from Showmesh docs/manual/generated/cue-fields.md; do not edit by hand, run `npm run sync:reference` -->
+
+| Cue type | Label | Kind-specific fields |
+|---|---|---|
+| `wait` | Wait | — |
+| `video` | Video | `target`, `layer`, `playMode`, `fadeInSec`, `fadeOutSec`, `audioOutput` |
+| `image` | Image | `target`, `layer`, `playMode`, `fadeInSec`, `fadeOutSec` |
+| `audio` | Audio | `target`, `playMode`, `fadeInSec`, `fadeOutSec`, `audioOutput` |
+| `text` | Text | `target`, `layer` |
+| `note` | Note | — |
+| `transition` | Transition | `target`, `property`, `toValue`, `curve`, `timing`, `tracks`, `conflictPolicy`, `completionAction`, `stopBehavior` |
+| `stop` | Stop | `target`, `targets` |
+| `pause` | Pause | `target`, `targets` |
+| `goto` | Go To | `target` |
+| `group` | Group | `children` |
+| `osc` | OSC | `connection`, `oscAddress`, `oscArgs`, `oscDurationSec`, `oscFadeFrom`, `oscFadeTo`, `oscCurve`, `oscPreWait` |
+| `midi` | MIDI | `midiDevice`, `midiMessage`, `midiChannel`, `midiData1`, `midiData2`, `midiNoteHoldMs`, `mscCommand`, `mscCue` |
+
+Every cue also carries these common fields:
+
+`id` · `number` · `name` · `type` · `color` · `notes` · `preWait` · `postWait` · `continueMode` · `durationSec` · `actions` · `tcArm` · `tcArmEnabled`
+
+<!-- generated:cue-fields end -->
+
 ## Common fields
 
 | Field | Meaning |

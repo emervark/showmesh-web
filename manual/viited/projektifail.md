@@ -24,10 +24,35 @@ migrates, journals, and atomically saves it.
 }
 ```
 
-Resources may be media, text, LTC generators, or live inputs. Outputs may be
-display, NDI, Spout, null, or audio buses. Connections currently describe OSC
-destinations. Triggers map MIDI Note/CC to transport actions including GO and
-PANIC.
+Connections currently describe OSC destinations. Triggers map MIDI Note/CC to
+transport actions including GO and PANIC.
+
+### Resource types
+
+<!-- generated:resource-types start — from Showmesh docs/manual/generated/resource-types.md; do not edit by hand, run `npm run sync:reference` -->
+
+| Resource type | Label | Kind-specific fields |
+|---|---|---|
+| `media` | Media | `path`, `fps` |
+| `text` | Text | `text`, `font`, `fontSize`, `textColor`, `align`, `width`, `height`, `backgroundColor` |
+| `ltcGen` | LTC | `startTc`, `ltcRate` |
+| `liveIn` | Live audio input | `inputDevice` |
+
+<!-- generated:resource-types end -->
+
+### Output types
+
+<!-- generated:output-types start — from Showmesh docs/manual/generated/output-types.md; do not edit by hand, run `npm run sync:reference` -->
+
+| Output type | Label | Kind-specific fields |
+|---|---|---|
+| `display` | Program output | `display`, `windowed`, `width`, `height` |
+| `ndi` | NDI output | `width`, `height`, `ndiName` |
+| `spout` | Spout output | `width`, `height`, `spoutName` |
+| `null` | Output | — |
+| `audioOut` | Output | `deviceName`, `channelStart`, `channelCount` |
+
+<!-- generated:output-types end -->
 
 ## Minimal video cue with an action
 

@@ -1,11 +1,11 @@
 ---
 title: Projektifail
-description: Showmeshi .imsn JSON-faili struktuur ja muutmise reeglid.
+description: Showmeshi .show JSON-faili struktuur ja muutmise reeglid.
 ---
 
 # Projektifail
 
-Showmeshi projekt on JSON-vormingus `.imsn` fail. Mootor laadib, normaliseerib,
+Showmeshi projekt on JSON-vormingus `.show` fail. Mootor laadib, normaliseerib,
 migreerib ja salvestab selle atomaarse kirjutuse ning žurnaaliga.
 
 ## Ülemine struktuur
@@ -32,6 +32,33 @@ migreerib ja salvestab selle atomaarse kirjutuse ning žurnaaliga.
 | `connections` | Praegu OSC väljundühendused |
 | `triggers` | MIDI Note/CC transpordiseosed |
 | `cueLists` | Cue-listid; editor töötab praegu esimese loendiga |
+
+### Ressursitüübid
+
+<!-- generated:resource-types start — Showmeshi docs/manual/generated/resource-types.et.md; ära toimeta käsitsi, uuenda `npm run sync:reference` -->
+
+| Ressursi tüüp | Silt | Tüübi-omased väljad |
+|---|---|---|
+| `media` | Media | `path`, `fps` |
+| `text` | Text | `text`, `font`, `fontSize`, `textColor`, `align`, `width`, `height`, `backgroundColor` |
+| `ltcGen` | LTC | `startTc`, `ltcRate` |
+| `liveIn` | Live audio input | `inputDevice` |
+
+<!-- generated:resource-types end -->
+
+### Väljunditüübid
+
+<!-- generated:output-types start — Showmeshi docs/manual/generated/output-types.et.md; ära toimeta käsitsi, uuenda `npm run sync:reference` -->
+
+| Väljundi tüüp | Silt | Tüübi-omased väljad |
+|---|---|---|
+| `display` | Program output | `display`, `windowed`, `width`, `height` |
+| `ndi` | NDI output | `width`, `height`, `ndiName` |
+| `spout` | Spout output | `width`, `height`, `spoutName` |
+| `null` | Output | — |
+| `audioOut` | Output | `deviceName`, `channelStart`, `channelCount` |
+
+<!-- generated:output-types end -->
 
 ## Minimaalne video cue action'itega
 

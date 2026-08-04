@@ -8,11 +8,23 @@ description: Animeeritavate Showmeshi parameetrite registry ja aadressid.
 Parameetrite allikas on repo `protocol/params.schema.json`. Stabiilset ID-d ei
 tohi ümber nimetada ilma projektimigratsioonita.
 
-| ID | Silt | Vahemik | Mapper | Toetatud ressursid |
-|---|---|---:|---|---|
-| `video.opacity` | Opacity | `0…1` | linear | video, image |
-| `audio.mainLevel` | Volume | `0…2` | perceptual | video, audio |
-| `audio.pan` | Pan | `-1…1` | equalPower | video, audio |
+<!-- generated:params start — Showmeshi docs/manual/generated/params.et.md; ära toimeta käsitsi, uuenda `npm run sync:reference` -->
+
+| ID | Silt | Vahemik | Fade'i vaikesiht | Mapper | Ühik | Toetatud cue-tüübid |
+|---|---|---:|---:|---|---|---|
+| `video.opacity` | Opacity | `0…1` | `0` | linear | `%` | video, image, text |
+| `video.scale` | Scale | `0…4` | `1` | linear | `×` | video, image, text |
+| `video.posX` | Position X | `-1…1` | `0` | linear | `canvas` | video, image, text |
+| `video.posY` | Position Y | `-1…1` | `0` | linear | `canvas` | video, image, text |
+| `video.rotation` | Rotation | `-180…180` | `0` | linear | `°` | video, image, text |
+| `audio.mainLevel` | Volume | `0…2` | `0` | perceptual | `dB` | video, audio |
+| `audio.pan` | Pan | `-1…1` | `0` | equalPower | `pan` | video, audio |
+
+<!-- generated:params end -->
+
+"Fade'i vaikesiht" on väärtus, millest uus fade algab — mitte parameetri
+puhkeväärtus. Seepärast läheb *Add Fade Out* nulli; puutumata cue renderdub
+ikka täisnähtavana.
 
 ## Opacity
 
