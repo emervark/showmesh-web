@@ -5,6 +5,37 @@ description: Showmeshi cue-tüüpide täielik viide.
 
 # Cue-tüübid
 
+## Väljad tüübi kaupa
+
+Genereeritud Showmeshi repo cue-kind registrist
+(`protocol/protocol.schema.json`), nii et loetletud on täpselt need väljad,
+mida mootor loeb. Mida iga tüüp *teeb*, on kirjeldatud allpool proosas —
+käitumist skeem öelda ei oska.
+
+<!-- generated:cue-fields start — Showmeshi docs/manual/generated/cue-fields.et.md; ära toimeta käsitsi, uuenda `npm run sync:reference` -->
+
+| Cue-tüüp | Silt | Tüübi-omased väljad |
+|---|---|---|
+| `wait` | Wait | — |
+| `video` | Video | `target`, `layer`, `playMode`, `fadeInSec`, `fadeOutSec`, `audioOutput` |
+| `image` | Image | `target`, `layer`, `playMode`, `fadeInSec`, `fadeOutSec` |
+| `audio` | Audio | `target`, `playMode`, `fadeInSec`, `fadeOutSec`, `audioOutput` |
+| `text` | Text | `target`, `layer` |
+| `note` | Note | — |
+| `transition` | Transition | `target`, `property`, `toValue`, `curve`, `timing`, `tracks`, `conflictPolicy`, `completionAction`, `stopBehavior` |
+| `stop` | Stop | `target`, `targets` |
+| `pause` | Pause | `target`, `targets` |
+| `goto` | Go To | `target` |
+| `group` | Group | `children` |
+| `osc` | OSC | `connection`, `oscAddress`, `oscArgs`, `oscDurationSec`, `oscFadeFrom`, `oscFadeTo`, `oscCurve`, `oscPreWait` |
+| `midi` | MIDI | `midiDevice`, `midiMessage`, `midiChannel`, `midiData1`, `midiData2`, `midiNoteHoldMs`, `mscCommand`, `mscCue` |
+
+Iga cue kannab lisaks neid ühiseid välju:
+
+`id` · `number` · `name` · `type` · `color` · `notes` · `preWait` · `postWait` · `continueMode` · `durationSec` · `actions` · `tcArm` · `tcArmEnabled`
+
+<!-- generated:cue-fields end -->
+
 ## Ühised väljad
 
 | Väli | Tüüp | Tähendus |

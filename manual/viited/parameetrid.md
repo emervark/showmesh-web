@@ -5,17 +5,26 @@ description: Animatable Showmesh parameter registry and addresses.
 
 # Parameters
 
-The source of truth is `protocol/params.schema.json`.
+The source of truth is `protocol/params.schema.json` in the Showmesh repo; the
+table below is generated from it.
 
-| ID | Label | Range | Mapper / unit | Applies to |
-|---|---|---:|---|---|
-| `video.opacity` | Opacity | `0…1` | linear / `%` | video, image, text |
-| `video.scale` | Scale | `0…4` | linear / `×` | video, image, text |
-| `video.posX` | Position X | `-1…1` | canvas fraction | video, image, text |
-| `video.posY` | Position Y | `-1…1` | canvas fraction | video, image, text |
-| `video.rotation` | Rotation | `-180…180` | degrees | video, image, text |
-| `audio.mainLevel` | Volume | `0…2` | perceptual / dB | video, audio |
-| `audio.pan` | Pan | `-1…1` | equal power | video, audio |
+<!-- generated:params start — from Showmesh docs/manual/generated/params.md; do not edit by hand, run `npm run sync:reference` -->
+
+| ID | Label | Range | Default fade target | Mapper | Unit | Applies to |
+|---|---|---:|---:|---|---|---|
+| `video.opacity` | Opacity | `0…1` | `0` | linear | `%` | video, image, text |
+| `video.scale` | Scale | `0…4` | `1` | linear | `×` | video, image, text |
+| `video.posX` | Position X | `-1…1` | `0` | linear | `canvas` | video, image, text |
+| `video.posY` | Position Y | `-1…1` | `0` | linear | `canvas` | video, image, text |
+| `video.rotation` | Rotation | `-180…180` | `0` | linear | `°` | video, image, text |
+| `audio.mainLevel` | Volume | `0…2` | `0` | perceptual | `dB` | video, audio |
+| `audio.pan` | Pan | `-1…1` | `0` | equalPower | `pan` | video, audio |
+
+<!-- generated:params end -->
+
+"Default fade target" is the value a newly added fade starts with — not the
+parameter's resting value. It is why *Add Fade Out* lands on `0`; an untouched
+cue still renders fully visible.
 
 ## Resource and cue levels
 
