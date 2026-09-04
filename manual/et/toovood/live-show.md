@@ -1,57 +1,59 @@
 ---
-title: Running a live show
-description: Safe Show mode operation, concurrent playback, and recovery.
+title: Live-show juhtimine
+description: Turvaline Show mode töö, samaaegne taasesitus ja taastumine.
 ---
 
-# Running a live show
+# Live-show juhtimine
 
-## Before doors open
+## Enne uste avamist
 
-1. Start Showmesh and open the correct `.show` file.
-2. Verify engine connection, build/version, outputs, inputs, and a safe idle
-   picture.
-3. Select the first intended cue and read **NEXT**.
-4. Perform a short audio, visual, and controller test.
-5. Enable **Show mode**.
+1. Käivita Showmesh ja ava õige `.show` fail.
+2. Kontrolli mootori ühendust, build'i/versiooni, väljundeid, sisendeid ja
+   ohutut vaikepilti.
+3. Vali esimene kavandatud cue ja loe **NEXT** rida.
+4. Tee lühike audio-, visuaal- ja kontrolleritest.
+5. Lülita sisse **Show mode**.
 
 ## Show mode
 
-Show mode hides editing panels and locks document changes and output
-reconfiguration. Cue selection/arming, GO, STOP, PANIC, and Manual FIRE remain
-available. Leave Show mode only for a deliberate edit, then save, test, and
-lock again.
+Show mode peidab redigeerimispaneelid ning lukustab dokumendi muudatused ja
+väljundite ümberseadistamise. Cue valimine ja ettevalmistamine, GO, STOP,
+PANIC ja Manual FIRE jäävad kättesaadavaks. Lahku Show mode'ist ainult
+tahtliku muudatuse tegemiseks, seejärel salvesta, testi ja lukusta uuesti.
 
-## GO and concurrent cues
+## GO ja samaaegsed cue'd
 
-GO or <kbd>Space</kbd> fires **NEXT**. The NOW block shows the most recently
-fired cue and lists other live cues underneath. Auto-continue, Auto-follow,
-timecode, or external triggers may start more cues without another GO.
+GO või <kbd>Space</kbd> käivitab **NEXT** cue. NOW plokk näitab viimati
+käivitatud cue'd ja loetleb selle all teised töötavad cue'd. Auto-continue,
+Auto-follow, timecode või välised triggerid võivad käivitada rohkem cue'sid
+ilma uue GO-ta.
 
 ## STOP
 
-STOP applies to every live cue and shows its blast radius, for example
-`STOP · 3`. It requests a polite stop so each cue can run its On Cue Stop fade.
-Stopping a cue again ends it immediately.
+STOP rakendub kõigile töötavatele cue'dele ja näitab, mitut cue'd see
+mõjutab, nt `STOP · 3`. See taotleb viisakat peatumist, nii et iga cue saab
+läbida oma On Cue Stop fade'i. Sama cue uuesti peatamine lõpetab selle kohe.
 
 ## PANIC
 
-Bare <kbd>Esc</kbd> or PANIC begins the global panic fade, approximately two
-seconds to black/silence. Press again during the fade for an immediate hard
-stop. Open menus and popovers consume Esc first and cannot accidentally pass it
-through to PANIC.
+Pelgalt <kbd>Esc</kbd> või PANIC käivitab globaalse panic-fade'i, umbes kaks
+sekundit musta/vaikuseni. Vajuta uuesti fade'i ajal kohese kõva peatuse
+saamiseks. Avatud menüüd ja hüpikaknad tarbivad Esc enne ning ei lase sellel
+kogemata PANIC-uni jõuda.
 
-## Engine-link loss
+## Engine-lingi kadumine
 
-The editor shows **ENGINE LINK LOST**, freezes telemetry as **LAST KNOWN**, and
-retries every second. Playback may still be running in the engine. Do not launch
-a second engine merely because the editor disconnected.
+Editor näitab **ENGINE LINK LOST**, külmutab telemeetria kui **LAST KNOWN**
+ning proovib uuesti iga sekundi järel. Taasesitus võib mootoris ikka
+töötada. Ära käivita teist mootorit ainult sellepärast, et editor katkestas
+ühenduse.
 
-If the editor closed, reopen it and let it attach to the persistent engine. If
-the engine itself must restart:
+Kui editor sulgus, ava see uuesti ja lase sel püsiva mootoriga uuesti
+ühenduda. Kui mootor ise peab taaskäivituma:
 
-1. put the downstream system into a safe state;
-2. confirm and stop the old process;
-3. start the correct engine and project;
-4. wait for the editor to reconnect;
-5. verify cue state, NEXT, and outputs;
-6. fire the prepared recovery cue.
+1. vii järgnev süsteem ohutusse olekusse;
+2. kinnita ja peata vana protsess;
+3. käivita õige mootor ja projekt;
+4. oota, kuni editor uuesti ühendub;
+5. kontrolli cue olekut, NEXT-i ja väljundeid;
+6. käivita ettevalmistatud taastumis-cue.

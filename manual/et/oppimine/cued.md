@@ -1,14 +1,14 @@
 ---
-title: Cues and the cue list
-description: Cue lifecycle, arming, timing, continue mode, and transport behaviour.
+title: Cue'd ja cue-list
+description: Cue elutsükkel, ettevalmistamine, ajastus, continue mode ja transpordi käitumine.
 ---
 
-# Cues and the cue list
+# Cue'd ja cue-list
 
-A cue is the smallest fireable unit in a show. It can play media, wait, control
-another cue, send OSC/MIDI, or run actions.
+Cue on show'i väikseim käivitatav üksus. See võib esitada meediat, oodata,
+juhtida teist cue'd, saata OSC/MIDI sõnumit või käivitada action'eid.
 
-## Cue lifecycle
+## Cue elutsükkel
 
 ```text
 idle → standby → prewait → playing → postwait → complete
@@ -16,58 +16,59 @@ idle → standby → prewait → playing → postwait → complete
                             paused
 ```
 
-| State | Meaning |
+| Olek | Tähendus |
 |---|---|
-| `idle` | Inactive |
-| `standby` | Loaded and ready |
-| `prewait` | Counting down before activity |
-| `playing` | Main activity is running |
-| `postwait` | Activity ended; post-wait is counting |
-| `paused` | Clock and media are frozen |
-| `complete` | Lifecycle finished |
+| `idle` | Passiivne |
+| `standby` | Laaditud ja valmis |
+| `prewait` | Enne tegevust loeb aega maha |
+| `playing` | Põhitegevus käib |
+| `postwait` | Tegevus lõppes; post-wait loeb aega |
+| `paused` | Kell ja meedia on peatatud |
+| `complete` | Elutsükkel lõppenud |
 
-## Arming and GO
+## Ettevalmistamine ja GO
 
-Selection is standby: plain-clicking a cue or moving with
-<kbd>↑</kbd>/<kbd>↓</kbd> selects it, arms it, and re-aims GO. **NEXT** always
-shows the armed cue and the intent of firing it.
+Valimine on standby: cue'l lihtsalt klõpsamine või liikumine nooltega
+<kbd>↑</kbd>/<kbd>↓</kbd> valib selle, valmistab ette ja suunab GO ümber.
+**NEXT** näitab alati ettevalmistatud cue'd ja seda, mida selle käivitamine
+teeb.
 
-Range selection does not change the armed cue. Use Shift to extend a range and
-Ctrl-click to toggle individual rows. The command palette
-(<kbd>Ctrl</kbd>+<kbd>K</kbd>) can search a number or name and arm that cue; it
-never fires a cue merely because it was found.
+Vahemiku valimine ettevalmistatud cue'd ei muuda. Vahemiku laiendamiseks
+kasuta Shift'i ja üksikute ridade lülitamiseks Ctrl-klõpsu. Käsupalett
+(<kbd>Ctrl</kbd>+<kbd>K</kbd>) võib otsida numbrit või nime ja valmistada
+selle cue ette; see ei käivita cue'd ainuüksi seepärast, et see leiti.
 
-## Timing
+## Ajastus
 
-- **Pre-wait** delays the cue's main activity after GO. **On Cue Start** fires
-  before this delay; **On Play** waits for the actual player start.
-- **Duration** controls Wait and control cues. Action timing is derived from
-  the latest scheduled action end.
-- **Post-wait** delays completion after the main activity.
-- **Timecode GO** arms a cue to fire when chased LTC/MTC crosses its
-  `hh:mm:ss:ff` value.
+- **Pre-wait** lükkab cue põhitegevuse pärast GO-d edasi. **On Cue Start**
+  käivitub enne seda viivitust; **On Play** ootab tegelikku playeri käivitust.
+- **Duration** juhib Wait ja juhtcue'sid. Action'ite ajastus tuletatakse
+  viimasest planeeritud action'i lõpust.
+- **Post-wait** lükkab lõpetamise pärast põhitegevust edasi.
+- **Timecode GO** valmistab cue ette käivituma, kui jälgitav LTC/MTC ületab
+  selle `hh:mm:ss:ff` väärtuse.
 
 ## Continue mode
 
-| Setting | Behaviour |
+| Seade | Käitumine |
 |---|---|
-| **None** | Wait for another GO |
-| **Auto-continue** | Fire the next cue after this cue starts |
-| **Auto-follow** | Fire the next cue after this cue completes |
+| **None** | Ootab järgmist GO-d |
+| **Auto-continue** | Käivitab järgmise cue pärast selle cue algust |
+| **Auto-follow** | Käivitab järgmise cue pärast selle cue lõppu |
 
-## Media play mode
+## Meedia play mode
 
-| Setting | Behaviour at media end |
+| Seade | Käitumine meedia lõpus |
 |---|---|
-| **Play once & eject** | Clear the output |
-| **Play once & hold** | Hold the final frame |
-| **Loop** | Repeat until stopped |
+| **Play once & eject** | Tühjendab väljundi |
+| **Play once & hold** | Hoiab viimast kaadrit |
+| **Loop** | Kordab, kuni peatatakse |
 
-## STOP and PANIC
+## STOP ja PANIC
 
-STOP politely stops **all currently live cues**. Each cue may complete its own
-On Cue Stop fade; stopping it again is immediate. PANIC is the global brake:
-the first press starts the panic fade, and a second press during that fade hard
-stops everything.
+STOP peatab viisakalt **kõik parajasti töötavad cue'd**. Iga cue võib läbida
+oma On Cue Stop fade'i; sama cue uuesti peatamine on kohene. PANIC on
+globaalne pidur: esimene vajutus käivitab panic-fade'i ja teine vajutus
+selle fade'i ajal peatab kõik kohe.
 
 Vaata [cue-tüüpide viidet](/et/viited/cue-tuubid).
