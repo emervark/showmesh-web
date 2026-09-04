@@ -112,10 +112,31 @@ const operator = [
   }
 ];
 
-const liveSignals = [
-  { label: 'OSC · /scene/2', status: '3 active', pulse: '1.6s' },
-  { label: 'MIDI · Note On Ch1', status: 'idle', pulse: '2.1s' },
-  { label: 'Timecode · LTC', status: 'locked', pulse: '1.3s' }
+// Example mappings, not live state: the previous rows showed invented status
+// ("locked", "3 active") on a page that says the status bar never claims what
+// is not true. Values follow the reactive triggers in ACTION_TRIGGER_KINDS.
+const mappings = [
+  {
+    kind: 'MIDI CC',
+    color: 'var(--sm-live)',
+    from: 'ch 1 · cc 21',
+    to: '/cue/{id}/opacity',
+    note: '0…127 mapped into the parameter’s range'
+  },
+  {
+    kind: 'OSC',
+    color: 'var(--sm-live)',
+    from: '/scene/2  0.4',
+    to: '/resource/{id}/volume',
+    note: 'the float argument drives the value'
+  },
+  {
+    kind: 'Timecode',
+    color: 'var(--sm-warning)',
+    from: '00:04:12:00',
+    to: 'arms cue 7',
+    note: 'freewheels through a dropout'
+  }
 ];
 
 const capabilityGroups = [
@@ -562,40 +583,42 @@ const cueData = JSON.stringify(
       </div>
     </section>
 
-    <!-- LIVE SYSTEMS -->
+    <!-- REACTIVE -->
     <section class="band band--panel reveal">
       <div class="wrap grid-2 grid-2--center">
         <div>
-          <div class="eyebrow eyebrow--live">
-            Control that responds in realtime
-          </div>
-          <h2>Let live data become part of the cue.</h2>
+          <div class="eyebrow eyebrow--live">Reactive triggers</div>
+          <h2>Live input can drive a parameter while the cue runs.</h2>
           <p class="lead">
-            A show does not always follow a fixed timeline. A performer moves, a
-            sensor changes, timecode advances or another system sends a command.
+            Three of the nine triggers are reactive — OSC, MIDI CC and Manual.
+            They arm when the cue starts playing and can fire repeatedly until
+            it stops.
           </p>
           <p class="lead">
-            Showmesh lets OSC, MIDI, timecode and realtime parameters
-            participate in the same cue workflow as media playback. Operators
-            can see where data comes from, what it controls and whether it is
-            live.
+            Press <span class="mono">◎ Learn</span> on an action, move the controller,
+            and it binds that channel and CC. GO and PANIC learn the same way; over
+            OSC they are <span class="mono">/go</span> and{' '}
+            <span class="mono">/panic</span>.
           </p>
           <p class="lead lead--accent">
-            From a simple GO command to a parameter continuously driven by live
-            input, the relationship remains visible inside the show sequence.
+            If chased timecode drops out, the internal generator freewheels from
+            the last frame, so timecode-armed cues keep firing through the gap.
           </p>
         </div>
-        <div class="signals">
+        <div class="maps">
+          <div class="maps__label">Example mappings</div>
           {
-            liveSignals.map((s) => (
-              <div class="signals__row">
-                <span
-                  class="dot dot--live"
-                  style={`animation-duration:${s.pulse}`}
-                  aria-hidden="true"
-                />
-                <span class="signals__label">{s.label}</span>
-                <span class="mono signals__status">{s.status}</span>
+            mappings.map((m) => (
+              <div class="maps__row">
+                <span class="maps__kind" style={`color:${m.color}`}>
+                  {m.kind}
+                </span>
+                <span class="mono maps__from">{m.from}</span>
+                <span class="maps__arrow" aria-hidden="true">
+                  →
+                </span>
+                <span class="mono maps__to">{m.to}</span>
+                <span class="maps__note">{m.note}</span>
               </div>
             ))
           }
@@ -1580,9 +1603,6 @@ const cueData = JSON.stringify(
     background: var(--sm-playing);
     align-self: center;
   }
-  .dot--live {
-    background: var(--sm-live);
-  }
 
   /* Layout helpers */
   .grid-2 {
@@ -1793,29 +1813,55 @@ const cueData = JSON.stringify(
   }
 
   /* Signals */
-  .signals {
+  /* Example mappings: source, destination, and what the value does. */
+  .maps {
     background: var(--sm-bg-workspace);
     border-radius: 12px;
     border: 1px solid rgb(255 255 255 / 5%);
-    padding: 26px;
+    padding: 24px 26px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 18px;
   }
-  .signals__row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  .maps__label {
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--sm-text-faint);
   }
-  .signals__label {
-    font-size: 13px;
-    color: #c6cbd3;
-    font-weight: 550;
+  .maps__row {
+    display: grid;
+    /* Fixed first column: per-row `auto` sized itself to each kind label and
+       left the arrows ragged. */
+    grid-template-columns: 74px 1fr;
+    gap: 2px 12px;
+    align-items: baseline;
   }
-  .signals__status {
-    margin-left: auto;
+  .maps__kind {
     font-size: 11px;
-    color: #4e555f;
+    font-weight: 650;
+    grid-column: 1;
+  }
+  .maps__from {
+    font-size: 12.5px;
+    color: var(--sm-text-strong);
+    grid-column: 2;
+  }
+  .maps__arrow {
+    grid-column: 1;
+    text-align: right;
+    color: var(--sm-text-faint);
+    font-size: 12px;
+  }
+  .maps__to {
+    font-size: 12.5px;
+    color: var(--sm-ready);
+    grid-column: 2;
+  }
+  .maps__note {
+    grid-column: 2;
+    font-size: 11.5px;
+    color: var(--sm-text-muted);
   }
 
   /* Themes */
