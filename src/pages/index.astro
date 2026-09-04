@@ -46,7 +46,7 @@ const cues = [
 const engine = [
   {
     title: 'Composited once',
-    copy: 'The project defines one canvas — width, height and frame rate. The program is composited once at that resolution and every output adapts it.'
+    copy: 'The project defines one canvas - width, height and frame rate. The program is composited once at that resolution and every output adapts it.'
   },
   {
     title: 'One thread owns the device',
@@ -58,7 +58,7 @@ const engine = [
   },
   {
     title: 'Decoding toward the canvas',
-    copy: 'Frames are decoded at the size the canvas actually needs — measured at roughly 4× on 4K down to 1080p.'
+    copy: 'Frames are decoded at the size the canvas actually needs - measured at roughly 4× on 4K down to 1080p.'
   }
 ];
 
@@ -67,7 +67,7 @@ const model = [
     label: 'What can be controlled',
     color: 'var(--sm-live)',
     title: 'Resource',
-    copy: 'Media — video, audio, images — plus text, an LTC generator and a live audio input. Resources live in the library and are reused across cues instead of being reconfigured in each one.',
+    copy: 'Media - video, audio, images - plus text, an LTC generator and a live audio input. Resources live in the library and are reused across cues instead of being reconfigured in each one.',
     note: 'Four kinds today; the model is built to take more.'
   },
   {
@@ -81,7 +81,7 @@ const model = [
     label: 'When it happens',
     color: 'var(--sm-ready)',
     title: 'Trigger',
-    copy: 'Nine, and only nine — a closed set, so an action’s timing is always one of a handful of things you can read off the cue.',
+    copy: 'Nine, and only nine - a closed set, so an action’s timing is always one of a handful of things you can read off the cue.',
     note: 'On Cue Start · On Play · On Cue Stop · On Finished · At Time · Timecode · OSC · MIDI CC · Manual'
   }
 ];
@@ -106,9 +106,9 @@ const operator = [
     title: 'Aim, then fire',
     color: 'var(--sm-ready)',
     items: [
-      'Space fires the armed cue, and the GO button names it: <b>GO — 5 · Score</b>.',
+      'Space fires the armed cue, and the GO button names it: <b>GO - 5 · Score</b>.',
       'Clicking a cue arms it. <b>↑</b> and <b>↓</b> re-aim without firing.',
-      'Esc is PANIC — but with a menu or the palette open, Esc only closes that. It cannot fall through and stop the show.',
+      'Esc is PANIC - but with a menu or the palette open, Esc only closes that. It cannot fall through and stop the show.',
       'STOP counts its blast radius before you press it: <b>STOP · 3</b>.'
     ]
   },
@@ -119,7 +119,7 @@ const operator = [
       'If the engine link drops, the clocks dim to <b>LAST KNOWN</b> and the progress bar freezes. A stopped clock is never mistaken for a paused show.',
       'The status bar reports what is true: <b>OSC ✕ not listening</b> when the bind failed, <b>MIDI not built</b> when it was compiled out.',
       '<b>LIVE</b> appears only when an input is actually listening.',
-      'Warnings are a queue, not a slot — <b>+3 older</b> — so a burst never eats the first one.'
+      'Warnings are a queue, not a slot - <b>+3 older</b> - so a burst never eats the first one.'
     ]
   },
   {
@@ -129,7 +129,7 @@ const operator = [
       'Show mode locks editing and grows the transport for reading at a distance. Every blocked action explains itself.',
       'Selecting a cue is never firing it: prepare the next one without losing the live context.',
       'Del removes a whole selection as a single undo step.',
-      'Deleting a resource takes two clicks: <b>used by 3 cues — delete?</b>'
+      'Deleting a resource takes two clicks: <b>used by 3 cues - delete?</b>'
     ]
   }
 ];
@@ -163,7 +163,7 @@ const mappings = [
 
 // Three groups instead of ten one-word statuses, because a single label
 // cannot say what is true of Art-Net: built and verified over loopback, never
-// run against a fixture. Notch Blocks is deliberately absent — it depends on a
+// run against a fixture. Notch Blocks is deliberately absent - it depends on a
 // closed SDK that has not been investigated, so the site promises nothing.
 // The manual's capability page is the full list; keep these in step with it.
 const integrations = [
@@ -174,16 +174,16 @@ const integrations = [
       'Video, audio, images and text',
       'Display output, NDI send, Spout send',
       'OSC in and out',
-      'MIDI in and out — note, CC, program, MSC',
+      'MIDI in and out - note, CC, program, MSC',
       'LTC and MTC chase, and LTC generation',
-      'Art-Net output — built and verified over loopback, but never yet run against a real fixture'
+      'Art-Net output - built and verified over loopback, but never yet run against a real fixture'
     ]
   },
   {
     title: 'Already reachable, today',
     color: 'var(--sm-live)',
     items: [
-      'Anything that speaks OSC or MIDI — TouchDesigner, Unreal, lighting desks, media servers — is drivable now.',
+      'Anything that speaks OSC or MIDI - TouchDesigner, Unreal, lighting desks, media servers - is drivable now.',
       'There is nothing to integrate: a cue sends the message, and the other system does what it already does.'
     ]
   },
@@ -194,7 +194,7 @@ const integrations = [
       'NDI receive',
       'sACN',
       'HTTP / REST',
-      'MTC output — MIDI out sends note, CC, program and MSC, but not quarter-frame',
+      'MTC output - MIDI out sends note, CC, program and MSC, but not quarter-frame',
       'Audio routing matrix and per-bus EQ',
       'Crop, corner pin and edge blend'
     ]
@@ -272,7 +272,7 @@ const faqs = [
   },
   {
     q: 'What can Showmesh control?',
-    a: 'Showmesh controls media, outputs, control connections, realtime engines and other show systems. Capabilities and integrations are labelled by state—core in the beta, planned or exploratory—so nothing is presented as more finished than it is.'
+    a: 'Showmesh controls media, outputs, control connections, realtime engines and other show systems. Capabilities and integrations are labelled by state - core in the beta, planned or exploratory - so nothing is presented as more finished than it is.'
   },
   {
     q: 'How does the cue model work?',
@@ -284,7 +284,7 @@ const faqs = [
   },
   {
     q: 'Does Showmesh support NDI and Spout?',
-    a: 'Yes—NDI and Spout output work on Windows in the current beta. NDI requires the NDI runtime; Spout shares GPU textures between applications.'
+    a: 'Yes - NDI and Spout output work on Windows in the current beta. NDI requires the NDI runtime; Spout shares GPU textures between applications.'
   },
   {
     q: 'Can I suggest an integration or workflow?',
@@ -311,7 +311,7 @@ const cueData = JSON.stringify(
 ---
 
 <BaseLayout
-  title="Showmesh — Run media, realtime systems and control from one show sequence."
+  title="Showmesh - Run media, realtime systems and control from one show sequence."
   description="Showmesh is a Windows-native show automation workspace. Bring playback, realtime graphics, control signals and external systems into one cue-based workflow."
 >
   <SiteNav />
@@ -330,7 +330,7 @@ const cueData = JSON.stringify(
         />
         <h1>A cue playback engine for Windows.</h1>
         <p>
-          Video, audio, images and text on a native C++ engine — plus OSC, MIDI,
+          Video, audio, images and text on a native C++ engine - plus OSC, MIDI,
           LTC/MTC timecode and NDI/Spout output to drive the rest of the rig.
           The editor is a separate process: closing it does not stop the show.
         </p>
@@ -350,7 +350,7 @@ const cueData = JSON.stringify(
         </p>
       </div>
 
-      <!-- Transport strip — mirrors editor/src/renderer/v2/components/
+      <!-- Transport strip - mirrors editor/src/renderer/v2/components/
            Transport.tsx in v0.1.0-beta.6: GO carries what it will fire, STOP
            counts its blast radius, NEXT states the fired cue's intent. -->
       <div class="transport" data-transport>
@@ -473,7 +473,7 @@ const cueData = JSON.stringify(
           <h2 class="h2-center">What the operator can rely on.</h2>
           <p class="lead lead--center">
             A show-control system earns trust by being specific about what it is
-            doing — and about what has stopped working.
+            doing - and about what has stopped working.
           </p>
         </div>
         <div class="opcols">
@@ -512,7 +512,7 @@ const cueData = JSON.stringify(
             <span class="appwindow__dots" aria-hidden="true"
               ><i></i><i></i><i></i></span
             >
-            <span class="appwindow__title">Showmesh — Hamlet — Act I.show</span>
+            <span class="appwindow__title">Showmesh - Hamlet - Act I.show</span>
             <a
               class="appwindow__open"
               href="/showmesh-ui.html"
@@ -530,14 +530,14 @@ const cueData = JSON.stringify(
               rel="noopener"
               data-ui-narrow
             >
-              <span class="appwindow__narrow-title">Showmesh — Operator</span>
+              <span class="appwindow__narrow-title">Showmesh - Operator</span>
               <span class="appwindow__narrow-note"
                 >The editor needs a wide screen. Open it full screen ↗</span
               >
             </a>
             <iframe
               class="appwindow__frame"
-              title="Showmesh editor — cue list, transport and system state"
+              title="Showmesh editor - cue list, transport and system state"
               data-ui-frame
               loading="lazy"
               width="1280"
@@ -554,7 +554,7 @@ const cueData = JSON.stringify(
           <div class="eyebrow eyebrow--live">Reactive triggers</div>
           <h2>Live input can drive a parameter while the cue runs.</h2>
           <p class="lead">
-            Three of the nine triggers are reactive — OSC, MIDI CC and Manual.
+            Three of the nine triggers are reactive - OSC, MIDI CC and Manual.
             They arm when the cue starts playing and can fire repeatedly until
             it stops.
           </p>
@@ -620,7 +620,7 @@ const cueData = JSON.stringify(
               crash leaves the show recoverable. The engine runs under a
               watchdog that restarts it after an abnormal exit and gives up on a
               crash loop rather than thrashing. A fault writes a minidump, a log
-              and a report bundle to the operator’s own disk — offline, no
+              and a report bundle to the operator’s own disk - offline, no
               server involved.
             </p>
           </div>
@@ -713,7 +713,7 @@ const cueData = JSON.stringify(
           <div class="eyebrow eyebrow--ready">Help shape the product</div>
           <h2 class="h2-center">Become a beta tester.</h2>
           <p class="lead lead--center">
-            For operators who today run QLab, Resolume or a media server — in
+            For operators who today run QLab, Resolume or a media server - in
             theatres, on tour, in installations and in corporate AV.
           </p>
           <p class="lead lead--center">
@@ -876,7 +876,7 @@ const cueData = JSON.stringify(
     let paused = false;
     let panicReset = 0;
     // The editor hides STOP when nothing is live and dims the NOW block to
-    // "nothing playing" — the box keeps its shape so the strip never jumps.
+    // "nothing playing" - the box keeps its shape so the strip never jumps.
     let running = true;
 
     const render = () => {
@@ -899,7 +899,7 @@ const cueData = JSON.stringify(
       if (t.nextNum) t.nextNum.textContent = nxt.num;
       if (t.nextName) t.nextName.textContent = nxt.name;
       if (t.nextIntent) t.nextIntent.textContent = nxt.intent;
-      // GO always states what it will fire — the editor's armed-GO doctrine.
+      // GO always states what it will fire - the editor's armed-GO doctrine.
       if (t.goTarget) t.goTarget.textContent = `${nxt.num} · ${nxt.name}`;
       if (t.stop) t.stop.hidden = !running;
     };
@@ -1553,7 +1553,7 @@ const cueData = JSON.stringify(
   /* Specificity has to clear `.model__card p`, which owns the body type. */
   .model__card .model__note {
     /* Bottom-aligned on a common floor so the three rules land on one line.
-       The floor is the tallest note — the nine trigger names, four lines
+       The floor is the tallest note - the nine trigger names, four lines
        plus the rule and its padding. */
     margin-top: auto;
     min-height: calc(6.8em + 13px);
@@ -1996,7 +1996,7 @@ const cueData = JSON.stringify(
   .appwindow.is-live .appwindow__narrow {
     display: none;
   }
-  /* Reveal animation — only active once JS arms it (.js-reveal on <html>),
+  /* Reveal animation - only active once JS arms it (.js-reveal on <html>),
      so content stays visible if scripts fail or motion is reduced. */
   :global(.js-reveal) .reveal {
     opacity: 0;

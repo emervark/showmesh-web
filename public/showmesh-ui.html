@@ -4,21 +4,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <title>Showmesh — editor (v0.1.0-beta.6)</title>
+    <title>Showmesh - editor (v0.1.0-beta.6)</title>
     <!--
       A standalone replica of the Showmesh editor as it stands in
       v0.1.0-beta.6, rebuilt from the application sources so the marketing
       site stops showing an interface the product no longer has:
 
-        editor/src/renderer/v2/lib.tsx              — the T.* palette below
-        editor/src/renderer/v2/App.tsx              — window layout, cue rows
+        editor/src/renderer/v2/lib.tsx              - the T.* palette below
+        editor/src/renderer/v2/App.tsx              - window layout, cue rows
         editor/src/renderer/v2/components/TitleBar.tsx
         editor/src/renderer/v2/components/Transport.tsx
         editor/src/renderer/v2/components/StatusBar.tsx
         editor/src/renderer/v2/components/ResourcesPanel.tsx
 
       It is a replica, not the application: no engine, no protocol, no
-      playback. Keep it that way — it exists to be looked at.
+      playback. Keep it that way - it exists to be looked at.
     -->
     <style>
       /* Palette lifted verbatim from lib.tsx's T. Do not invent values here:
@@ -239,7 +239,7 @@
         border-radius: 2px;
         transition: width 0.14s linear;
       }
-      /* Every other live cue, newest first — the transport never hides
+      /* Every other live cue, newest first - the transport never hides
          concurrent playback. */
       .now__others {
         display: flex;
@@ -704,7 +704,7 @@
             width="18"
             height="18"
           />
-          <span>Hamlet — Act I.show</span>
+          <span>Hamlet - Act I.show</span>
         </span>
         <button class="mode-chip" type="button" aria-pressed="false" data-mode>
           ✎ Edit
@@ -732,7 +732,7 @@
           <div class="bar"><i data-bar style="width: 20%"></i></div>
           <div class="now__others">
             <span class="now__other"
-              ><span class="dot"></span>6 Underscore — Waves
+              ><span class="dot"></span>6 Underscore - Waves
               <span class="mono">1:12.4</span></span
             >
           </div>
@@ -870,7 +870,7 @@
           </div>
           <div class="field">
             <span class="field__label">Parameter</span>
-            <div class="field__value">Opacity — 1.00 → 0.00</div>
+            <div class="field__value">Opacity - 1.00 → 0.00</div>
           </div>
           <div class="field">
             <span class="field__label">Duration</span>
@@ -963,7 +963,7 @@
         {
           n: '6',
           g: '♪',
-          name: 'Underscore — Waves',
+          name: 'Underscore - Waves',
           sub: 'Starts media · loops until stopped',
           out: 'Main 1-2',
           dur: 120,
@@ -982,10 +982,10 @@
           n: '8',
           g: '■',
           name: 'End of act',
-          sub: '↳ stops — all cues',
+          sub: '↳ stops - all cues',
           out: '',
           dur: 0,
-          intent: '↳ stops — all cues'
+          intent: '↳ stops - all cues'
         }
       ];
 
