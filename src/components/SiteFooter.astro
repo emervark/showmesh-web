@@ -26,9 +26,10 @@ const company = [
         width="150"
         height="105"
       />
+      <p class="site-footer__promise">Connect, automate and run the show.</p>
       <p>
-        Showmesh is a Windows-first realtime show automation system for media,
-        realtime graphics and control.
+        Showmesh is a cue playback engine for Windows: a native C++ engine that
+        plays media and drives the rest of the rig over OSC, MIDI and timecode.
       </p>
       <p class="site-footer__maker">
         Developed by <strong>VFX OÜ</strong>.
@@ -76,6 +77,13 @@ const company = [
     color: var(--sm-text-faint);
     max-width: 280px;
     margin: 0;
+  }
+  /* The product promise. It reads as a slogan, which is what a footer is
+     for; the page body states what the product is instead. */
+  .site-footer__promise {
+    color: var(--sm-text-muted) !important;
+    font-weight: 600;
+    margin-bottom: 10px !important;
   }
   .site-footer__maker {
     margin-top: 12px !important;

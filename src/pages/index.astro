@@ -36,30 +36,6 @@ const cues = [
   }
 ];
 
-const valueCards = [
-  {
-    icon: '◈',
-    color: 'var(--sm-live)',
-    tint: 'rgb(69 200 232 / 12%)',
-    title: 'Bring the systems together.',
-    copy: 'Organise media, outputs, control connections and realtime engines as reusable resources. Keep the systems that make the show visible and available from one project.'
-  },
-  {
-    icon: '⇄',
-    color: 'var(--sm-warning)',
-    tint: 'rgb(227 169 79 / 12%)',
-    title: 'Describe the outcome once.',
-    copy: 'Define what should change, when it should happen and what should trigger it. Build repeatable cue behaviour instead of coordinating the same steps by hand every night.'
-  },
-  {
-    icon: '▶',
-    color: 'var(--sm-ready)',
-    tint: 'rgb(87 200 120 / 12%)',
-    title: 'Operate with confidence.',
-    copy: 'See the current cue, remaining time, next cue, active actions, incoming control and warnings without losing the run order.'
-  }
-];
-
 // Resource → Action → Trigger, as the protocol actually ships it. The kinds
 // come from protocol/protocol.schema.json (x-resource-kinds) and the triggers
 // from ACTION_TRIGGER_KINDS; the design principles describe a wider model that
@@ -445,32 +421,6 @@ const cueData = JSON.stringify(
             <span aria-hidden="true">⚠</span>
             <b class="mono">PANIC</b>
           </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- VALUE -->
-    <section class="band band--tight reveal">
-      <div class="wrap center">
-        <div class="eyebrow eyebrow--live">Connect. Automate. Run.</div>
-        <h2 class="h2-center">
-          One workspace for everything that makes the show.
-        </h2>
-        <div class="cards cards--3">
-          {
-            valueCards.map((c) => (
-              <article class="card">
-                <div
-                  class="card__icon"
-                  style={`background:${c.tint};color:${c.color}`}
-                >
-                  {c.icon}
-                </div>
-                <h3>{c.title}</h3>
-                <p>{c.copy}</p>
-              </article>
-            ))
-          }
         </div>
       </div>
     </section>
@@ -1683,10 +1633,6 @@ const cueData = JSON.stringify(
     gap: 20px;
     text-align: left;
   }
-  .cards--3 {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    margin-top: 44px;
-  }
   .cards--4 {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 18px;
@@ -1706,16 +1652,6 @@ const cueData = JSON.stringify(
   }
   .card--sm h3 {
     font-size: 15.5px;
-  }
-  .card__icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    margin-bottom: 18px;
   }
   .card p {
     font-size: 14.5px;
