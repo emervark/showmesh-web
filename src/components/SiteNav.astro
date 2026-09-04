@@ -1,11 +1,12 @@
 ---
 const links = [
-  { href: '#model', label: 'Product' },
+  // One destination per item: 'Product' and 'How it works' both pointed at
+  // #model, and nothing linked the editor at all.
+  { href: '#workspace', label: 'The editor' },
   { href: '#model', label: 'How it works' },
   { href: '#operator', label: 'Live operation' },
   { href: '#integrations', label: 'Integrations' },
-  { href: 'https://manual.showmesh.app', label: 'Manual' },
-  { href: '#access', label: 'Development' }
+  { href: 'https://manual.showmesh.app', label: 'Manual' }
 ];
 ---
 
@@ -23,14 +24,14 @@ const links = [
     <nav class="site-nav__links" aria-label="Primary navigation">
       {links.map((l) => <a href={l.href}>{l.label}</a>)}
     </nav>
-    <a class="site-nav__cta" href="#access">Apply for the beta</a>
+    <a class="site-nav__cta" href="/download">Download the beta</a>
     <details class="site-nav__mobile" data-nav-details>
       <summary aria-label="Open navigation"
         ><span></span><span></span><span></span></summary
       >
       <nav aria-label="Mobile navigation">
         {links.map((l) => <a href={l.href}>{l.label}</a>)}
-        <a href="#access" class="site-nav__mobile-cta">Apply for the beta</a>
+        <a href="/download" class="site-nav__mobile-cta">Download the beta</a>
       </nav>
     </details>
   </div>
