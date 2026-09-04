@@ -608,16 +608,15 @@ const cueData = JSON.stringify(
       </div>
     </section>
 
-    <!-- LIVE OPERATOR CONCEPT -->
+    <!-- EDITOR -->
     <section id="workspace" class="band reveal">
       <div class="wrap">
         <div class="center intro">
-          <div class="eyebrow eyebrow--live">The live operator concept</div>
-          <h2 class="h2-center">Step into the actual Showmesh workspace.</h2>
+          <div class="eyebrow eyebrow--live">v0.1.0-beta.6</div>
+          <h2 class="h2-center">The editor.</h2>
           <p class="lead lead--center">
-            An interactive concept of the operator interface—cue list,
-            transport, live state and the GO button in one workspace. Click
-            around below, or open it full screen.
+            Cue list, transport and live system state, as the current beta draws
+            them. Click a cue to arm it, or press GO.
           </p>
         </div>
 
@@ -626,7 +625,7 @@ const cueData = JSON.stringify(
             <span class="appwindow__dots" aria-hidden="true"
               ><i></i><i></i><i></i></span
             >
-            <span class="appwindow__title">Showmesh — Operator</span>
+            <span class="appwindow__title">Showmesh — Hamlet — Act I.show</span>
             <a
               class="appwindow__open"
               href="/showmesh-ui.html"
@@ -635,28 +634,23 @@ const cueData = JSON.stringify(
             >
           </figcaption>
           <div class="appwindow__viewport" data-ui-viewport>
+            <!-- The editor's own layout has a 1180px floor, so a phone gets
+                 the link rather than an unreadable postage stamp. -->
             <a
-              class="appwindow__shotlink"
+              class="appwindow__narrow"
               href="/showmesh-ui.html"
               target="_blank"
               rel="noopener"
-              data-ui-shot
+              data-ui-narrow
             >
-              <img
-                class="appwindow__shot"
-                src="/showmesh-application.png"
-                alt="Showmesh operator interface: cue list, transport strip with NOW / NEXT and GO, and live system state"
-                loading="lazy"
-                width="1280"
-                height="800"
-              />
-              <span class="appwindow__launch"
-                >Open the interactive concept ↗</span
+              <span class="appwindow__narrow-title">Showmesh — Operator</span>
+              <span class="appwindow__narrow-note"
+                >The editor needs a wide screen. Open it full screen ↗</span
               >
             </a>
             <iframe
               class="appwindow__frame"
-              title="Showmesh operator interface — interactive concept"
+              title="Showmesh editor — cue list, transport and system state"
               data-ui-frame
               loading="lazy"
               width="1280"
@@ -1270,10 +1264,9 @@ const cueData = JSON.stringify(
   });
 
   // ---- Live operator concept: scale + lazy-load the embedded workspace ----
-  // On wide screens, once the window scrolls into view, load the interactive
-  // UI and scale the fixed 1280x800 iframe to fit its container. Narrow screens
-  // keep the static screenshot (which links to the full-screen concept) and
-  // never fetch the heavy embed.
+  // The editor replica has a 1180px floor, so on wide screens the fixed
+  // 1280x800 iframe is scaled to fit its container once it scrolls into view.
+  // Narrow screens keep the link card instead and never load the embed.
   const BASE_W = 1280;
   const uiWindow = document.querySelector<HTMLElement>('[data-ui-window]');
   const uiFrame = document.querySelector<HTMLIFrameElement>('[data-ui-frame]');
@@ -2338,34 +2331,29 @@ const cueData = JSON.stringify(
     background: var(--sm-bg-shell);
     overflow: hidden;
   }
-  .appwindow__shotlink {
+  .appwindow__narrow {
     position: absolute;
     inset: 0;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 24px;
+    text-align: center;
+    text-decoration: none;
+    background: var(--sm-bg-workspace);
   }
-  .appwindow__shot {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-  }
-  .appwindow__launch {
-    position: absolute;
-    left: 50%;
-    bottom: 18px;
-    transform: translateX(-50%);
-    padding: 11px 20px;
-    border-radius: 8px;
-    background: var(--sm-go);
-    color: #eafbf0;
-    font-size: 13.5px;
+  .appwindow__narrow-title {
+    font-size: 14px;
     font-weight: 650;
-    white-space: nowrap;
-    box-shadow: 0 10px 30px rgb(0 0 0 / 45%);
-    transition: background-color 160ms ease;
+    color: var(--sm-text-strong);
   }
-  .appwindow__shotlink:hover .appwindow__launch {
-    background: #35ae61;
+  .appwindow__narrow-note {
+    font-size: 12.5px;
+    color: var(--sm-text-muted);
+    max-width: 260px;
+    line-height: 1.6;
   }
   .appwindow__frame {
     position: absolute;
@@ -2383,9 +2371,8 @@ const cueData = JSON.stringify(
     opacity: 1;
     pointer-events: auto;
   }
-  .appwindow.is-live .appwindow__shotlink {
-    /* keep image as instant paint under the iframe until it loads */
-    pointer-events: none;
+  .appwindow.is-live .appwindow__narrow {
+    display: none;
   }
   /* Reveal animation — only active once JS arms it (.js-reveal on <html>),
      so content stays visible if scripts fail or motion is reduced. */
