@@ -9,24 +9,24 @@ hero:
   actions:
     - theme: brand
       text: Build your first show
-      link: /alustamine/esimene-show
+      link: /getting-started/first-show
     - theme: alt
       text: Open the reference
-      link: /viited/
+      link: /reference/
 
 features:
   - icon: ▶
     title: Learning
     details: Understand cue lists, media, actions, triggers, transitions, layers, and timecode.
-    link: /oppimine/
+    link: /learn/
   - icon: ◆
     title: Workflows
     details: Install Showmesh, prepare and run a show, configure outputs, and connect external control.
-    link: /toovood/
+    link: /workflows/
   - icon: ◫
     title: Reference
     details: Exact cue types, parameters, triggers, shortcuts, and project-file fields.
-    link: /viited/
+    link: /reference/
 ---
 
 ## Documented version
@@ -43,15 +43,15 @@ This English edition documents [`emervark/Showmesh`](https://github.com/emervark
 ::: warning Beta software
 Showmesh is under active development. Rehearse the exact build, media, output
 hardware, and control path used in the show. The
-[capabilities page](/sissejuhatus/voimalused) separates available features from
+[capabilities page](/introduction/capabilities) separates available features from
 known limitations.
 :::
 
 ## How to use this manual
 
-- New operators should begin with [Getting started](/alustamine/).
-- Experienced cue-based operators can go directly to [Workflows](/toovood/).
-- Use search or [Reference](/viited/) for exact fields and allowed values.
+- New operators should begin with [Getting started](/getting-started/).
+- Experienced cue-based operators can go directly to [Workflows](/workflows/).
+- Use search or [Reference](/reference/) for exact fields and allowed values.
 - English is the primary and most current edition. The Estonian translation may
   follow a product update later.
-- Writers should read [Contributing to the manual](/manuaal/kaastoo).
+- Writers should read [Contributing to the manual](/manual/contributing).

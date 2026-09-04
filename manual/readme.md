@@ -35,4 +35,4 @@ Valmis staatiline sait tekib kausta `manual/.vitepress/dist`.
 - `.vitepress/theme/` — ainult ühine visuaalne kiht;
 - `public/` — staatilised pildid ja failid.
 
-Loe täpsemalt lehelt `manuaal/kaastoo.md` või `et/manuaal/kaastoo.md`.
+Loe täpsemalt lehelt `manual/contributing.md` või `et/manuaal/kaastoo.md`.

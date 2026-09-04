@@ -10,10 +10,10 @@ list, choose an output, and run a controlled first rehearsal.
 
 ## Recommended order
 
-1. [Install and run Showmesh](/alustamine/paigaldamine).
-2. Learn the [user interface](/alustamine/kasutajaliides).
-3. Build [your first show](/alustamine/esimene-show).
-4. Before a performance, use the [show preparation checklist](/toovood/show-ettevalmistamine).
+1. [Install and run Showmesh](/getting-started/install).
+2. Learn the [user interface](/getting-started/interface).
+3. Build [your first show](/getting-started/first-show).
+4. Before a performance, use the [show preparation checklist](/workflows/preparing-a-show).
 
 ## Before you begin
 

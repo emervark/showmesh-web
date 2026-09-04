@@ -59,5 +59,5 @@ A window test does not validate monitor colour, refresh rate, NDI/Spout
 reception, or audio routing. Rehearse the complete signal path.
 :::
 
-Next, learn [cues and the cue list](/oppimine/cued) and
-[actions and triggers](/oppimine/actionid-ja-triggerid).
+Next, learn [cues and the cue list](/learn/cues) and
+[actions and triggers](/learn/actions-and-triggers).

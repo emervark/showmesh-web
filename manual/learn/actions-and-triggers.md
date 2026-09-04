@@ -46,4 +46,4 @@ If **From** is omitted, the engine starts from the real current value. A new
 transition on the same target parameter replaces the previous one and continues
 from the current state.
 
-See the exact fields in [Actions and triggers reference](/viited/actionid).
+See the exact fields in [Actions and triggers reference](/reference/actions).

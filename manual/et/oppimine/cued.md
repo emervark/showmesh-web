@@ -70,4 +70,4 @@ On Cue Stop fade; stopping it again is immediate. PANIC is the global brake:
 the first press starts the panic fade, and a second press during that fade hard
 stops everything.
 
-See the [cue type reference](/viited/cue-tuubid).
+Vaata [cue-tüüpide viidet](/et/viited/cue-tuubid).

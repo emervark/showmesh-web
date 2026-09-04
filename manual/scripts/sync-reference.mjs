@@ -44,11 +44,11 @@ const useLocal = existsSync(join(localRepo, ".git"));
 // One fragment may appear on one page per language; one page may host several
 // fragments (projektifail carries both kind tables).
 const BLOCKS = [
-  { id: "params",         en: "viited/parameetrid.md",  et: "et/viited/parameetrid.md" },
-  { id: "cue-fields",     en: "viited/cue-tuubid.md",   et: "et/viited/cue-tuubid.md" },
-  { id: "resource-types", en: "viited/projektifail.md", et: "et/viited/projektifail.md" },
-  { id: "output-types",   en: "viited/projektifail.md", et: "et/viited/projektifail.md" },
-  { id: "shortcuts",      en: "viited/otseteed.md",     et: "et/viited/otseteed.md" },
+  { id: "params",         en: "reference/parameters.md",  et: "et/viited/parameetrid.md" },
+  { id: "cue-fields",     en: "reference/cue-types.md",   et: "et/viited/cue-tuubid.md" },
+  { id: "resource-types", en: "reference/project-file.md", et: "et/viited/projektifail.md" },
+  { id: "output-types",   en: "reference/project-file.md", et: "et/viited/projektifail.md" },
+  { id: "shortcuts",      en: "reference/shortcuts.md",     et: "et/viited/otseteed.md" },
 ];
 
 function grab(name) {

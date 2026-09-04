@@ -45,5 +45,5 @@ stop a persistent engine or the show it is running.
   <div><strong>Output</strong>A display, NDI/Spout sender, or audio destination.</div>
 </div>
 
-Continue with [Capabilities and limitations](/sissejuhatus/voimalused), or
-build [your first show](/alustamine/esimene-show).
+Continue with [Capabilities and limitations](/introduction/capabilities), or
+build [your first show](/getting-started/first-show).

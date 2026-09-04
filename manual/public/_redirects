@@ -1,0 +1,39 @@
+# The English manual moved off Estonian slugs; these keep every previously
+# published or indexed URL working. The /et/ tree is unchanged and needs no
+# rules. Every page is listed explicitly rather than by wildcard: _redirects
+# is first-match-wins, and a /alustamine/* rule would swallow the pages
+# beneath it and send them to slugs that do not exist.
+
+/sissejuhatus/                   /introduction/  301
+/sissejuhatus                    /introduction/  301
+/sissejuhatus/voimalused         /introduction/capabilities  301
+/alustamine/                     /getting-started/  301
+/alustamine                      /getting-started/  301
+/alustamine/paigaldamine         /getting-started/install  301
+/alustamine/kasutajaliides       /getting-started/interface  301
+/alustamine/esimene-show         /getting-started/first-show  301
+/oppimine/                       /learn/  301
+/oppimine                        /learn/  301
+/oppimine/cued                   /learn/cues  301
+/oppimine/actionid-ja-triggerid  /learn/actions-and-triggers  301
+/oppimine/uleminekud             /learn/transitions  301
+/oppimine/kihid                  /learn/layers  301
+/toovood/                        /workflows/  301
+/toovood                         /workflows/  301
+/toovood/show-ettevalmistamine   /workflows/preparing-a-show  301
+/toovood/live-show               /workflows/live-show  301
+/toovood/valjundid               /workflows/outputs  301
+/toovood/osc-midi                /workflows/osc-and-midi  301
+/toovood/torkeotsing             /workflows/troubleshooting  301
+/viited/                         /reference/  301
+/viited                          /reference/  301
+/viited/cue-tuubid               /reference/cue-types  301
+/viited/actionid                 /reference/actions  301
+/viited/parameetrid              /reference/parameters  301
+/viited/otseteed                 /reference/shortcuts  301
+/viited/projektifail             /reference/project-file  301
+/viited/moisted                  /reference/glossary  301
+/manuaal/                        /manual/  301
+/manuaal                         /manual/  301
+/manuaal/kaastoo                 /manual/contributing  301
+/manuaal/sisu-olek               /manual/content-status  301

@@ -18,30 +18,30 @@ Capabilities are labelled by state so nothing is presented as more finished than
 ## Manual
 
 - [Showmesh manual](https://manual.showmesh.app/): Operator and system-setup manual. English at the root, Estonian under `/et/`.
-- [What is Showmesh?](https://manual.showmesh.app/sissejuhatus/): Introduction and the problem the application addresses.
-- [Capabilities and limitations](https://manual.showmesh.app/sissejuhatus/voimalused): What the beta does and does not do.
-- [Install and run](https://manual.showmesh.app/alustamine/paigaldamine): Windows installation and first launch.
-- [User interface](https://manual.showmesh.app/alustamine/kasutajaliides): Layout of the operator workspace.
-- [Your first show](https://manual.showmesh.app/alustamine/esimene-show): Guided walkthrough from empty project to a running cue list.
-- [Cues and the cue list](https://manual.showmesh.app/oppimine/cued): How cues are structured and sequenced.
-- [Actions and triggers](https://manual.showmesh.app/oppimine/actionid-ja-triggerid): How behaviour is described and fired.
-- [Transitions](https://manual.showmesh.app/oppimine/uleminekud): Fades and parameter changes over time.
-- [Layers and compositing](https://manual.showmesh.app/oppimine/kihid): How visual layers combine.
-- [Preparing a show](https://manual.showmesh.app/toovood/show-ettevalmistamine): Programming and rehearsal workflow.
-- [Running a live show](https://manual.showmesh.app/toovood/live-show): Operating during performance.
-- [Outputs, NDI and Spout](https://manual.showmesh.app/toovood/valjundid): Output routing and network/GPU video sharing.
-- [OSC and MIDI](https://manual.showmesh.app/toovood/osc-midi): External control in both directions.
-- [Troubleshooting](https://manual.showmesh.app/toovood/torkeotsing): Diagnosing problems before and during a show.
+- [What is Showmesh?](https://manual.showmesh.app/introduction/): Introduction and the problem the application addresses.
+- [Capabilities and limitations](https://manual.showmesh.app/introduction/capabilities): What the beta does and does not do.
+- [Install and run](https://manual.showmesh.app/getting-started/install): Windows installation and first launch.
+- [User interface](https://manual.showmesh.app/getting-started/interface): Layout of the operator workspace.
+- [Your first show](https://manual.showmesh.app/getting-started/first-show): Guided walkthrough from empty project to a running cue list.
+- [Cues and the cue list](https://manual.showmesh.app/learn/cues): How cues are structured and sequenced.
+- [Actions and triggers](https://manual.showmesh.app/learn/actions-and-triggers): How behaviour is described and fired.
+- [Transitions](https://manual.showmesh.app/learn/transitions): Fades and parameter changes over time.
+- [Layers and compositing](https://manual.showmesh.app/learn/layers): How visual layers combine.
+- [Preparing a show](https://manual.showmesh.app/workflows/preparing-a-show): Programming and rehearsal workflow.
+- [Running a live show](https://manual.showmesh.app/workflows/live-show): Operating during performance.
+- [Outputs, NDI and Spout](https://manual.showmesh.app/workflows/outputs): Output routing and network/GPU video sharing.
+- [OSC and MIDI](https://manual.showmesh.app/workflows/osc-and-midi): External control in both directions.
+- [Troubleshooting](https://manual.showmesh.app/workflows/troubleshooting): Diagnosing problems before and during a show.
 
 ## Reference
 
-- [Reference index](https://manual.showmesh.app/viited/): Entry point for the reference section.
-- [Cue types](https://manual.showmesh.app/viited/cue-tuubid): Every cue type and its parameters.
-- [Actions and triggers reference](https://manual.showmesh.app/viited/actionid): Complete action and trigger list.
-- [Parameters](https://manual.showmesh.app/viited/parameetrid): Parameter names, ranges and units.
-- [Keyboard shortcuts](https://manual.showmesh.app/viited/otseteed): Operator key bindings.
-- [Project file](https://manual.showmesh.app/viited/projektifail): Project file structure and recovery.
-- [Glossary](https://manual.showmesh.app/viited/moisted): Terms used across the product and manual.
+- [Reference index](https://manual.showmesh.app/reference/): Entry point for the reference section.
+- [Cue types](https://manual.showmesh.app/reference/cue-types): Every cue type and its parameters.
+- [Actions and triggers reference](https://manual.showmesh.app/reference/actions): Complete action and trigger list.
+- [Parameters](https://manual.showmesh.app/reference/parameters): Parameter names, ranges and units.
+- [Keyboard shortcuts](https://manual.showmesh.app/reference/shortcuts): Operator key bindings.
+- [Project file](https://manual.showmesh.app/reference/project-file): Project file structure and recovery.
+- [Glossary](https://manual.showmesh.app/reference/glossary): Terms used across the product and manual.
 
 ## Contact
 

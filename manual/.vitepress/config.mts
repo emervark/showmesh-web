@@ -46,13 +46,19 @@ function collectPages(srcDir: string) {
     .sort((a, b) => {
       // English before Estonian, then the manual's own reading order, then
       // section overviews (index.md) before the pages inside them.
-      const ORDER = ["", "sissejuhatus", "alustamine", "oppimine", "toovood", "viited", "manuaal"];
+      // The two locales have different slugs — English pages moved to English
+      // URLs — so the reading order is listed per locale rather than shared.
+      const ORDER = [
+        ["", "introduction", "getting-started", "learn", "workflows", "reference", "manual"],
+        ["", "sissejuhatus", "alustamine", "oppimine", "toovood", "viited", "manuaal"]
+      ];
       const locale = (p: string) => (p.startsWith("et/") ? 1 : 0);
       const parts = (p: string) => p.replace(/^et\//, "").split("/");
       const chapter = (p: string) => {
+        const order = ORDER[locale(p)];
         const segments = parts(p);
-        const rank = ORDER.indexOf(segments.length > 1 ? segments[0] : "");
-        return rank === -1 ? ORDER.length : rank;
+        const rank = order.indexOf(segments.length > 1 ? segments[0] : "");
+        return rank === -1 ? order.length : rank;
       };
       const isOverview = (p: string) => (parts(p).at(-1) === "index.md" ? 0 : 1);
       return (
@@ -207,72 +213,72 @@ const etTheme = {
 const enTheme = {
   ...sharedTheme,
   nav: [
-    { text: "Getting started", link: "/alustamine/" },
-    { text: "Learning", link: "/oppimine/" },
-    { text: "Workflows", link: "/toovood/" },
-    { text: "Reference", link: "/viited/" },
-    { text: "Contributing", link: "/manuaal/kaastoo" }
+    { text: "Getting started", link: "/getting-started/" },
+    { text: "Learning", link: "/learn/" },
+    { text: "Workflows", link: "/workflows/" },
+    { text: "Reference", link: "/reference/" },
+    { text: "Contributing", link: "/manual/contributing" }
   ],
   sidebar: [
     {
       text: "Introduction",
       items: [
-        { text: "What is Showmesh?", link: "/sissejuhatus/" },
-        { text: "Capabilities and limitations", link: "/sissejuhatus/voimalused" }
+        { text: "What is Showmesh?", link: "/introduction/" },
+        { text: "Capabilities and limitations", link: "/introduction/capabilities" }
       ]
     },
     {
       text: "Getting started",
       collapsed: false,
       items: [
-        { text: "Overview", link: "/alustamine/" },
-        { text: "Install and run", link: "/alustamine/paigaldamine" },
-        { text: "User interface", link: "/alustamine/kasutajaliides" },
-        { text: "Your first show", link: "/alustamine/esimene-show" }
+        { text: "Overview", link: "/getting-started/" },
+        { text: "Install and run", link: "/getting-started/install" },
+        { text: "User interface", link: "/getting-started/interface" },
+        { text: "Your first show", link: "/getting-started/first-show" }
       ]
     },
     {
       text: "Learning",
       collapsed: false,
       items: [
-        { text: "Overview", link: "/oppimine/" },
-        { text: "Cues and the cue list", link: "/oppimine/cued" },
-        { text: "Actions and triggers", link: "/oppimine/actionid-ja-triggerid" },
-        { text: "Transitions", link: "/oppimine/uleminekud" },
-        { text: "Layers and compositing", link: "/oppimine/kihid" }
+        { text: "Overview", link: "/learn/" },
+        { text: "Cues and the cue list", link: "/learn/cues" },
+        { text: "Actions and triggers", link: "/learn/actions-and-triggers" },
+        { text: "Transitions", link: "/learn/transitions" },
+        { text: "Layers and compositing", link: "/learn/layers" }
       ]
     },
     {
       text: "Workflows",
       collapsed: false,
       items: [
-        { text: "Overview", link: "/toovood/" },
-        { text: "Preparing a show", link: "/toovood/show-ettevalmistamine" },
-        { text: "Running a live show", link: "/toovood/live-show" },
-        { text: "Outputs, NDI, and Spout", link: "/toovood/valjundid" },
-        { text: "OSC and MIDI", link: "/toovood/osc-midi" },
-        { text: "Troubleshooting", link: "/toovood/torkeotsing" }
+        { text: "Overview", link: "/workflows/" },
+        { text: "Preparing a show", link: "/workflows/preparing-a-show" },
+        { text: "Running a live show", link: "/workflows/live-show" },
+        { text: "Outputs, NDI, and Spout", link: "/workflows/outputs" },
+        { text: "OSC and MIDI", link: "/workflows/osc-and-midi" },
+        { text: "Troubleshooting", link: "/workflows/troubleshooting" }
       ]
     },
     {
       text: "Reference",
       collapsed: true,
       items: [
-        { text: "Reference index", link: "/viited/" },
-        { text: "Cue types", link: "/viited/cue-tuubid" },
-        { text: "Actions and triggers", link: "/viited/actionid" },
-        { text: "Parameters", link: "/viited/parameetrid" },
-        { text: "Keyboard shortcuts", link: "/viited/otseteed" },
-        { text: "Project file", link: "/viited/projektifail" },
-        { text: "Glossary", link: "/viited/moisted" }
+        { text: "Reference index", link: "/reference/" },
+        { text: "Cue types", link: "/reference/cue-types" },
+        { text: "Actions and triggers", link: "/reference/actions" },
+        { text: "Parameters", link: "/reference/parameters" },
+        { text: "Keyboard shortcuts", link: "/reference/shortcuts" },
+        { text: "Project file", link: "/reference/project-file" },
+        { text: "Glossary", link: "/reference/glossary" }
       ]
     },
     {
       text: "Manual",
       collapsed: true,
       items: [
-        { text: "Contributing to the manual", link: "/manuaal/kaastoo" },
-        { text: "Content status", link: "/manuaal/sisu-olek" }
+        { text: "Contributing to the manual", link: "/manual/contributing" },
+        { text: "Content status", link: "/manual/content-status" }
       ]
     }
   ],
