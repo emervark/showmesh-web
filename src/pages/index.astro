@@ -108,14 +108,40 @@ const params = [
   'Pan'
 ];
 
-const benefits = [
-  'Clear current and next cue',
-  'Elapsed, remaining and total time',
-  'Visible cue and action progress',
-  'Live connection and input state',
-  'Warnings next to the affected cue',
-  'Safe inspection and editing during rehearsal or playback',
-  'Deliberate separation between GO and emergency controls'
+// Operator behaviour a screenshot cannot show, from the application's own
+// docs/MANUAL.md. Each line is something the editor does, not a quality it
+// claims to have.
+const operator = [
+  {
+    title: 'Aim, then fire',
+    color: 'var(--sm-ready)',
+    items: [
+      'Space fires the armed cue, and the GO button names it: <b>GO — 5 · Score</b>.',
+      'Clicking a cue arms it. <b>↑</b> and <b>↓</b> re-aim without firing.',
+      'Esc is PANIC — but with a menu or the palette open, Esc only closes that. It cannot fall through and stop the show.',
+      'STOP counts its blast radius before you press it: <b>STOP · 3</b>.'
+    ]
+  },
+  {
+    title: 'When something breaks',
+    color: 'var(--sm-warning)',
+    items: [
+      'If the engine link drops, the clocks dim to <b>LAST KNOWN</b> and the progress bar freezes. A stopped clock is never mistaken for a paused show.',
+      'The status bar reports what is true: <b>OSC ✕ not listening</b> when the bind failed, <b>MIDI not built</b> when it was compiled out.',
+      '<b>LIVE</b> appears only when an input is actually listening.',
+      'Warnings are a queue, not a slot — <b>+3 older</b> — so a burst never eats the first one.'
+    ]
+  },
+  {
+    title: 'Editing without fear',
+    color: 'var(--sm-live)',
+    items: [
+      'Show mode locks editing and grows the transport for reading at a distance. Every blocked action explains itself.',
+      'Selecting a cue is never firing it: prepare the next one without losing the live context.',
+      'Del removes a whole selection as a single undo step.',
+      'Deleting a resource takes two clicks: <b>used by 3 cues — delete?</b>'
+    ]
+  }
 ];
 
 const liveSignals = [
@@ -415,7 +441,7 @@ const cueData = JSON.stringify(
         <div class="transport__controls">
           <button type="button" class="stop-btn" data-stop>
             <span aria-hidden="true">■</span>
-            <b class="mono" data-stop-label>STOP</b>
+            <b class="mono">STOP</b>
           </button>
           <button type="button" class="go-btn" data-go>
             <span class="mono go-btn__word">GO</span>
@@ -555,88 +581,26 @@ const cueData = JSON.stringify(
     <section id="operator" class="band reveal">
       <div class="wrap">
         <div class="center intro">
-          <div class="eyebrow eyebrow--playing">
-            Built for the person pressing GO
-          </div>
-          <h2 class="h2-center">Know what is live. Know what is next.</h2>
+          <div class="eyebrow eyebrow--playing">Under pressure</div>
+          <h2 class="h2-center">What the operator can rely on.</h2>
           <p class="lead lead--center">
-            During a live show, clarity is not a convenience. It is part of the
-            system. Showmesh keeps the run order at the centre while timing, cue
-            actions, live inputs, warnings and output state remain in context.
+            A show-control system earns trust by being specific about what it is
+            doing — and about what has stopped working.
           </p>
         </div>
-
-        <div class="cuelist" data-cuelist>
-          <div class="cuelist__head">
-            <span>Cue list</span>
-            <span class="cuelist__hint"
-              >click a cue, or press GO · live demo</span
-            >
-          </div>
-          <div class="cuelist__rows">
-            {
-              cues.map((c, i) => (
-                <button
-                  type="button"
-                  class:list={[
-                    'cuerow',
-                    {
-                      'is-playing': i === startIndex,
-                      'is-next': i === startNext
-                    }
-                  ]}
-                  data-cue-index={i}
-                  aria-label={`Jump to cue ${c.num}, ${c.name}`}
-                >
-                  <span class="cuerow__rail" aria-hidden="true" />
-                  <span class="cuerow__num mono">{c.num}</span>
-                  <span class="cuerow__icon" aria-hidden="true">
-                    {c.icon}
-                  </span>
-                  <span class="cuerow__body">
-                    <span class="cuerow__name">{c.name}</span>
-                    <span
-                      class="cuerow__progress"
-                      data-progress
-                      hidden={i !== startIndex}
-                    >
-                      <span class="cuerow__track">
-                        <i
-                          data-progress-bar
-                          style={
-                            i === startIndex
-                              ? `width:${startProgress}%`
-                              : 'width:0%'
-                          }
-                        />
-                      </span>
-                      <span class="mono cuerow__time" data-progress-time />
-                    </span>
-                    <span
-                      class="cuerow__sub"
-                      data-sub
-                      hidden={i === startIndex}
-                    >
-                      {c.intent}
-                    </span>
-                  </span>
-                </button>
-              ))
-            }
-          </div>
-        </div>
-
-        <div class="benefits">
+        <div class="opcols">
           {
-            benefits.map((b) => (
-              <div class="benefits__item">
-                <>
-                  <span class="check" aria-hidden="true">
-                    ✓
-                  </span>
-                  <span>{b}</span>
-                </>
-              </div>
+            operator.map((col) => (
+              <article class="opcol">
+                <h3 class="opcol__title" style={`color:${col.color}`}>
+                  {col.title}
+                </h3>
+                <ul class="opcol__list">
+                  {col.items.map((item) => (
+                    <li set:html={item} />
+                  ))}
+                </ul>
+              </article>
             ))
           }
         </div>
@@ -1096,7 +1060,7 @@ const cueData = JSON.stringify(
     sweep();
   }
 
-  // ---- Shared cue demo (hero transport + operator cue list) ----
+  // ---- Hero transport demo ----
   const main = document.getElementById('main-content');
   type Cue = { num: string; name: string; dur: number; intent: string };
   let cues: Cue[] = [];
@@ -1113,8 +1077,6 @@ const cueData = JSON.stringify(
     return `${m}:${String(r).padStart(2, '0')}`;
   };
 
-  const rows = Array.from(document.querySelectorAll<HTMLElement>('.cuerow'));
-
   const t = {
     curNum: document.querySelector<HTMLElement>('[data-cur-num]'),
     curName: document.querySelector<HTMLElement>('[data-cur-name]'),
@@ -1126,7 +1088,6 @@ const cueData = JSON.stringify(
     nextIntent: document.querySelector<HTMLElement>('[data-next-intent]'),
     goTarget: document.querySelector<HTMLElement>('[data-go-target]'),
     stop: document.querySelector<HTMLElement>('[data-stop]'),
-    stopLabel: document.querySelector<HTMLElement>('[data-stop-label]'),
     curDot: document.querySelector<HTMLElement>('[data-transport] .dot')
   };
 
@@ -1162,29 +1123,6 @@ const cueData = JSON.stringify(
       // GO always states what it will fire — the editor's armed-GO doctrine.
       if (t.goTarget) t.goTarget.textContent = `${nxt.num} · ${nxt.name}`;
       if (t.stop) t.stop.hidden = !running;
-      if (t.stopLabel) t.stopLabel.textContent = 'STOP';
-
-      // cue rows
-      rows.forEach((row, i) => {
-        const playing = running && i === index;
-        const isNext = i === nextIdx;
-        row.classList.toggle('is-playing', playing);
-        row.classList.toggle('is-next', isNext);
-        const progEl = row.querySelector<HTMLElement>('[data-progress]');
-        const subEl = row.querySelector<HTMLElement>('[data-sub]');
-        const bar = row.querySelector<HTMLElement>('[data-progress-bar]');
-        const time = row.querySelector<HTMLElement>('[data-progress-time]');
-        if (progEl) progEl.hidden = !playing;
-        if (subEl) subEl.hidden = playing;
-        if (playing) {
-          const dur = cues[i].dur;
-          if (bar) bar.style.width = `${progress}%`;
-          if (time)
-            time.textContent = `${fmt((progress / 100) * dur)} / ${fmt(dur)}`;
-        } else if (bar) {
-          bar.style.width = '0%';
-        }
-      });
     };
 
     const advance = () => {
@@ -1193,18 +1131,6 @@ const cueData = JSON.stringify(
       running = true;
       render();
     };
-
-    rows.forEach((row) => {
-      row.addEventListener('click', () => {
-        const i = Number(row.dataset.cueIndex);
-        if (!Number.isNaN(i)) {
-          index = i;
-          progress = 0;
-          running = true;
-          render();
-        }
-      });
-    });
 
     document.querySelector('[data-go]')?.addEventListener('click', advance);
     // STOP ends the live cue politely and leaves GO armed; PANIC is the hard
@@ -1935,167 +1861,46 @@ const cueData = JSON.stringify(
   }
 
   /* Cue list */
-  .cuelist {
-    background: var(--sm-bg-workspace);
-    border-radius: 14px;
-    border: 1px solid var(--sm-border);
-    overflow: hidden;
-    max-width: 820px;
-    margin: 0 auto 52px;
-    box-shadow: 0 30px 60px rgb(0 0 0 / 35%);
-  }
-  .cuelist__head {
-    display: flex;
-    align-items: center;
-    height: 42px;
-    padding: 0 20px;
-    border-bottom: 1px solid rgb(255 255 255 / 5%);
-    font-size: 11.5px;
-    font-weight: 600;
-    color: #7a828e;
-  }
-  .cuelist__hint {
-    margin-left: auto;
-    font-size: 10.5px;
-    font-weight: 400;
-    color: #4e555f;
-  }
-  .cuelist__rows {
-    padding: 8px 10px;
-  }
-  .cuerow {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    min-height: 48px;
-    padding: 10px 14px 10px 16px;
-    border: none;
-    border-radius: 10px;
-    background: transparent;
-    cursor: pointer;
-    position: relative;
+  /* The three operator columns. */
+  .opcols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px 40px;
+    max-width: 1000px;
+    margin: 0 auto;
     text-align: left;
-    transition: background-color 140ms ease;
   }
-  .cuerow:hover {
-    background: rgb(255 255 255 / 3%);
-  }
-  .cuerow.is-playing {
-    background: rgb(242 96 106 / 7%);
-  }
-  .cuerow__rail {
-    position: absolute;
-    left: 8px;
-    top: 8px;
-    bottom: 8px;
-    width: 2.5px;
-    border-radius: 2px;
-    background: rgb(255 255 255 / 8%);
-  }
-  .cuerow.is-playing .cuerow__rail {
-    background: var(--sm-playing);
-  }
-  .cuerow.is-next .cuerow__rail {
-    background: var(--sm-ready);
-  }
-  .cuerow__num {
-    width: 38px;
-    text-align: right;
-    padding-right: 12px;
+  .opcol__title {
     font-size: 12px;
-    font-weight: 600;
-    color: var(--sm-text-faint);
-    flex-shrink: 0;
+    font-weight: 650;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--sm-border);
   }
-  .cuerow.is-playing .cuerow__num {
-    color: var(--sm-playing);
-  }
-  .cuerow.is-next .cuerow__num {
-    color: var(--sm-ready);
-  }
-  .cuerow__icon {
-    width: 24px;
-    height: 24px;
-    border-radius: 6px;
-    background: rgb(255 255 255 / 3.5%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    color: #6b727d;
-    flex-shrink: 0;
-    margin-right: 12px;
-  }
-  .cuerow__body {
-    flex: 1;
-    min-width: 0;
+  .opcol__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 14px;
   }
-  .cuerow__name {
+  .opcol__list li {
     font-size: 13.5px;
-    color: #c6cbd3;
-    font-weight: 550;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .cuerow.is-playing .cuerow__name {
-    color: var(--sm-text-strong);
-    font-weight: 650;
-  }
-  .cuerow__progress {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .cuerow__track {
-    flex: 1;
-    max-width: 320px;
-    height: 3px;
-    background: rgb(255 255 255 / 7%);
-    border-radius: 2px;
-    position: relative;
-    overflow: hidden;
-  }
-  .cuerow__track i {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    background: var(--sm-playing);
-    border-radius: 2px;
-    transition: width 0.15s linear;
-  }
-  .cuerow__time {
-    font-size: 10px;
+    line-height: 1.6;
     color: var(--sm-text-muted);
   }
-  .cuerow__sub {
-    font-size: 10.5px;
-    color: var(--sm-text-faint);
-  }
-
-  .benefits {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 14px 32px;
-    max-width: 820px;
-    margin: 0 auto;
-  }
-  .benefits__item {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .benefits__item .check {
-    font-size: 13px;
-  }
-  .benefits__item span:last-child {
-    font-size: 13.5px;
-    color: #c6cbd3;
-    line-height: 1.5;
+  /* The literal strings the editor shows, set apart from the prose around
+     them without shouting. `:global` because these <b> elements arrive
+     through set:html and so never carry Astro's scope attribute. */
+  .opcol__list :global(b) {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--sm-text-strong);
+    white-space: nowrap;
   }
 
   /* Signals */
