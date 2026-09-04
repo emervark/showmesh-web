@@ -161,29 +161,6 @@ const mappings = [
   }
 ];
 
-const useCases = [
-  {
-    title: 'Theatre',
-    copy: 'Run video, sound, graphics and control cues from a sequence that remains clear through rehearsals, changes and performance.'
-  },
-  {
-    title: 'Concerts and touring',
-    copy: 'Coordinate playback, visuals, outputs and external systems in a workflow designed for repeatable live operation.'
-  },
-  {
-    title: 'Immersive installations',
-    copy: 'Connect scheduled events, live inputs, sensors and realtime visual systems without reducing the installation to a fixed playlist.'
-  },
-  {
-    title: 'Events and experiences',
-    copy: 'Build dependable sequences for launches, conferences, exhibitions and branded experiences where multiple systems must act together.'
-  },
-  {
-    title: 'Studios and creative technology',
-    copy: 'Prototype and operate workflows that move between recorded media, realtime rendering and network control.'
-  }
-];
-
 const integrations = [
   {
     name: 'Video and audio playback',
@@ -664,30 +641,6 @@ const cueData = JSON.stringify(
       </div>
     </section>
 
-    <!-- USE CASES -->
-    <section class="band band--panel reveal">
-      <div class="wrap">
-        <div class="center intro">
-          <div class="eyebrow eyebrow--live">
-            Different rooms. One operating model.
-          </div>
-          <h2 class="h2-center">
-            Made for shows that combine media, timing and control.
-          </h2>
-        </div>
-        <div class="cards cards--auto">
-          {
-            useCases.map((u) => (
-              <article class="card card--sm">
-                <h3>{u.title}</h3>
-                <p>{u.copy}</p>
-              </article>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
     <!-- INTEGRATIONS -->
     <section id="integrations" class="band reveal">
       <div class="wrap">
@@ -762,6 +715,10 @@ const cueData = JSON.stringify(
         <div class="center intro">
           <div class="eyebrow eyebrow--ready">Help shape the product</div>
           <h2 class="h2-center">Become a beta tester.</h2>
+          <p class="lead lead--center">
+            For operators who today run QLab, Resolume or a media server — in
+            theatres, on tour, in installations and in corporate AV.
+          </p>
           <p class="lead lead--center">
             Test a real Windows build, complete a 60–90 minute test mission and
             speak directly with the developer.
@@ -1597,10 +1554,6 @@ const cueData = JSON.stringify(
   .cards--4 {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 18px;
-  }
-  .cards--auto {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 16px;
   }
   .card {
     background: var(--sm-bg-workspace);
