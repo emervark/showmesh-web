@@ -190,15 +190,6 @@ const integrations = [
   }
 ];
 
-const whySummary = [
-  'Cue-first enough to learn quickly',
-  'Extensible enough for complex automation',
-  'Windows-first for modern production environments',
-  'Designed around live operator confidence',
-  'Built to connect media and realtime systems',
-  'Honest about system state and development state'
-];
-
 type AccessField = {
   id: string;
   label: string;
@@ -676,39 +667,6 @@ const cueData = JSON.stringify(
       </div>
     </section>
 
-    <!-- WHY -->
-    <section class="band band--panel reveal">
-      <div class="wrap grid-2 grid-2--center">
-        <div>
-          <div class="eyebrow eyebrow--playing">
-            A clearer way to build and run complex shows
-          </div>
-          <h2>Keep the power. Remove the fragmentation.</h2>
-          <p class="lead">
-            Showmesh is for technical teams who need more than playback but do
-            not want the operator juggling an improvised collection of control
-            panels. It brings the sequence, automation model and live state
-            together so the show can become more capable without becoming harder
-            to understand.
-          </p>
-        </div>
-        <ul class="checklist checklist--2col">
-          {
-            whySummary.map((w) => (
-              <li>
-                <>
-                  <span class="check" aria-hidden="true">
-                    ✓
-                  </span>
-                  <span>{w}</span>
-                </>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </section>
-
     <!-- ACCESS -->
     <section id="access" class="band reveal">
       <div class="wrap wrap--narrow">
@@ -722,6 +680,16 @@ const cueData = JSON.stringify(
           <p class="lead lead--center">
             Test a real Windows build, complete a 60–90 minute test mission and
             speak directly with the developer.
+          </p>
+          <p class="startlinks">
+            <a
+              href="https://manual.showmesh.app/alustamine/paigaldamine"
+              rel="noopener">Install and run ↗</a
+            >
+            <a
+              href="https://manual.showmesh.app/alustamine/esimene-show"
+              rel="noopener">Your first show ↗</a
+            >
           </p>
         </div>
 
@@ -1516,33 +1484,21 @@ const cueData = JSON.stringify(
   }
 
   /* Checklist */
-  .checklist {
-    list-style: none;
-    margin: 0;
-    padding: 6px 0 0;
+  .startlinks {
     display: flex;
-    flex-direction: column;
-    gap: 14px;
+    justify-content: center;
+    gap: 22px;
+    flex-wrap: wrap;
+    margin: 6px 0 0;
+    font-size: 13px;
   }
-  .checklist--2col {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px 20px;
-  }
-  .checklist li {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  .check {
+  .startlinks a {
     color: var(--sm-ready);
-    font-size: 15px;
-    flex-shrink: 0;
+    text-decoration: none;
+    border-bottom: 1px solid rgb(255 255 255 / 18%);
   }
-  .checklist li span:last-child {
-    font-size: 14.5px;
-    color: #c6cbd3;
-    line-height: 1.5;
+  .startlinks a:hover {
+    border-bottom-color: currentcolor;
   }
 
   /* Cards */
