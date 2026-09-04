@@ -43,7 +43,8 @@ See leht kirjeldab manuaali lähteharu tegelikku seisu. Märgistus:
 | Projektide undo/redo ja salvestus | Valmis | Mootor on ainus kirjutaja |
 | Autosave'i žurnaal / taastamine | Valmis | Projekti muudatused žurnaalitakse |
 | Missing-media kontroll | Valmis osaliselt | Pre-flight tuvastus olemas, relinker-UI puudub |
-| HTTP/REST ja Art-Net/sACN | Puudub | Ei ole praeguses versioonis kasutatavad |
+| Art-Net väljund | Ehitatud, riistvaras testimata | Sõlmed, universe'id, kanalitasemed ja fade'id on editoris ning tee on loopbackis otsast otsani kinnitatud, aga päris valgusti vastu ei ole seda kordagi jooksutatud |
+| HTTP/REST ja sACN | Puudub | Ei ole praeguses versioonis kasutatavad |
 
 ::: tip Kontrolli sharing-väljundeid päris vastuvõtjas
 NDI ja Spout peegeldavad programmi kompositsiooni. Veendu läbimängul, et

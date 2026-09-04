@@ -43,7 +43,8 @@ This page describes the `main` build documented on the manual home page.
 | Journal and recovery | Working | Document operations are journalled |
 | Missing-media relinker | Partial | Detection exists; the complete collection/relink workflow is not finished |
 | Windows installer | Beta | Per-user NSIS installer; currently unsigned |
-| HTTP/REST and Art-Net/sACN | Not available | Candidates only if beta feedback requires them |
+| Art-Net output | Built, untested on hardware | Nodes, universes, channel levels and fades are in the editor, and the path is verified end to end over loopback, but it has never been run against a real fixture |
+| HTTP/REST and sACN | Not available | Candidates only if beta feedback requires them |
 
 ::: info 1.0 scope
 ISF shaders, the Timeline panel, and Lua cues were moved to the 1.1 candidate
