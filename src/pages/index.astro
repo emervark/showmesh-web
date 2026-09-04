@@ -9,42 +9,30 @@ const cues = [
     icon: '▶',
     name: 'House out',
     dur: 2,
-    sub: 'Manual — GO when actor says “dog”.'
+    // The NEXT block's second line: what firing this cue will actually do.
+    // Mirrors nextIntentText() in the editor's Transport.tsx.
+    intent: 'manual · GO on the actor’s line'
   },
   {
     num: '2',
     icon: '▶',
     name: 'Opening video',
     dur: 45,
-    sub: 'Program · Output A'
+    intent: 'video · Output A'
   },
   {
     num: '3',
     icon: '⇄',
     name: 'Fade house to 0',
     dur: 3,
-    sub: '↳ fades out 1 · House out'
+    intent: 'fades out 1 · House out'
   },
   {
     num: '4',
     icon: '◈',
     name: 'Send OSC /scene/2',
     dur: 1,
-    sub: 'OSC → Notch'
-  },
-  {
-    num: '5',
-    icon: '⧉',
-    name: 'Act I transition',
-    dur: 8,
-    sub: 'Group · 3 actions'
-  },
-  {
-    num: '6',
-    icon: '♪',
-    name: 'Underscore loop',
-    dur: 120,
-    sub: 'Audio · loops'
+    intent: 'osc → Notch'
   }
 ];
 
@@ -320,7 +308,7 @@ const startNext = (startIndex + 1) % cues.length;
 const startCur = cues[startIndex];
 const startNextCue = cues[startNext];
 const cueData = JSON.stringify(
-  cues.map((c) => ({ num: c.num, name: c.name, dur: c.dur }))
+  cues.map((c) => ({ num: c.num, name: c.name, dur: c.dur, intent: c.intent }))
 );
 ---
 
@@ -342,35 +330,31 @@ const cueData = JSON.stringify(
           width="120"
           height="99"
         />
-        <div class="eyebrow eyebrow--ready">
-          Realtime show automation for Windows
-        </div>
-        <h1>Run media, realtime systems and control from one show sequence.</h1>
+        <h1>A cue playback engine for Windows.</h1>
         <p>
-          Showmesh is a Windows-native show automation workspace for building
-          and operating live shows. Bring playback, realtime graphics, control
-          signals and external systems into one cue-based workflow—then see
-          exactly what is live, what comes next and what the system is doing.
+          Video, audio, images and text on a native C++ engine — plus OSC, MIDI,
+          LTC/MTC timecode and NDI/Spout output to drive the rest of the rig.
+          The editor is a separate process: closing it does not stop the show.
         </p>
         <div class="hero__actions">
-          <a class="btn-solid" href="#access">Apply for the Windows beta</a>
-          <a class="btn-outline" href="#model">Explore how it works</a>
+          <a class="btn-solid" href="/download">Download the beta</a>
+          <a
+            class="btn-outline"
+            href="https://manual.showmesh.app"
+            rel="noopener">Read the manual</a
+          >
         </div>
-        <div class="hero__note">
-          Test a real Windows build, complete a 60–90 minute test mission and
-          speak directly with the developer.
-        </div>
-        <p class="hero__spec">
-          Working in the current Windows beta: video, audio, images, text,
-          layered output, OSC, MIDI, LTC/MTC, NDI and Spout. <a
-            href="https://manual.showmesh.app/sissejuhatus/voimalused"
-            target="_blank"
-            rel="noopener">See the full capability list ↗</a
+        <p class="hero__meta">
+          <span class="mono">v0.1.0-beta.6</span> · Windows 10/11 ·
+          <span class="hero__meta-warn"
+            >installer is unsigned, SmartScreen will warn</span
           >
         </p>
       </div>
 
-      <!-- transport strip -->
+      <!-- Transport strip — mirrors editor/src/renderer/v2/components/
+           Transport.tsx in v0.1.0-beta.6: GO carries what it will fire, STOP
+           counts its blast radius, NEXT states the fired cue's intent. -->
       <div class="transport" data-transport>
         <div class="transport__now">
           <div class="transport__now-head">
@@ -395,19 +379,33 @@ const cueData = JSON.stringify(
           </div>
         </div>
         <div class="transport__next">
-          <span class="transport__next-label">Next</span>
-          <span class="mono transport__next-num" data-next-num
-            >{startNextCue.num}</span
-          >
-          <span class="transport__next-name" data-next-name
-            >{startNextCue.name}</span
-          >
+          <div class="transport__next-head">
+            <span class="transport__next-label">Next</span>
+            <span class="mono transport__next-num" data-next-num
+              >{startNextCue.num}</span
+            >
+            <span class="transport__next-name" data-next-name
+              >{startNextCue.name}</span
+            >
+          </div>
+          <span class="mono transport__next-intent">
+            <span class="transport__next-caret" aria-hidden="true">▸</span>
+            <span data-next-intent>{startNextCue.intent}</span>
+          </span>
         </div>
         <div class="transport__controls">
+          <button type="button" class="stop-btn" data-stop>
+            <span aria-hidden="true">■</span>
+            <b class="mono" data-stop-label>STOP</b>
+          </button>
           <button type="button" class="go-btn" data-go>
-            <span class="mono">GO</span>
+            <span class="mono go-btn__word">GO</span>
+            <span class="go-btn__target" data-go-target
+              >{startNextCue.num} · {startNextCue.name}</span
+            >
           </button>
           <button type="button" class="panic-btn" data-panic>
+            <span aria-hidden="true">⚠</span>
             <b class="mono">PANIC</b>
           </button>
         </div>
@@ -584,7 +582,7 @@ const cueData = JSON.stringify(
                       data-sub
                       hidden={i === startIndex}
                     >
-                      {c.sub}
+                      {c.intent}
                     </span>
                   </span>
                 </button>
@@ -1071,7 +1069,7 @@ const cueData = JSON.stringify(
 
   // ---- Shared cue demo (hero transport + operator cue list) ----
   const main = document.getElementById('main-content');
-  type Cue = { num: string; name: string; dur: number };
+  type Cue = { num: string; name: string; dur: number; intent: string };
   let cues: Cue[] = [];
   try {
     cues = JSON.parse(main?.dataset.cues || '[]');
@@ -1095,7 +1093,12 @@ const cueData = JSON.stringify(
     curDur: document.querySelector<HTMLElement>('[data-cur-dur]'),
     curBar: document.querySelector<HTMLElement>('[data-cur-bar]'),
     nextNum: document.querySelector<HTMLElement>('[data-next-num]'),
-    nextName: document.querySelector<HTMLElement>('[data-next-name]')
+    nextName: document.querySelector<HTMLElement>('[data-next-name]'),
+    nextIntent: document.querySelector<HTMLElement>('[data-next-intent]'),
+    goTarget: document.querySelector<HTMLElement>('[data-go-target]'),
+    stop: document.querySelector<HTMLElement>('[data-stop]'),
+    stopLabel: document.querySelector<HTMLElement>('[data-stop-label]'),
+    curDot: document.querySelector<HTMLElement>('[data-transport] .dot')
   };
 
   if (cues.length) {
@@ -1103,6 +1106,9 @@ const cueData = JSON.stringify(
     let progress = 20;
     let paused = false;
     let panicReset = 0;
+    // The editor hides STOP when nothing is live and dims the NOW block to
+    // "nothing playing" — the box keeps its shape so the strip never jumps.
+    let running = true;
 
     const render = () => {
       const len = cues.length;
@@ -1111,18 +1117,27 @@ const cueData = JSON.stringify(
       const nxt = cues[nextIdx];
 
       // transport
-      if (t.curNum) t.curNum.textContent = cur.num;
-      if (t.curName) t.curName.textContent = cur.name;
+      if (t.curNum) t.curNum.textContent = running ? cur.num : '';
+      if (t.curName)
+        t.curName.textContent = running ? cur.name : 'nothing playing';
       if (t.curElapsed)
-        t.curElapsed.textContent = fmt((progress / 100) * cur.dur);
-      if (t.curDur) t.curDur.textContent = `/ ${fmt(cur.dur)}`;
-      if (t.curBar) t.curBar.style.width = `${progress}%`;
+        t.curElapsed.textContent = running
+          ? fmt((progress / 100) * cur.dur)
+          : '';
+      if (t.curDur) t.curDur.textContent = running ? `/ ${fmt(cur.dur)}` : '';
+      if (t.curBar) t.curBar.style.width = running ? `${progress}%` : '0%';
+      if (t.curDot) t.curDot.classList.toggle('dot--idle', !running);
       if (t.nextNum) t.nextNum.textContent = nxt.num;
       if (t.nextName) t.nextName.textContent = nxt.name;
+      if (t.nextIntent) t.nextIntent.textContent = nxt.intent;
+      // GO always states what it will fire — the editor's armed-GO doctrine.
+      if (t.goTarget) t.goTarget.textContent = `${nxt.num} · ${nxt.name}`;
+      if (t.stop) t.stop.hidden = !running;
+      if (t.stopLabel) t.stopLabel.textContent = 'STOP';
 
       // cue rows
       rows.forEach((row, i) => {
-        const playing = i === index;
+        const playing = running && i === index;
         const isNext = i === nextIdx;
         row.classList.toggle('is-playing', playing);
         row.classList.toggle('is-next', isNext);
@@ -1146,6 +1161,7 @@ const cueData = JSON.stringify(
     const advance = () => {
       index = (index + 1) % cues.length;
       progress = 0;
+      running = true;
       render();
     };
 
@@ -1155,14 +1171,23 @@ const cueData = JSON.stringify(
         if (!Number.isNaN(i)) {
           index = i;
           progress = 0;
+          running = true;
           render();
         }
       });
     });
 
     document.querySelector('[data-go]')?.addEventListener('click', advance);
+    // STOP ends the live cue politely and leaves GO armed; PANIC is the hard
+    // brake. Both leave the strip in the same shape the editor shows.
+    document.querySelector('[data-stop]')?.addEventListener('click', () => {
+      running = false;
+      progress = 0;
+      render();
+    });
     document.querySelector('[data-panic]')?.addEventListener('click', () => {
       paused = true;
+      running = false;
       progress = 0;
       render();
       window.clearTimeout(panicReset);
@@ -1172,7 +1197,7 @@ const cueData = JSON.stringify(
     });
 
     window.setInterval(() => {
-      if (paused) return;
+      if (paused || !running) return;
       progress += 1.6;
       if (progress >= 100) {
         advance();
@@ -1477,26 +1502,13 @@ const cueData = JSON.stringify(
     justify-content: center;
     flex-wrap: wrap;
   }
-  .hero__note {
+  .hero__meta {
+    margin-top: 22px;
     font-size: 12.5px;
-    color: #4e555f;
-    margin-top: 20px;
-  }
-  .hero__spec {
-    max-width: 640px;
-    margin: 12px auto 0;
-    font-size: 12.5px;
-    line-height: 1.6;
     color: var(--sm-text-muted);
   }
-  .hero__spec a {
-    color: var(--sm-ready);
-    text-decoration: none;
-    border-bottom: 1px solid rgb(255 255 255 / 18%);
-    white-space: nowrap;
-  }
-  .hero__spec a:hover {
-    border-bottom-color: currentcolor;
+  .hero__meta-warn {
+    color: var(--sm-warning);
   }
 
   /* Transport strip */
@@ -1578,15 +1590,23 @@ const cueData = JSON.stringify(
   .transport__next {
     flex: 0.8;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    padding: 0 22px;
+    min-width: 0;
+  }
+  .transport__next-head {
+    display: flex;
     align-items: baseline;
     gap: 12px;
-    padding: 0 22px;
     min-width: 0;
   }
   .transport__next-label {
     font-size: 10px;
     color: var(--sm-ready);
     font-weight: 600;
+    flex-shrink: 0;
   }
   .transport__next-num {
     font-size: 13px;
@@ -1601,6 +1621,17 @@ const cueData = JSON.stringify(
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .transport__next-intent {
+    font-size: 11px;
+    color: var(--sm-text-muted);
+    padding-left: 34px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .transport__next-caret {
+    color: var(--sm-ready);
+  }
   .transport__controls {
     display: flex;
     align-items: center;
@@ -1608,42 +1639,77 @@ const cueData = JSON.stringify(
     padding-left: 16px;
   }
   .go-btn,
-  .panic-btn {
+  .panic-btn,
+  .stop-btn {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 1px;
     height: 52px;
     border: none;
     border-radius: 7px;
+    cursor: pointer;
+    font-family: inherit;
     transition: background-color 160ms ease;
   }
   .go-btn {
-    min-width: 82px;
+    min-width: 170px;
     background: var(--sm-go);
     color: #eafbf0;
-    padding: 0 20px;
+    padding: 0 22px;
   }
-  .go-btn span {
-    font-size: 15px;
+  .go-btn__word {
+    font-size: 17px;
     font-weight: 700;
     letter-spacing: 2.5px;
+  }
+  /* What GO will fire is operator-read data, not decoration: full opacity. */
+  .go-btn__target {
+    font-size: 10.5px;
+    font-weight: 550;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .go-btn:hover {
     background: #35ae61;
   }
-  .panic-btn {
-    min-width: 70px;
+  .panic-btn,
+  .stop-btn {
     color: var(--sm-playing);
     background: rgb(242 96 106 / 8%);
   }
+  .panic-btn {
+    min-width: 78px;
+  }
+  .stop-btn {
+    min-width: 64px;
+  }
+  .panic-btn span,
+  .stop-btn span {
+    font-size: 12px;
+  }
   .panic-btn b {
-    font-size: 9.5px;
+    font-size: 10px;
     letter-spacing: 1.5px;
   }
-  .panic-btn:hover {
+  .stop-btn b {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+  .panic-btn:hover,
+  .stop-btn:hover {
     background: rgb(242 96 106 / 15%);
   }
 
+  /* Nothing playing: the dot goes unlit rather than disappearing, so the
+     NOW block keeps its shape. */
+  .dot--idle {
+    background: var(--sm-border) !important;
+    animation: none !important;
+  }
   .dot {
     width: 8px;
     height: 8px;
@@ -2071,7 +2137,8 @@ const cueData = JSON.stringify(
   .field select {
     appearance: none;
     /* Chevron drawn in CSS so the control needs no image request. */
-    background-image: linear-gradient(45deg, transparent 50%, #7b838d 50%),
+    background-image:
+      linear-gradient(45deg, transparent 50%, #7b838d 50%),
       linear-gradient(135deg, #7b838d 50%, transparent 50%);
     background-position:
       calc(100% - 18px) 19px,
@@ -2348,6 +2415,9 @@ const cueData = JSON.stringify(
     }
     .transport__next {
       padding: 0;
+    }
+    .transport__next-intent {
+      padding-left: 0;
     }
     .transport__controls {
       padding-left: 0;
