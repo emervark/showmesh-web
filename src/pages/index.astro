@@ -161,16 +161,6 @@ const mappings = [
   }
 ];
 
-const reliabilityThemes = [
-  'Resource and cue validation',
-  'Missing-target and missing-resource warnings',
-  'Connection and input status',
-  'Output, audio and engine telemetry',
-  'Autosave and project recovery',
-  'Logs that help explain what happened',
-  'Safe editing and deliberate destructive actions'
-];
-
 const useCases = [
   {
     title: 'Theatre',
@@ -645,6 +635,17 @@ const cueData = JSON.stringify(
         </div>
         <div class="evidence">
           <div class="evidence__row">
+            <span class="evidence__label evidence__label--info">Recovery</span>
+            <p>
+              Documents are op-based, journalled and saved atomically, so a
+              crash leaves the show recoverable. The engine runs under a
+              watchdog that restarts it after an abnormal exit and gives up on a
+              crash loop rather than thrashing. A fault writes a minidump, a log
+              and a report bundle to the operator’s own disk — offline, no
+              server involved.
+            </p>
+          </div>
+          <div class="evidence__row">
             <span class="evidence__label evidence__label--ok">Measured</span>
             <p>
               A six-hour operator soak at 3440×1440 with NDI and Spout running,
@@ -659,37 +660,6 @@ const cueData = JSON.stringify(
               change, not a device loss, so that path remains untested.
             </p>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- RELIABILITY -->
-    <section class="band reveal">
-      <div class="wrap">
-        <div class="center intro">
-          <div class="eyebrow eyebrow--warning">Confidence is a feature</div>
-          <h2 class="h2-center">
-            The operator should not have to guess whether the system is ready.
-          </h2>
-          <p class="lead lead--center">
-            A show-control system must communicate more than success or failure.
-            It should show what is connected, what is missing, what is running
-            and what needs attention before it becomes a live problem.
-          </p>
-        </div>
-        <div class="themes">
-          {
-            reliabilityThemes.map((r) => (
-              <div class="themes__item">
-                <>
-                  <span class="diamond" aria-hidden="true">
-                    ◆
-                  </span>
-                  <span>{r}</span>
-                </>
-              </div>
-            ))
-          }
         </div>
       </div>
     </section>
@@ -1855,6 +1825,9 @@ const cueData = JSON.stringify(
     letter-spacing: 0.5px;
     text-transform: uppercase;
   }
+  .evidence__label--info {
+    color: var(--sm-live);
+  }
   .evidence__label--ok {
     color: var(--sm-ready);
   }
@@ -1869,30 +1842,6 @@ const cueData = JSON.stringify(
   }
 
   /* Themes */
-  .themes {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 12px 32px;
-    max-width: 760px;
-    margin: 0 auto;
-  }
-  .themes__item {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .diamond {
-    color: var(--sm-warning);
-    font-size: 13px;
-    flex-shrink: 0;
-  }
-  .themes__item span:last-child {
-    font-size: 14px;
-    color: #c6cbd3;
-    line-height: 1.5;
-  }
-
-  /* Chips */
   .chips {
     display: flex;
     flex-wrap: wrap;
