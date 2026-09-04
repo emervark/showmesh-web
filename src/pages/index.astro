@@ -68,25 +68,44 @@ const valueCards = [
   }
 ];
 
+// Resource → Action → Trigger, as the protocol actually ships it. The kinds
+// come from protocol/protocol.schema.json (x-resource-kinds) and the triggers
+// from ACTION_TRIGGER_KINDS; the design principles describe a wider model that
+// the product has not reached yet, so it is named as intent, not inventory.
 const model = [
   {
     label: 'What can be controlled',
     color: 'var(--sm-live)',
     title: 'Resource',
-    copy: 'A video, audio file, image, output, connection, realtime engine or other system used by the show.'
+    copy: 'Media — video, audio, images — plus text, an LTC generator and a live audio input. Resources live in the library and are reused across cues instead of being reconfigured in each one.',
+    note: 'Four kinds today; the model is built to take more.'
   },
   {
     label: 'What changes',
     color: 'var(--sm-warning)',
     title: 'Action',
-    copy: 'Fade a parameter, change volume, route an output, send a command or control another resource.'
+    copy: 'Three kinds. Command plays, pauses or stops. Set jumps a parameter to a value. Transition moves it over time on a curve. The engine clamps every value to the parameter registry.',
+    note: 'command · set · transition'
   },
   {
     label: 'When it happens',
     color: 'var(--sm-ready)',
     title: 'Trigger',
-    copy: 'Cue start, cue stop, timeline position, timecode, OSC, MIDI or deliberate manual execution.'
+    copy: 'Nine, and only nine — a closed set, so an action’s timing is always one of a handful of things you can read off the cue.',
+    note: 'On Cue Start · On Play · On Cue Stop · On Finished · At Time · Timecode · OSC · MIDI CC · Manual'
   }
+];
+
+// The animatable parameter registry (protocol/params.schema.json), and the
+// address shape that makes each one reachable from OSC while the show runs.
+const params = [
+  'Opacity',
+  'Scale',
+  'Position X',
+  'Position Y',
+  'Rotation',
+  'Volume',
+  'Pan'
 ];
 
 const benefits = [
@@ -481,13 +500,7 @@ const cueData = JSON.stringify(
     <section id="model" class="band band--panel reveal">
       <div class="wrap center">
         <div class="eyebrow eyebrow--ready">Resource → Action → Trigger</div>
-        <h2 class="h2-center">
-          Build what should happen, not another workaround.
-        </h2>
-        <p class="lead lead--center">
-          Showmesh is based on a simple automation model that can scale across
-          different types of show technology.
-        </p>
+        <h2 class="h2-center">One model behind every cue.</h2>
         <div class="model">
           {
             model.map((m, i) => (
@@ -503,15 +516,37 @@ const cueData = JSON.stringify(
                   </div>
                   <h3>{m.title}</h3>
                   <p>{m.copy}</p>
+                  <p class="mono model__note">{m.note}</p>
                 </article>
               </>
             ))
           }
         </div>
+        <div class="model__params">
+          <div class="model__params-row">
+            <span class="model__params-label">Animatable parameters</span>
+            <span class="model__params-list">
+              {
+                params.map((p, i) => (
+                  <>
+                    {i > 0 && <span class="model__sep"> · </span>}
+                    <span>{p}</span>
+                  </>
+                ))
+              }
+            </span>
+          </div>
+          <div class="model__params-row">
+            <span class="model__params-label">Addressable live</span>
+            <span class="mono model__addr"
+              >/resource/&#123;id&#125;/opacity &nbsp;
+              /cue/&#123;id&#125;/volume</span
+            >
+          </div>
+        </div>
         <p class="lead lead--center note">
-          The same model can describe a simple playback cue or a coordinated
-          sequence across media, graphics and external systems. Your show
-          remains readable even as the automation becomes more capable.
+          A media cue plays because the cue lifecycle plays it, not because you
+          added a Play action. Actions are what you build around that lifecycle.
         </p>
       </div>
     </section>
@@ -1825,10 +1860,62 @@ const cueData = JSON.stringify(
   .model__card {
     width: 280px;
     padding: 28px;
+    display: flex;
+    flex-direction: column;
   }
   .model__card p {
     font-size: 14px;
     line-height: 1.6;
+  }
+  /* The registry line under each card: the actual names, so a reader can
+     check the claim rather than take it. */
+  /* Specificity has to clear `.model__card p`, which owns the body type. */
+  .model__card .model__note {
+    /* Bottom-aligned on a common floor so the three rules land on one line.
+       The floor is the tallest note — the nine trigger names, four lines
+       plus the rule and its padding. */
+    margin-top: auto;
+    min-height: calc(6.8em + 13px);
+    padding-top: 12px;
+    border-top: 1px solid var(--sm-border);
+    font-size: 11.5px;
+    line-height: 1.7;
+    color: var(--sm-text-muted);
+  }
+  .model__params {
+    max-width: 760px;
+    margin: 34px auto 0;
+    padding: 18px 22px;
+    border: 1px solid var(--sm-border);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+  }
+  .model__params-row {
+    display: flex;
+    gap: 18px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  .model__params-label {
+    flex: 0 0 150px;
+    font-size: 11px;
+    color: var(--sm-text-faint);
+  }
+  .model__params-list,
+  .model__addr {
+    flex: 1;
+    min-width: 0;
+    font-size: 12.5px;
+    color: var(--sm-text-muted);
+  }
+  .model__addr {
+    color: var(--sm-ready);
+  }
+  .model__sep {
+    color: var(--sm-text-faint);
   }
   .model__arrow {
     display: flex;
