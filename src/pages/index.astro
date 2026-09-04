@@ -36,14 +36,6 @@ const cues = [
   }
 ];
 
-const keyOutcomes = [
-  'Fewer disconnected control surfaces during a show',
-  'Less manual coordination between media and external systems',
-  'A clearer relationship between cues, actions and triggers',
-  'Better visibility of current state, next state and system health',
-  'One workflow from programming and rehearsal to live operation'
-];
-
 const valueCards = [
   {
     icon: '◈',
@@ -454,45 +446,6 @@ const cueData = JSON.stringify(
             <b class="mono">PANIC</b>
           </button>
         </div>
-      </div>
-    </section>
-
-    <!-- PROBLEM -->
-    <section class="band reveal">
-      <div class="wrap grid-2 grid-2--top">
-        <div>
-          <div class="eyebrow eyebrow--playing">
-            One show. Too many disconnected tools.
-          </div>
-          <h2>
-            Your show already works as one system. Your software should too.
-          </h2>
-          <p class="lead">
-            Live productions rarely depend on a single type of content. A cue
-            may start a video, change a realtime visual, send control data,
-            route an output and prepare the next state—all while the operator
-            watches timing, connections and system health.
-          </p>
-          <p class="lead">
-            When those tasks are spread across separate applications, the
-            operator becomes the integration layer. Showmesh brings that work
-            into one readable sequence.
-          </p>
-        </div>
-        <ul class="checklist">
-          {
-            keyOutcomes.map((k) => (
-              <li>
-                <>
-                  <span class="check" aria-hidden="true">
-                    ✓
-                  </span>
-                  <span>{k}</span>
-                </>
-              </li>
-            ))
-          }
-        </ul>
       </div>
     </section>
 
