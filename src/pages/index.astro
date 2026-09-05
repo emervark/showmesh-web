@@ -335,7 +335,9 @@ const cueData = JSON.stringify(
           The editor is a separate process: closing it does not stop the show.
         </p>
         <div class="hero__actions">
-          <a class="btn-solid" href="/download">Download the beta</a>
+          <a class="btn-solid" href="https://licenses.showmesh.app/beta"
+            >Get a beta license</a
+          >
           <a
             class="btn-outline"
             href="https://manual.showmesh.app"
@@ -343,7 +345,8 @@ const cueData = JSON.stringify(
           >
         </div>
         <p class="hero__meta">
-          <span class="mono">v0.1.0-beta.6</span> · Windows 10/11 ·
+          <a class="mono hero__meta-dl" href="/download">v0.1.0-beta.6 ↓</a> ·
+          Windows 10/11 ·
           <span class="hero__meta-warn"
             >installer is unsigned, SmartScreen will warn</span
           >
@@ -732,66 +735,21 @@ const cueData = JSON.stringify(
           </p>
         </div>
 
-        <form class="access-form" data-access-form>
-          <input
-            type="checkbox"
-            name="botcheck"
-            tabindex="-1"
-            autocomplete="off"
-            aria-hidden="true"
-            style="display:none"
-          />
-          {
-            accessFields.map((f) => (
-              <div class:list={['field', { 'field--span': f.span }]}>
-                <label for={`f-${f.id}`}>{f.label}</label>
-                {f.type === 'textarea' ? (
-                  <textarea id={`f-${f.id}`} name={f.label} rows="3" />
-                ) : f.type === 'select' ? (
-                  <select id={`f-${f.id}`} name={f.label}>
-                    <option value="">Select…</option>
-                    {(f.options ?? []).map((o) => (
-                      <option value={o}>{o}</option>
-                    ))}
-                  </select>
-                ) : (
-                  <input
-                    id={`f-${f.id}`}
-                    name={f.id === 'email' ? 'email' : f.label}
-                    type={f.id === 'email' ? 'email' : 'text'}
-                    required={f.id === 'email'}
-                    aria-describedby={f.hint ? `f-${f.id}-hint` : undefined}
-                  />
-                )}
-                {f.hint && (
-                  <span class="field__hint" id={`f-${f.id}-hint`}>
-                    {f.hint}
-                  </span>
-                )}
-              </div>
-            ))
-          }
-          <div class="field field--span access-form__submit">
-            <p class="access-form__error" data-access-error hidden>
-              Sending failed. Please try again, or email info@showmesh.app
-              directly.
-            </p>
-            <button type="submit" class="btn-solid">Apply for the beta</button>
-          </div>
-          <p class="field--span access-form__privacy">
-            Questions rather than an application? <a
-              href="mailto:info@showmesh.app">info@showmesh.app</a
-            >.<br />
-            No newsletter or sales sequence. We will only contact you about the Showmesh
-            beta. Expect a personal reply within 2–3 working days.
-          </p>
-        </form>
-
-        <div class="access-done" data-access-done hidden>
-          <div class="access-done__mark" aria-hidden="true">✓</div>
-          <p>
-            Thank you. We will read your application and reply personally within
-            2–3 working days about the Showmesh beta.
+        <!--
+          The beta used to be an application: a form, a 2-3 day wait and a
+          personal reply. Now the licence is issued the moment somebody asks
+          for it, so an application form would only be a slower door to the
+          same room — and two different promises on one page.
+        -->
+        <div class="center">
+          <a class="btn-solid" href="https://licenses.showmesh.app/beta"
+            >Get a beta license</a
+          >
+          <p class="fine">
+            The key arrives by email and activates two computers. Questions
+            rather than a license? <a href="mailto:support@showmesh.app"
+              >support@showmesh.app</a
+            >.
           </p>
         </div>
       </div>
@@ -957,51 +915,6 @@ const cueData = JSON.stringify(
         if (icon) icon.textContent = open ? '+' : '−';
       });
     });
-
-  // ---- Early access form (Web3Forms) ----
-  // The access key is public by design: it only routes submissions to the
-  // email address it was registered with.
-  const WEB3FORMS_ACCESS_KEY = '2f8eb683-3253-4574-9fc4-a5b506e4a130';
-  const form = document.querySelector<HTMLFormElement>('[data-access-form]');
-  const done = document.querySelector<HTMLElement>('[data-access-done]');
-  const formError = document.querySelector<HTMLElement>('[data-access-error]');
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-    // Web3Forms answers a multipart post with an HTML success page and only
-    // answers a JSON post with JSON, so send JSON to keep res.json() valid.
-    const payload: Record<string, FormDataEntryValue> = {
-      access_key: WEB3FORMS_ACCESS_KEY,
-      subject: 'Showmesh beta application',
-      from_name: 'showmesh.app'
-    };
-    for (const [key, value] of new FormData(form)) payload[key] = value;
-    if (formError) formError.hidden = true;
-    if (btn) {
-      btn.disabled = true;
-      btn.textContent = 'Sending…';
-    }
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
-      const json = await res.json();
-      if (!json.success) throw new Error(json.message);
-      form.hidden = true;
-      if (done) done.hidden = false;
-    } catch {
-      if (formError) formError.hidden = false;
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = 'Apply for the beta';
-      }
-    }
-  });
 
   // ---- Live operator concept: scale + lazy-load the embedded workspace ----
   // The editor replica has a 1180px floor, so on wide screens the fixed
@@ -1245,12 +1158,20 @@ const cueData = JSON.stringify(
     flex-wrap: wrap;
   }
   .hero__meta {
-    margin-top: 22px;
-    font-size: 12.5px;
+    margin-top: 34px;
+    font-size: 11.5px;
+    line-height: 1.7;
     color: var(--sm-text-muted);
   }
   .hero__meta-warn {
     color: var(--sm-warning);
+  }
+  .hero__meta-dl {
+    color: var(--sm-ready);
+    border-bottom: 1px solid #ffffff2e;
+  }
+  .hero__meta-dl:hover {
+    border-bottom-color: currentColor;
   }
 
   /* Transport strip */
@@ -1748,112 +1669,11 @@ const cueData = JSON.stringify(
 
   /* Themes */
   /* Access form */
-  .access-form {
-    background: var(--sm-bg-workspace);
-    border: 1px solid var(--sm-border);
-    border-radius: 12px;
-    padding: 30px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-  }
-  .field {
-    display: flex;
-    flex-direction: column;
-  }
-  .field--span {
-    grid-column: 1 / -1;
-  }
-  .field label {
-    font-size: 12px;
-    color: var(--sm-text-muted);
-    margin-bottom: 6px;
-  }
   .field input,
   .field select,
-  .field textarea {
-    width: 100%;
-    background: var(--sm-bg-panel);
-    border: 1px solid rgb(255 255 255 / 8%);
-    border-radius: 7px;
-    color: var(--sm-text-strong);
-    font-size: 13.5px;
-    font-family: inherit;
-    transition: border-color 160ms ease;
-  }
   .field input,
-  .field select {
-    height: 42px;
-    padding: 0 13px;
-  }
-  .field select {
-    appearance: none;
-    /* Chevron drawn in CSS so the control needs no image request. */
-    background-image:
-      linear-gradient(45deg, transparent 50%, #7b838d 50%),
-      linear-gradient(135deg, #7b838d 50%, transparent 50%);
-    background-position:
-      calc(100% - 18px) 19px,
-      calc(100% - 13px) 19px;
-    background-size:
-      5px 5px,
-      5px 5px;
-    background-repeat: no-repeat;
-    padding-right: 34px;
-  }
-  .field select option {
-    background: var(--sm-bg-panel);
-    color: var(--sm-text-strong);
-  }
-  .field__hint {
-    margin-top: 6px;
-    font-size: 11.5px;
-    color: var(--sm-text-faint);
-  }
-  .field textarea {
-    padding: 11px 13px;
-    resize: vertical;
-  }
   .field input:focus,
   .field select:focus,
-  .field textarea:focus {
-    outline: none;
-    border-color: var(--sm-ready);
-  }
-  .access-form__submit {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 16px;
-  }
-  .access-form__privacy {
-    margin: 0;
-    font-size: 12px;
-    line-height: 1.6;
-    color: var(--sm-text-faint);
-  }
-  .access-form__error {
-    margin: 0;
-    font-size: 13px;
-    color: var(--sm-playing);
-  }
-  .access-done {
-    background: var(--sm-bg-workspace);
-    border: 1px solid rgb(87 200 120 / 25%);
-    border-radius: 12px;
-    padding: 40px;
-    text-align: center;
-  }
-  .access-done__mark {
-    color: var(--sm-ready);
-    font-size: 26px;
-    margin-bottom: 12px;
-  }
-  .access-done p {
-    font-size: 15.5px;
-    color: var(--sm-text-strong);
-    margin: 0;
-  }
 
   /* FAQ */
   .faq-title {
