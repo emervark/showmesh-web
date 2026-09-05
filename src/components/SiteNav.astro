@@ -24,14 +24,14 @@ const links = [
     <nav class="site-nav__links" aria-label="Primary navigation">
       {links.map((l) => <a href={l.href}>{l.label}</a>)}
     </nav>
-    <a class="site-nav__cta" href="/download">Download the beta</a>
+    <a class="site-nav__cta" href="https://licenses.showmesh.app/beta">Get a beta license</a>
     <details class="site-nav__mobile" data-nav-details>
       <summary aria-label="Open navigation"
         ><span></span><span></span><span></span></summary
       >
       <nav aria-label="Mobile navigation">
         {links.map((l) => <a href={l.href}>{l.label}</a>)}
-        <a href="/download" class="site-nav__mobile-cta">Download the beta</a>
+        <a href="https://licenses.showmesh.app/beta" class="site-nav__mobile-cta">Get a beta license</a>
       </nav>
     </details>
   </div>
