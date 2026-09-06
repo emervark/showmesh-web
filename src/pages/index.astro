@@ -41,7 +41,7 @@ const cues = [
 // from ACTION_TRIGGER_KINDS; the design principles describe a wider model that
 // the product has not reached yet, so it is named as intent, not inventory.
 // Engine behaviour from the application's docs/STATUS.md. Everything here is
-// on by default in v0.1.0-beta.6; the measured and unmeasured lines below the
+// on by default in v0.1.0-beta.7; the measured and unmeasured lines below the
 // grid are quoted from the same file's soak record.
 const engine = [
   {
@@ -201,58 +201,6 @@ const integrations = [
   }
 ];
 
-type AccessField = {
-  id: string;
-  label: string;
-  span: boolean;
-  type: 'input' | 'textarea' | 'select';
-  hint?: string;
-  options?: string[];
-};
-
-const accessFields: AccessField[] = [
-  { id: 'name', label: 'Name', span: false, type: 'input' },
-  { id: 'email', label: 'Email', span: false, type: 'input' },
-  {
-    id: 'company',
-    label: 'Company, venue or freelance',
-    span: false,
-    type: 'input'
-  },
-  { id: 'role', label: 'Role', span: false, type: 'input' },
-  {
-    id: 'machine',
-    label: 'Windows version + GPU',
-    span: false,
-    type: 'input',
-    hint: 'For example: Windows 11 24H2, RTX 4070'
-  },
-  { id: 'prod', label: 'Type of productions', span: true, type: 'input' },
-  {
-    id: 'systems',
-    label: 'Systems and protocols you use',
-    span: true,
-    type: 'input'
-  },
-  {
-    id: 'availability',
-    label: 'Can you test for 60–90 minutes in the next two weeks?',
-    span: true,
-    type: 'select',
-    options: [
-      'Yes, within two weeks',
-      'Yes, but later than two weeks',
-      'Not sure yet'
-    ]
-  },
-  {
-    id: 'problem',
-    label: 'What would you test with Showmesh?',
-    span: true,
-    type: 'textarea'
-  }
-];
-
 const faqs = [
   {
     q: 'What is Showmesh?',
@@ -318,7 +266,79 @@ const cueData = JSON.stringify(
   <main id="main-content" data-cues={cueData}>
     <!-- HERO -->
     <section class="hero">
-      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__glow" aria-hidden="true">
+        <svg
+          class="hero__aurora"
+          viewBox="0 0 1440 760"
+          preserveAspectRatio="xMidYMid slice"
+          focusable="false"
+        >
+          <defs>
+            <linearGradient id="aurora-stroke" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#dfffee" stop-opacity="0" />
+              <stop offset="0.22" stop-color="#a7f3d0" stop-opacity="0.72" />
+              <stop offset="0.52" stop-color="#4be8a0" stop-opacity="0.9" />
+              <stop offset="0.78" stop-color="#2e9d67" stop-opacity="0.62" />
+              <stop offset="1" stop-color="#2e6e80" stop-opacity="0" />
+            </linearGradient>
+            <filter id="aurora-blur" x="-20%" y="-80%" width="140%" height="260%">
+              <feGaussianBlur stdDeviation="34" />
+            </filter>
+            <filter id="aurora-soft" x="-20%" y="-60%" width="140%" height="220%">
+              <feGaussianBlur stdDeviation="12" />
+            </filter>
+          </defs>
+          <g class="hero__stars">
+            <g class="hero__stars-a">
+              <circle cx="94" cy="104" r="1.5" />
+              <circle cx="238" cy="74" r="1" />
+              <circle cx="405" cy="128" r="1.8" />
+              <circle cx="612" cy="64" r="1.2" />
+              <circle cx="822" cy="116" r="1.5" />
+              <circle cx="1048" cy="78" r="1" />
+              <circle cx="1286" cy="136" r="1.7" />
+            </g>
+            <g class="hero__stars-b">
+              <circle cx="168" cy="224" r="1.1" />
+              <circle cx="332" cy="192" r="1.6" />
+              <circle cx="524" cy="252" r="1" />
+              <circle cx="744" cy="198" r="1.7" />
+              <circle cx="938" cy="242" r="1.2" />
+              <circle cx="1146" cy="186" r="1.5" />
+              <circle cx="1362" cy="254" r="1" />
+            </g>
+            <g class="hero__stars-c">
+              <circle cx="64" cy="346" r="1" />
+              <circle cx="276" cy="318" r="1.4" />
+              <circle cx="468" cy="372" r="1.1" />
+              <circle cx="682" cy="326" r="1.6" />
+              <circle cx="886" cy="360" r="1" />
+              <circle cx="1092" cy="314" r="1.4" />
+              <circle cx="1318" cy="382" r="1.1" />
+            </g>
+          </g>
+          <g class="hero__aurora-back" filter="url(#aurora-blur)">
+            <path
+              d="M-120 210 C 100 28, 330 430, 560 185 S 960 18, 1170 230 S 1450 390, 1570 145"
+              pathLength="1"
+            />
+            <path
+              d="M-90 345 C 165 105, 350 505, 620 285 S 1040 105, 1240 320 S 1470 455, 1570 260"
+              pathLength="1"
+            />
+          </g>
+          <g class="hero__aurora-front" filter="url(#aurora-soft)">
+            <path
+              d="M-120 210 C 100 28, 330 430, 560 185 S 960 18, 1170 230 S 1450 390, 1570 145"
+              pathLength="1"
+            />
+            <path
+              d="M-90 345 C 165 105, 350 505, 620 285 S 1040 105, 1240 320 S 1470 455, 1570 260"
+              pathLength="1"
+            />
+          </g>
+        </svg>
+      </div>
       <div class="hero__copy">
         <img
           class="hero__logo"
@@ -345,16 +365,16 @@ const cueData = JSON.stringify(
           >
         </div>
         <p class="hero__meta">
-          <a class="mono hero__meta-dl" href="/download">v0.1.0-beta.6 ↓</a> ·
-          Windows 10/11 ·
-          <span class="hero__meta-warn"
-            >installer is unsigned, SmartScreen will warn</span
-          >
+          <a class="mono hero__meta-dl" href="/download">v0.1.0-beta.7 ↓</a>
+          <span class="hero__meta-sep" aria-hidden="true">·</span>
+          <span>Windows 10/11</span>
+          <span class="hero__meta-sep" aria-hidden="true">·</span>
+          <span class="hero__meta-warn">installer is unsigned, SmartScreen will warn</span>
         </p>
       </div>
 
       <!-- Transport strip - mirrors editor/src/renderer/v2/components/
-           Transport.tsx in v0.1.0-beta.6: GO carries what it will fire, STOP
+           Transport.tsx in v0.1.0-beta.7: GO carries what it will fire, STOP
            counts its blast radius, NEXT states the fired cue's intent. -->
       <div class="transport" data-transport>
         <div class="transport__now">
@@ -502,7 +522,7 @@ const cueData = JSON.stringify(
     <section id="workspace" class="band reveal">
       <div class="wrap">
         <div class="center intro">
-          <div class="eyebrow eyebrow--live">v0.1.0-beta.6</div>
+          <div class="eyebrow eyebrow--live">v0.1.0-beta.7</div>
           <h2 class="h2-center">The editor.</h2>
           <p class="lead lead--center">
             Cue list, transport and live system state, as the current beta draws
@@ -709,51 +729,6 @@ const cueData = JSON.stringify(
       </div>
     </section>
 
-    <!-- ACCESS -->
-    <section id="access" class="band reveal">
-      <div class="wrap wrap--narrow">
-        <div class="center intro">
-          <div class="eyebrow eyebrow--ready">Help shape the product</div>
-          <h2 class="h2-center">Become a beta tester.</h2>
-          <p class="lead lead--center">
-            For operators who today run QLab, Resolume or a media server - in
-            theatres, on tour, in installations and in corporate AV.
-          </p>
-          <p class="lead lead--center">
-            Test a real Windows build, complete a 60–90 minute test mission and
-            speak directly with the developer.
-          </p>
-          <p class="startlinks">
-            <a
-              href="https://manual.showmesh.app/getting-started/install"
-              rel="noopener">Install and run ↗</a
-            >
-            <a
-              href="https://manual.showmesh.app/getting-started/first-show"
-              rel="noopener">Your first show ↗</a
-            >
-          </p>
-        </div>
-
-        <!--
-          The beta used to be an application: a form, a 2-3 day wait and a
-          personal reply. Now the licence is issued the moment somebody asks
-          for it, so an application form would only be a slower door to the
-          same room — and two different promises on one page.
-        -->
-        <div class="center">
-          <a class="btn-solid" href="https://licenses.showmesh.app/beta"
-            >Get a beta license</a
-          >
-          <p class="fine">
-            The key arrives by email and activates two computers. Questions
-            rather than a license? <a href="mailto:support@showmesh.app"
-              >support@showmesh.app</a
-            >.
-          </p>
-        </div>
-      </div>
-    </section>
   </main>
   <SiteFooter />
 </BaseLayout>
@@ -1023,7 +998,7 @@ const cueData = JSON.stringify(
   }
   h1 {
     font-size: clamp(34px, 5.4vw, 56px);
-    font-weight: 750;
+    font-weight: 600;
     color: var(--sm-text-strong);
     line-height: 1.12;
     margin: 0 0 22px;
@@ -1031,7 +1006,7 @@ const cueData = JSON.stringify(
   }
   h2 {
     font-size: clamp(26px, 3.6vw, 38px);
-    font-weight: 700;
+    font-weight: 600;
     color: var(--sm-text-strong);
     line-height: 1.2;
     margin: 0 0 20px;
@@ -1042,7 +1017,7 @@ const cueData = JSON.stringify(
   }
   h3 {
     font-size: 17px;
-    font-weight: 650;
+    font-weight: 600;
     color: var(--sm-text-strong);
     margin: 0 0 10px;
   }
@@ -1121,19 +1096,79 @@ const cueData = JSON.stringify(
     position: relative;
     padding: 130px 24px 90px;
     overflow: hidden;
+    background: linear-gradient(
+      to bottom,
+      var(--sm-bg-shell) 0%,
+      var(--sm-bg-shell) 54%,
+      var(--sm-bg-panel) 100%
+    );
   }
   .hero__glow {
     position: absolute;
-    inset: 0;
+    inset: -70px -8% -1px;
     pointer-events: none;
-    background: radial-gradient(
-      ellipse 900px 420px at 50% -10%,
-      rgb(87 200 120 / 9%),
-      transparent 62%
-    );
+    overflow: hidden;
+    opacity: 0.7;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 68%, transparent 98%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 68%, transparent 98%);
+  }
+  .hero__aurora {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .hero__aurora path {
+    fill: none;
+    stroke: url(#aurora-stroke);
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .hero__stars {
+    fill: #dfffee;
+  }
+  .hero__stars-a,
+  .hero__stars-b,
+  .hero__stars-c {
+    transform-box: fill-box;
+    transform-origin: center;
+    will-change: opacity;
+  }
+  .hero__stars-a {
+    opacity: 0.62;
+    animation: heroStarsTwinkle 8.5s ease-in-out infinite alternate;
+  }
+  .hero__stars-b {
+    opacity: 0.3;
+    animation: heroStarsTwinkle 11s 2.4s ease-in-out infinite alternate-reverse;
+  }
+  .hero__stars-c {
+    opacity: 0.44;
+    animation: heroStarsTwinkle 9.5s 4.1s ease-in-out infinite alternate;
+  }
+  .hero__aurora-back,
+  .hero__aurora-front {
+    transform-box: fill-box;
+    transform-origin: center;
+    will-change: transform, opacity;
+  }
+  .hero__aurora-back path {
+    stroke-width: 122px;
+    opacity: 0.34;
+  }
+  .hero__aurora-front path {
+    stroke-width: 26px;
+    opacity: 0.5;
+  }
+  .hero__aurora-back {
+    animation: heroAuroraCurtain 26s ease-in-out infinite alternate;
+  }
+  .hero__aurora-front {
+    animation: heroAuroraShimmer 18s ease-in-out infinite alternate-reverse;
   }
   .hero__copy {
     position: relative;
+    z-index: 1;
     max-width: 720px;
     margin: 0 auto;
     text-align: center;
@@ -1143,6 +1178,10 @@ const cueData = JSON.stringify(
     height: 100px;
     width: auto;
     margin: 0 auto 24px;
+    filter:
+      drop-shadow(0 0 14px rgb(75 232 160 / 24%))
+      drop-shadow(0 0 34px rgb(46 157 87 / 18%));
+    animation: heroLogoGlow 6.5s ease-in-out infinite alternate;
   }
   .hero__copy p {
     font-size: 16.5px;
@@ -1157,11 +1196,19 @@ const cueData = JSON.stringify(
     justify-content: center;
     flex-wrap: wrap;
   }
-  .hero__meta {
-    margin-top: 34px;
-    font-size: 11.5px;
-    line-height: 1.7;
+  .hero__copy .hero__meta {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 2px 6px;
+    margin: 16px auto 0;
+    font-size: 10.5px;
+    line-height: 1.55;
     color: var(--sm-text-muted);
+  }
+  .hero__meta-sep {
+    color: var(--sm-text-faint);
   }
   .hero__meta-warn {
     color: var(--sm-warning);
@@ -1177,6 +1224,7 @@ const cueData = JSON.stringify(
   /* Transport strip */
   .transport {
     position: relative;
+    z-index: 1;
     max-width: 920px;
     margin: 64px auto 0;
     background: var(--sm-bg-workspace);
@@ -1189,6 +1237,54 @@ const cueData = JSON.stringify(
     gap: 0;
     animation: smFloat 7s ease-in-out infinite;
   }
+
+  @keyframes heroAuroraCurtain {
+    from {
+      opacity: 0.7;
+      transform: translate3d(-2.5%, -2%, 0) scale(1.04, 0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(2.5%, 3%, 0) scale(1.08, 1.06);
+    }
+  }
+
+  @keyframes heroAuroraShimmer {
+    from {
+      opacity: 0.4;
+      transform: translate3d(1.5%, 1%, 0) scale(1.02, 1.08);
+    }
+    to {
+      opacity: 0.82;
+      transform: translate3d(-2%, -2%, 0) scale(1.07, 0.94);
+    }
+  }
+  @keyframes heroLogoGlow {
+    from {
+      filter:
+        drop-shadow(0 0 12px rgb(75 232 160 / 18%))
+        drop-shadow(0 0 28px rgb(46 157 87 / 12%));
+    }
+    to {
+      filter:
+        drop-shadow(0 0 18px rgb(75 232 160 / 32%))
+        drop-shadow(0 0 42px rgb(46 157 87 / 22%));
+    }
+  }
+
+  @keyframes heroStarsTwinkle {
+    0%,
+    18% {
+      opacity: 0.2;
+    }
+    58% {
+      opacity: 0.72;
+    }
+    100% {
+      opacity: 0.38;
+    }
+  }
+
   .transport__now {
     flex: 1.2;
     display: flex;
@@ -1401,23 +1497,6 @@ const cueData = JSON.stringify(
   }
 
   /* Checklist */
-  .startlinks {
-    display: flex;
-    justify-content: center;
-    gap: 22px;
-    flex-wrap: wrap;
-    margin: 6px 0 0;
-    font-size: 13px;
-  }
-  .startlinks a {
-    color: var(--sm-ready);
-    text-decoration: none;
-    border-bottom: 1px solid rgb(255 255 255 / 18%);
-  }
-  .startlinks a:hover {
-    border-bottom-color: currentcolor;
-  }
-
   /* Cards */
   .cards {
     display: grid;
@@ -1667,14 +1746,6 @@ const cueData = JSON.stringify(
     color: var(--sm-text-muted);
   }
 
-  /* Themes */
-  /* Access form */
-  .field input,
-  .field select,
-  .field input,
-  .field input:focus,
-  .field select:focus,
-
   /* FAQ */
   .faq-title {
     font-size: clamp(24px, 3.2vw, 32px);
@@ -1837,6 +1908,10 @@ const cueData = JSON.stringify(
     .hero {
       padding: 96px 24px 64px;
     }
+    .hero__glow {
+      inset-inline: -42%;
+      opacity: 0.58;
+    }
     .transport {
       flex-direction: column;
       gap: 16px;
@@ -1857,6 +1932,15 @@ const cueData = JSON.stringify(
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .hero__logo,
+    .hero__stars-a,
+    .hero__stars-b,
+    .hero__stars-c,
+    .hero__aurora-back,
+    .hero__aurora-front {
+      animation: none;
+      will-change: auto;
+    }
     .transport {
       animation: none;
     }
