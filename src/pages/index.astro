@@ -201,58 +201,6 @@ const integrations = [
   }
 ];
 
-type AccessField = {
-  id: string;
-  label: string;
-  span: boolean;
-  type: 'input' | 'textarea' | 'select';
-  hint?: string;
-  options?: string[];
-};
-
-const accessFields: AccessField[] = [
-  { id: 'name', label: 'Name', span: false, type: 'input' },
-  { id: 'email', label: 'Email', span: false, type: 'input' },
-  {
-    id: 'company',
-    label: 'Company, venue or freelance',
-    span: false,
-    type: 'input'
-  },
-  { id: 'role', label: 'Role', span: false, type: 'input' },
-  {
-    id: 'machine',
-    label: 'Windows version + GPU',
-    span: false,
-    type: 'input',
-    hint: 'For example: Windows 11 24H2, RTX 4070'
-  },
-  { id: 'prod', label: 'Type of productions', span: true, type: 'input' },
-  {
-    id: 'systems',
-    label: 'Systems and protocols you use',
-    span: true,
-    type: 'input'
-  },
-  {
-    id: 'availability',
-    label: 'Can you test for 60–90 minutes in the next two weeks?',
-    span: true,
-    type: 'select',
-    options: [
-      'Yes, within two weeks',
-      'Yes, but later than two weeks',
-      'Not sure yet'
-    ]
-  },
-  {
-    id: 'problem',
-    label: 'What would you test with Showmesh?',
-    span: true,
-    type: 'textarea'
-  }
-];
-
 const faqs = [
   {
     q: 'What is Showmesh?',
@@ -781,51 +729,6 @@ const cueData = JSON.stringify(
       </div>
     </section>
 
-    <!-- ACCESS -->
-    <section id="access" class="band reveal">
-      <div class="wrap wrap--narrow">
-        <div class="center intro">
-          <div class="eyebrow eyebrow--ready">Help shape the product</div>
-          <h2 class="h2-center">Become a beta tester.</h2>
-          <p class="lead lead--center">
-            For operators who today run QLab, Resolume or a media server - in
-            theatres, on tour, in installations and in corporate AV.
-          </p>
-          <p class="lead lead--center">
-            Test a real Windows build, complete a 60–90 minute test mission and
-            speak directly with the developer.
-          </p>
-          <p class="startlinks">
-            <a
-              href="https://manual.showmesh.app/getting-started/install"
-              rel="noopener">Install and run ↗</a
-            >
-            <a
-              href="https://manual.showmesh.app/getting-started/first-show"
-              rel="noopener">Your first show ↗</a
-            >
-          </p>
-        </div>
-
-        <!--
-          The beta used to be an application: a form, a 2-3 day wait and a
-          personal reply. Now the licence is issued the moment somebody asks
-          for it, so an application form would only be a slower door to the
-          same room — and two different promises on one page.
-        -->
-        <div class="center">
-          <a class="btn-solid" href="https://licenses.showmesh.app/beta"
-            >Get a beta license</a
-          >
-          <p class="fine">
-            The key arrives by email and activates two computers. Questions
-            rather than a license? <a href="mailto:support@showmesh.app"
-              >support@showmesh.app</a
-            >.
-          </p>
-        </div>
-      </div>
-    </section>
   </main>
   <SiteFooter />
 </BaseLayout>
@@ -1594,23 +1497,6 @@ const cueData = JSON.stringify(
   }
 
   /* Checklist */
-  .startlinks {
-    display: flex;
-    justify-content: center;
-    gap: 22px;
-    flex-wrap: wrap;
-    margin: 6px 0 0;
-    font-size: 13px;
-  }
-  .startlinks a {
-    color: var(--sm-ready);
-    text-decoration: none;
-    border-bottom: 1px solid rgb(255 255 255 / 18%);
-  }
-  .startlinks a:hover {
-    border-bottom-color: currentcolor;
-  }
-
   /* Cards */
   .cards {
     display: grid;
@@ -1859,14 +1745,6 @@ const cueData = JSON.stringify(
     line-height: 1.6;
     color: var(--sm-text-muted);
   }
-
-  /* Themes */
-  /* Access form */
-  .field input,
-  .field select,
-  .field input,
-  .field input:focus,
-  .field select:focus,
 
   /* FAQ */
   .faq-title {
