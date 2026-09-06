@@ -340,6 +340,35 @@ const cueData = JSON.stringify(
               <feGaussianBlur stdDeviation="12" />
             </filter>
           </defs>
+          <g class="hero__stars">
+            <g class="hero__stars-a">
+              <circle cx="94" cy="104" r="1.5" />
+              <circle cx="238" cy="74" r="1" />
+              <circle cx="405" cy="128" r="1.8" />
+              <circle cx="612" cy="64" r="1.2" />
+              <circle cx="822" cy="116" r="1.5" />
+              <circle cx="1048" cy="78" r="1" />
+              <circle cx="1286" cy="136" r="1.7" />
+            </g>
+            <g class="hero__stars-b">
+              <circle cx="168" cy="224" r="1.1" />
+              <circle cx="332" cy="192" r="1.6" />
+              <circle cx="524" cy="252" r="1" />
+              <circle cx="744" cy="198" r="1.7" />
+              <circle cx="938" cy="242" r="1.2" />
+              <circle cx="1146" cy="186" r="1.5" />
+              <circle cx="1362" cy="254" r="1" />
+            </g>
+            <g class="hero__stars-c">
+              <circle cx="64" cy="346" r="1" />
+              <circle cx="276" cy="318" r="1.4" />
+              <circle cx="468" cy="372" r="1.1" />
+              <circle cx="682" cy="326" r="1.6" />
+              <circle cx="886" cy="360" r="1" />
+              <circle cx="1092" cy="314" r="1.4" />
+              <circle cx="1318" cy="382" r="1.1" />
+            </g>
+          </g>
           <g class="hero__aurora-back" filter="url(#aurora-blur)">
             <path
               d="M-120 210 C 100 28, 330 430, 560 185 S 960 18, 1170 230 S 1450 390, 1570 145"
@@ -1192,6 +1221,28 @@ const cueData = JSON.stringify(
     stroke-linecap: round;
     vector-effect: non-scaling-stroke;
   }
+  .hero__stars {
+    fill: #dfffee;
+  }
+  .hero__stars-a,
+  .hero__stars-b,
+  .hero__stars-c {
+    transform-box: fill-box;
+    transform-origin: center;
+    will-change: opacity;
+  }
+  .hero__stars-a {
+    opacity: 0.62;
+    animation: heroStarsTwinkle 8.5s ease-in-out infinite alternate;
+  }
+  .hero__stars-b {
+    opacity: 0.3;
+    animation: heroStarsTwinkle 11s 2.4s ease-in-out infinite alternate-reverse;
+  }
+  .hero__stars-c {
+    opacity: 0.44;
+    animation: heroStarsTwinkle 9.5s 4.1s ease-in-out infinite alternate;
+  }
   .hero__aurora-back,
   .hero__aurora-front {
     transform-box: fill-box;
@@ -1293,6 +1344,19 @@ const cueData = JSON.stringify(
       transform: translate3d(-2%, -2%, 0) scale(1.07, 0.94);
     }
   }
+  @keyframes heroStarsTwinkle {
+    0%,
+    18% {
+      opacity: 0.2;
+    }
+    58% {
+      opacity: 0.72;
+    }
+    100% {
+      opacity: 0.38;
+    }
+  }
+
   .transport__now {
     flex: 1.2;
     display: flex;
@@ -1965,6 +2029,9 @@ const cueData = JSON.stringify(
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .hero__stars-a,
+    .hero__stars-b,
+    .hero__stars-c,
     .hero__aurora-back,
     .hero__aurora-front {
       animation: none;
