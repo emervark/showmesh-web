@@ -1275,6 +1275,10 @@ const cueData = JSON.stringify(
     height: 100px;
     width: auto;
     margin: 0 auto 24px;
+    filter:
+      drop-shadow(0 0 14px rgb(75 232 160 / 24%))
+      drop-shadow(0 0 34px rgb(46 157 87 / 18%));
+    animation: heroLogoGlow 6.5s ease-in-out infinite alternate;
   }
   .hero__copy p {
     font-size: 16.5px;
@@ -1344,6 +1348,19 @@ const cueData = JSON.stringify(
       transform: translate3d(-2%, -2%, 0) scale(1.07, 0.94);
     }
   }
+  @keyframes heroLogoGlow {
+    from {
+      filter:
+        drop-shadow(0 0 12px rgb(75 232 160 / 18%))
+        drop-shadow(0 0 28px rgb(46 157 87 / 12%));
+    }
+    to {
+      filter:
+        drop-shadow(0 0 18px rgb(75 232 160 / 32%))
+        drop-shadow(0 0 42px rgb(46 157 87 / 22%));
+    }
+  }
+
   @keyframes heroStarsTwinkle {
     0%,
     18% {
@@ -2029,6 +2046,7 @@ const cueData = JSON.stringify(
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .hero__logo,
     .hero__stars-a,
     .hero__stars-b,
     .hero__stars-c,
