@@ -11,9 +11,10 @@ koostada cue-listi, valida väljundi ning teha esimese kontrollitud läbimängu.
 ## Soovitatud järjekord
 
 1. [Paigalda ja käivita Showmesh](/et/alustamine/paigaldamine).
-2. Tutvu [kasutajaliidese aladega](/et/alustamine/kasutajaliides).
-3. Koosta [esimene show](/et/alustamine/esimene-show).
-4. Loe enne päris esitust [show ettevalmistamise kontrollnimekirja](/et/toovood/show-ettevalmistamine).
+2. Aktiveeri [oma litsents](/et/alustamine/litsents).
+3. Tutvu [kasutajaliidese aladega](/et/alustamine/kasutajaliides).
+4. Koosta [esimene show](/et/alustamine/esimene-show).
+5. Loe enne päris esitust [show ettevalmistamise kontrollnimekirja](/et/toovood/show-ettevalmistamine).
 
 ## Enne alustamist
 

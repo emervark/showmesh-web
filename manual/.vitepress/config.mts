@@ -148,6 +148,7 @@ const etTheme = {
       items: [
         { text: "Ülevaade", link: "/et/alustamine/" },
         { text: "Paigaldamine ja käivitamine", link: "/et/alustamine/paigaldamine" },
+        { text: "Sinu litsents", link: "/et/alustamine/litsents" },
         { text: "Kasutajaliides", link: "/et/alustamine/kasutajaliides" },
         { text: "Esimene show", link: "/et/alustamine/esimene-show" }
       ]
@@ -233,6 +234,7 @@ const enTheme = {
       items: [
         { text: "Overview", link: "/getting-started/" },
         { text: "Install and run", link: "/getting-started/install" },
+        { text: "Your licence", link: "/getting-started/licensing" },
         { text: "User interface", link: "/getting-started/interface" },
         { text: "Your first show", link: "/getting-started/first-show" }
       ]
