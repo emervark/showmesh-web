@@ -41,7 +41,7 @@ const cues = [
 // from ACTION_TRIGGER_KINDS; the design principles describe a wider model that
 // the product has not reached yet, so it is named as intent, not inventory.
 // Engine behaviour from the application's docs/STATUS.md. Everything here is
-// on by default in v0.1.0-beta.6; the measured and unmeasured lines below the
+// on by default in v0.1.0-beta.7; the measured and unmeasured lines below the
 // grid are quoted from the same file's soak record.
 const engine = [
   {
@@ -417,16 +417,16 @@ const cueData = JSON.stringify(
           >
         </div>
         <p class="hero__meta">
-          <a class="mono hero__meta-dl" href="/download">v0.1.0-beta.6 ↓</a> ·
-          Windows 10/11 ·
-          <span class="hero__meta-warn"
-            >installer is unsigned, SmartScreen will warn</span
-          >
+          <a class="mono hero__meta-dl" href="/download">v0.1.0-beta.7 ↓</a>
+          <span class="hero__meta-sep" aria-hidden="true">·</span>
+          <span>Windows 10/11</span>
+          <span class="hero__meta-sep" aria-hidden="true">·</span>
+          <span class="hero__meta-warn">installer is unsigned, SmartScreen will warn</span>
         </p>
       </div>
 
       <!-- Transport strip - mirrors editor/src/renderer/v2/components/
-           Transport.tsx in v0.1.0-beta.6: GO carries what it will fire, STOP
+           Transport.tsx in v0.1.0-beta.7: GO carries what it will fire, STOP
            counts its blast radius, NEXT states the fired cue's intent. -->
       <div class="transport" data-transport>
         <div class="transport__now">
@@ -574,7 +574,7 @@ const cueData = JSON.stringify(
     <section id="workspace" class="band reveal">
       <div class="wrap">
         <div class="center intro">
-          <div class="eyebrow eyebrow--live">v0.1.0-beta.6</div>
+          <div class="eyebrow eyebrow--live">v0.1.0-beta.7</div>
           <h2 class="h2-center">The editor.</h2>
           <p class="lead lead--center">
             Cue list, transport and live system state, as the current beta draws
@@ -1293,11 +1293,19 @@ const cueData = JSON.stringify(
     justify-content: center;
     flex-wrap: wrap;
   }
-  .hero__meta {
-    margin-top: 34px;
-    font-size: 11.5px;
-    line-height: 1.7;
+  .hero__copy .hero__meta {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 2px 6px;
+    margin: 16px auto 0;
+    font-size: 10.5px;
+    line-height: 1.55;
     color: var(--sm-text-muted);
+  }
+  .hero__meta-sep {
+    color: var(--sm-text-faint);
   }
   .hero__meta-warn {
     color: var(--sm-warning);
