@@ -1124,16 +1124,53 @@ const cueData = JSON.stringify(
   }
   .hero__glow {
     position: absolute;
-    inset: 0;
+    inset: -110px -12% 0;
     pointer-events: none;
-    background: radial-gradient(
-      ellipse 900px 420px at 50% -10%,
-      rgb(87 200 120 / 9%),
-      transparent 62%
+    overflow: hidden;
+    opacity: 0.62;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 58%, transparent 94%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 58%, transparent 94%);
+  }
+  .hero__glow::before,
+  .hero__glow::after {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    will-change: transform;
+  }
+  .hero__glow::before {
+    background: linear-gradient(
+      135deg,
+      rgb(166 181 173 / 32%) 12.5%,
+      rgb(46 157 87 / 38%) 37.5%,
+      rgb(170 121 33 / 22%) 62.5%,
+      rgb(13 21 20 / 16%) 87.5%
     );
+    background: linear-gradient(
+      135deg in oklab,
+      rgb(166 181 173 / 32%) 12.5%,
+      rgb(46 157 87 / 38%) 37.5%,
+      rgb(170 121 33 / 22%) 62.5%,
+      rgb(13 21 20 / 16%) 87.5%
+    );
+    filter: blur(74px) saturate(0.86);
+    transform: translate3d(-4%, -6%, 0) scale(1.14) rotate(-2deg);
+    animation: heroAuroraDrift 26s ease-in-out infinite alternate;
+  }
+  .hero__glow::after {
+    inset: -6% -12% 18%;
+    background:
+      radial-gradient(ellipse 38% 72% at 22% 32%, rgb(166 181 173 / 22%), transparent 72%),
+      radial-gradient(ellipse 40% 76% at 48% 16%, rgb(46 157 87 / 28%), transparent 74%),
+      radial-gradient(ellipse 36% 66% at 74% 40%, rgb(170 121 33 / 15%), transparent 72%);
+    filter: blur(58px);
+    mix-blend-mode: screen;
+    transform: translate3d(4%, 0, 0) scale(1.08);
+    animation: heroAuroraBreathe 19s ease-in-out infinite alternate;
   }
   .hero__copy {
     position: relative;
+    z-index: 1;
     max-width: 720px;
     margin: 0 auto;
     text-align: center;
@@ -1177,6 +1214,7 @@ const cueData = JSON.stringify(
   /* Transport strip */
   .transport {
     position: relative;
+    z-index: 1;
     max-width: 920px;
     margin: 64px auto 0;
     background: var(--sm-bg-workspace);
@@ -1188,6 +1226,29 @@ const cueData = JSON.stringify(
     align-items: stretch;
     gap: 0;
     animation: smFloat 7s ease-in-out infinite;
+  }
+
+  @keyframes heroAuroraDrift {
+    0% {
+      transform: translate3d(-4%, -6%, 0) scale(1.14) rotate(-2deg);
+    }
+    52% {
+      transform: translate3d(3%, 3%, 0) scale(1.2) rotate(1deg);
+    }
+    100% {
+      transform: translate3d(-1%, 8%, 0) scale(1.16) rotate(3deg);
+    }
+  }
+
+  @keyframes heroAuroraBreathe {
+    from {
+      opacity: 0.58;
+      transform: translate3d(4%, 0, 0) scale(1.08);
+    }
+    to {
+      opacity: 0.9;
+      transform: translate3d(-5%, 6%, 0) scale(1.18);
+    }
   }
   .transport__now {
     flex: 1.2;
@@ -1837,6 +1898,10 @@ const cueData = JSON.stringify(
     .hero {
       padding: 96px 24px 64px;
     }
+    .hero__glow {
+      inset-inline: -30%;
+      opacity: 0.48;
+    }
     .transport {
       flex-direction: column;
       gap: 16px;
@@ -1857,6 +1922,11 @@ const cueData = JSON.stringify(
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .hero__glow::before,
+    .hero__glow::after {
+      animation: none;
+      will-change: auto;
+    }
     .transport {
       animation: none;
     }
